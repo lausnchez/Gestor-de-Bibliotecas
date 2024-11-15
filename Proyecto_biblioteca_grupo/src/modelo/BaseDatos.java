@@ -21,30 +21,40 @@ public class BaseDatos {
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USUARIO = "root"; // Cambiar
     private static final String CONTRASENA = "root"; // Cambiar
-
+    
+    // Variables para utilizar
     public static Connection conexion;
     public static Statement st = null;
     
     // Métodos
-//    public BaseDatos() {
-//    	try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-//			if(conexion != null) {
-//				st = conexion.createStatement();
-//				System.out.println("Conexión a la base de datos correcta");
-//			}else System.out.println("Conexión a la base de datos fallida");
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    }
+    /**
+     * Conecta la base de datos y los drivers JDBC de SQL al programa 
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws Exception
+     */
+    public BaseDatos() {
+    	try {
+			Class.forName("com.mysql.jdbc.Driver");
+			if(obtenerConnection() != null) {
+				st = conexion.createStatement();
+				System.out.println("Conexión a la base de datos correcta");
+			}else System.out.println("Conexión a la base de datos fallida");
+		}
+    	catch (ClassNotFoundException e) {
+			System.err.println("Clase no encontrada");
+    		e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Error de SQL");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Error genérico");
+			e.printStackTrace();
+		}
+    }
     
     /**
-     * Método para obtener una conexión a la base de datos
+     * Método para comprobar la conexión a la base de datos
      * @return
      * @throws SQLException 
      */
@@ -115,7 +125,6 @@ public class BaseDatos {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return rs;
     }
 
