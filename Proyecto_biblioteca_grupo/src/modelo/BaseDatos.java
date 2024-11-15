@@ -17,11 +17,31 @@ import java.sql.ResultSet;
  */
 public class BaseDatos {
     // Parámetros de conexión
+	private static final String DB = "Gestor de Bibliotecas";
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USUARIO = "root"; // Cambiar
     private static final String CONTRASENA = "root"; // Cambiar
 
+    public static Connection conexion;
+    public static Statement st = null;
+    
     // Métodos
+//    public BaseDatos() {
+//    	try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+//			if(conexion != null) {
+//				st = conexion.createStatement();
+//				System.out.println("Conexión a la base de datos correcta");
+//			}else System.out.println("Conexión a la base de datos fallida");
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    }
     
     /**
      * Método para obtener una conexión a la base de datos
@@ -37,6 +57,7 @@ public class BaseDatos {
             throw new SQLException("Error al conectar con la base de datos", e);
         }
     }
+ 
 
     /**
      * Método para cerrar una conexión y los recursos asociados
