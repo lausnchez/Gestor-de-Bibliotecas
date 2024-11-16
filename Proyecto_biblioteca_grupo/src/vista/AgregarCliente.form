@@ -81,10 +81,7 @@
               <Component id="jSeparator3" min="-2" pref="8" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Component id="lbl_id" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lbl_id" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="txt_id" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>

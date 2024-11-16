@@ -8,6 +8,7 @@ package modelo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.Biblioteca.UbiBiblio;
 
 /**
@@ -214,6 +215,77 @@ public class Libro {
         BaseDatos.ejecutarUpdate(sql);
     }
 
+    
+    public boolean validarDatos(String id, String isbn, String titulo, String autor, String genero, String editorial, String precio, String ubicacion) {
+
+    StringBuilder mensajeError = new StringBuilder();
+    boolean hayError = false;
+
+    // Validar ID
+    if (id.trim().length() == 0) {
+        mensajeError.append("Falta introducir un ID.\n");
+        hayError = true;
+    }
+
+    // Validar ISBN
+    if (isbn.trim().length() == 0) {
+        mensajeError.append("Falta introducir un ISBN válido.\n");
+        hayError = true;
+    }
+
+    // Validar Título
+    if (titulo.trim().length() == 0) {
+        mensajeError.append("Falta introducir un título válido.\n");
+        hayError = true;
+    }
+
+    // Validar Autor
+    if (autor.trim().length() == 0) {
+        mensajeError.append("Falta introducir un autor válido.\n");
+        hayError = true;
+    }
+
+    // Validar Género
+    if (genero.trim().length() == 0) {
+        mensajeError.append("Falta introducir un género válido.\n");
+        hayError = true;
+    }
+
+    // Validar Editorial (puede ser un ComboBox, asegurémonos de que no sea vacío)
+    if (editorial.trim().length() == 0) {
+        mensajeError.append("Falta seleccionar una editorial válida.\n");
+        hayError = true;
+    }
+
+    // Validar Precio (asegurarnos de que es un número válido)
+    if (precio.trim().length() == 0) {
+        mensajeError.append("Falta introducir un precio válido.\n");
+        hayError = true;
+    } else {
+        try {
+            Float.parseFloat(precio);  // Intentamos convertir el precio a un número
+        } catch (NumberFormatException ex) {
+            mensajeError.append("El precio no es un número válido.\n");
+            hayError = true;
+        }
+    }
+
+    // Validar Ubicación (también puede ser un ComboBox, asegurémonos de que no esté vacío)
+    if (ubicacion.trim().length() == 0) {
+        mensajeError.append("Falta seleccionar una ubicación válida.\n");
+        hayError = true;
+    }
+
+    // Si hay errores, mostramos el mensaje en un JOptionPane
+    if (hayError) {
+        System.err.println(mensajeError.toString());
+        JOptionPane.showMessageDialog(null, mensajeError.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        return false;  // Si hay error, no es válido
+    }
+
+    // Si no hay errores, todo está bien
+    return true;
+}
     /**
      * Método para mostrar la información del libro
      * @return 
@@ -223,5 +295,4 @@ public class Libro {
     public String toString() {
         return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", genero=" + genero + ", editorial=" + editorial + ", precio=" + precio + ", biblioteca=" + biblioteca + ", disponible=" + disponible + '}';
     }
-
 }
