@@ -13,6 +13,8 @@ import java.util.ArrayList;
  * @author
  */
 public class Socio {
+    private BaseDatos baseDeDatos;
+    
     public enum UBICACION {
         MADRID,
         BARCELONA,
