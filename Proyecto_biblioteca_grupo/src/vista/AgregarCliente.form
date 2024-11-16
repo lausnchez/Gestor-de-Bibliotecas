@@ -20,59 +20,52 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="42" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="585" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btn_registrar" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="585" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lbl_dni" max="32767" attributes="0"/>
-                                      <Component id="lbl_telefono" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lbl_apellidos" alignment="0" pref="65" max="32767" attributes="0"/>
-                                      <Component id="lbl_nombre" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lbl_id" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lbl_email" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_id" max="32767" attributes="0"/>
-                                      <Component id="txt_dni" max="32767" attributes="0"/>
-                                      <Component id="txt_nombre" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_apellidos" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_telefono" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_email" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="jSeparator1" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lbl_provincia" alignment="0" pref="65" max="32767" attributes="0"/>
-                                      <Component id="lbl_calle" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lbl_ciudad" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cBox_provincia" max="32767" attributes="0"/>
-                                      <Component id="txt_ciudad" max="32767" attributes="0"/>
-                                      <Component id="txt_calle" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="jSeparator2" alignment="0" min="-2" pref="563" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="lbl_biblioteca" min="-2" pref="65" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cBox_biblioteca" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="lbl_dni" max="32767" attributes="0"/>
+                              <Component id="lbl_telefono" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_apellidos" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_nombre" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_id" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_email" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="btn_registrar" min="-2" pref="200" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txt_id" max="32767" attributes="0"/>
+                              <Component id="txt_dni" max="32767" attributes="0"/>
+                              <Component id="txt_nombre" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_apellidos" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_telefono" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_email" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lbl_provincia" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_calle" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbl_ciudad" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="cBox_provincia" max="32767" attributes="0"/>
+                              <Component id="txt_ciudad" max="32767" attributes="0"/>
+                              <Component id="txt_calle" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lbl_biblioteca" min="-2" pref="65" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cBox_biblioteca" min="-2" pref="492" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -83,10 +76,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="39" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator3" min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="lbl_id" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="txt_id" min="-2" max="-2" attributes="0"/>
@@ -142,7 +138,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btn_registrar" min="-2" pref="38" max="-2" attributes="0"/>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -153,7 +149,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="24" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="REGISTRO DE CLIENTES"/>
+        <Property name="text" type="java.lang.String" value="Registro de Clientes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_id">
@@ -260,6 +256,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator3">
     </Component>
   </SubComponents>
 </Form>
