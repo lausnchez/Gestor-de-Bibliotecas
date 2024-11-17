@@ -17,14 +17,13 @@ import java.sql.ResultSet;
  */
 public class BaseDatos {
     // Parámetros de conexión
-	private static final String DB = "Gestor de Bibliotecas";
-    private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
+    private static final String DB = "Gestor de Bibliotecas";
+    private static final String URL = "jdbc:mysql://localhost:3306/bibliotecas";
     private static final String USUARIO = "root"; // Cambiar
-    private static final String CONTRASENA = "root"; // Cambiar
+    private static final String CONTRASENA = "damdaw"; // Cambiar
     
-    // Variables para utilizar
-    public static Connection conexion;
-    public static Statement st = null;
+    public static Connection conexion = null;
+    public static Statement miStatement = null;
     
     // Métodos
     /**
@@ -35,22 +34,22 @@ public class BaseDatos {
      */
     public BaseDatos() {
     	try {
-			Class.forName("com.mysql.jdbc.Driver");
-			if(obtenerConnection() != null) {
-				st = conexion.createStatement();
-				System.out.println("Conexión a la base de datos correcta");
-			}else System.out.println("Conexión a la base de datos fallida");
-		}
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            if(obtenerConnection() != null) {
+                    miStatement = conexion.createStatement();
+                    System.out.println("Conexión a la base de datos correcta");
+            }else System.out.println("Conexión a la base de datos fallida");
+        }
     	catch (ClassNotFoundException e) {
-			System.err.println("Clase no encontrada");
-    		e.printStackTrace();
-		} catch (SQLException e) {
-			System.err.println("Error de SQL");
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.err.println("Error genérico");
-			e.printStackTrace();
-		}
+                System.err.println("Clase no encontrada");
+        e.printStackTrace();
+        } catch (SQLException e) {
+                System.err.println("Error de SQL");
+                e.printStackTrace();
+        } catch (Exception e) {
+                System.err.println("Error genérico");
+                e.printStackTrace();
+        }
     }
     
     /**
@@ -71,18 +70,18 @@ public class BaseDatos {
 
     /**
      * Método para cerrar una conexión y los recursos asociados
-     * @param conn 
+     * @param conexion 
      */
-    public static void cerrarConnection(Connection conn) {
+    public static void cerrarConnection(Connection conexion) {
         try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
+            if (conexion != null && !conexion.isClosed()) {
+                conexion.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
     /**
      * Método para ejecutar una consulta de tipo UPDATE, DELETE, INSERT
      * @param sql 
