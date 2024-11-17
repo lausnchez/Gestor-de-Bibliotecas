@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
+import vista.librosView;
 import vista.usuarioLoginView;
 
 /**
@@ -42,11 +43,13 @@ public class UsuarioController implements ActionListener{
                 JOptionPane.showMessageDialog(usuarioView, "¡Bienvenido, " + nombreUsuario + "!", "Inicio de sesión exitoso", JOptionPane.INFORMATION_MESSAGE);
                 
                 usuarioView.dispose(); // Cerrar la ventana de login
+                 // Ahora se abre la vista de libros
             } else {
                 // Si la autenticación falla
                 JOptionPane.showMessageDialog(usuarioView, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
+
 }
 
