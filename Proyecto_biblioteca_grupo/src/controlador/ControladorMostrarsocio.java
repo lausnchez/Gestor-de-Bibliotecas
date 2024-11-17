@@ -30,6 +30,7 @@ public class ControladorMostrarSocio implements ActionListener{
         this.modeloTabla = null;
         inicializarAL();
         crearTabla();
+        agregarTodos();
         this.vista.setVisible(true);
     }
     
@@ -82,7 +83,7 @@ public class ControladorMostrarSocio implements ActionListener{
      * Crea el modelo para la tabla de la vista MostrarSocio
      */
     public void crearTabla(){
-        DefaultTableModel modelo = new DefaultTableModel();
+        this.modeloTabla = new DefaultTableModel();
         this.modeloTabla.addColumn("ID");
         this.modeloTabla.addColumn("DNI");
         this.modeloTabla.addColumn("Nombre Completo");
@@ -93,14 +94,15 @@ public class ControladorMostrarSocio implements ActionListener{
         this.modeloTabla.addColumn("Sanciones");
         this.modeloTabla.addColumn("Cuenta Bancaria");
         this.modeloTabla.addColumn("Pago Realizado");
-        this.modeloTabla.addColumn("Editar");
-        this.modeloTabla.addColumn("Eliminar");
     }
 
     public void agregarTodos(){
         modeloTabla.setRowCount(0);  // Vaciar tabla
         List<Socio> listadoSocios = modelo.obtenerSocios();
-        for(Socio nuevoSocio: listadoSocios){
+        for(int i=0; i<listadoSocios.size(); i++){
+            Socio nuevoSocio = listadoSocios.get(i);
+            String pago;
+            if(nuevoSocio.isPago()) pago = "PAGADO"; else pago = "NO PAGADO";
             this.modeloTabla.addRow(new Object[]{
                 nuevoSocio.getId(),
                 nuevoSocio.getDni(),
@@ -111,11 +113,10 @@ public class ControladorMostrarSocio implements ActionListener{
                 nuevoSocio.getProvincia(),
                 nuevoSocio.getSanciones(),
                 nuevoSocio.getCuentaBancaria(),
-                nuevoSocio.isPago(),
-                new Button("Editar"),
-                new Button("Eliminar")
+                pago       
             });
         }
+        this.vista.getTbl_clientes().setModel(modeloTabla);
     }
     
 }

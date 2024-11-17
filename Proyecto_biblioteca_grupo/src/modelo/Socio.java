@@ -28,7 +28,12 @@ public class Socio {
         LUGO,
         PALENCIA,
         ASTURIAS,
-        MURCIA
+        MURCIA,
+        SEVILLA,
+        ZARAGOZA,
+        MÁLAGA,
+        ALICANTE,
+        GRANADA
     }
     private int id;
     private String bibliotecaAsociada;
@@ -423,20 +428,33 @@ public class Socio {
         List<Socio> listado = new ArrayList<>();
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM socios;";
+            //String sql = "SELECT * FROM socios;";
+            String sql = "select socios.id_soc,\n" +
+                " bibliotecas.nombre_biblio,\n" +
+                " socios.dni_soc,\n" +
+                " socios.nombre_soc,\n" +
+                " socios.apellidos_soc,\n" +
+                " socios.tlf_soc,\n" +
+                " socios.email_soc,\n" +
+                " socios.provincia_soc,\n" +
+                " socios.numSanciones_soc,\n" +
+                " socios.cuentaBancaria_soc,\n" +
+                " socios.pago_soc\n" +
+                " FROM socios, bibliotecas\n" +
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio;";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
-            if (rs.next()) {
+            while(rs.next()) {
                 int id = rs.getInt("id_soc");
-                String biblioteca = rs.getString("biblioteca_soc");
+                String biblioteca = rs.getString("nombre_biblio");
                 String dni = rs.getString("dni_soc");
                 String nombre = rs.getString("nombre_soc");
                 String apellidos = rs.getString("apellidos_soc");
                 String tlf = rs.getString("tlf_soc");
                 String email = rs.getString("email_soc");
                 String provincia = rs.getString("provincia_soc");
-                int numSanciones = rs.getInt("numSanciones_soc");
+                int numSanciones = Integer.parseInt(rs.getString("numSanciones_soc"));
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
