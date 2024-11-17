@@ -222,7 +222,7 @@ public class Socio {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "UPDATE clientes SET pago = ? WHERE idCliente = ?";
+            String sql = "UPDATE socios SET pago = ? WHERE id_prest = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setBoolean(1, pago);
             stmt.setInt(2, idSocio);
@@ -253,7 +253,7 @@ public class Socio {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "INSERT INTO clientes(dni, nombre, apellidos, telefono, email, provincia, pago, bibliotecaAsociada, cuentaBancaria) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO socios(dni_soc, nombre_soc, apellidos_soc, tlf_soc, email_soc, provincia_soc, pago_soc, biblioteca_soc, cuentaBancaria_soc) VALUES (?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, socio.getDni());
             stmt.setString(2, socio.getNombre());
@@ -287,22 +287,29 @@ public class Socio {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Socio socio = null;
+        Socio socioNuevo = null;
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM clientes WHERE idCliente = ?";
+            String sql = "SELECT * FROM socios WHERE id_soc = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idSocio);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String dni = rs.getString("dni");
-                boolean pago = rs.getBoolean("pago");
-                //socio = new Socio(idSocio, nombre, dni, pago);
-                
-                socio = new Socio(idSocio, dni, dni, nombre, dni, dni, dni, pago, UBICACION.PALENCIA, idSocio, nombre);
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -315,8 +322,7 @@ public class Socio {
                 e.printStackTrace();
             }
         }
-
-        return socio;
+        return socioNuevo;
     }
 
     /**
@@ -331,17 +337,24 @@ public class Socio {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM socios WHERE cuota_pagada_soc = false";
+            String sql = "SELECT * FROM socios WHERE pago_soc = 0";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id_soc");
-                String nombre = rs.getString("nombre_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
                 String dni = rs.getString("dni_soc");
-                boolean cuotaPagada = rs.getBoolean("cuota_pagada_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
 
-                Socio socio = new Socio(id, nombre, dni, cuotaPagada);
+                Socio socio = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
                 socios.add(socio);
             }
         } catch (SQLException e) {
@@ -402,17 +415,45 @@ public class Socio {
     
     
     
-    public static HashMap obtenerTodosLosSocios(){
-        HashMap<Integer, Socio> listado = new HashMap<>();
-        ResultSet resultado;
+    public static List<Socio> obtenerSocios() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Socio socioNuevo = null;
+        List<Socio> listado = new ArrayList<>();
         try {
-            resultado= BaseDatos.miStatement.executeQuery("SELECT * FROM clientes");
-            while(resultado.next()){
-               Socio nuevoSocio = new Socio();
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM socios;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
+                listado.add(socioNuevo);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Socio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return new HashMap();
+        return listado;
     }
 }

@@ -5,17 +5,27 @@
  */
 package vista;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Laura Sánchez
  */
-public class MostrarClientes extends javax.swing.JFrame {
+public class MostrarSocio extends javax.swing.JFrame {
 
     /**
      * Creates new form MostrarClientes
      */
-    public MostrarClientes() {
+    public MostrarSocio() {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -121,6 +131,65 @@ public class MostrarClientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Getters & Setters
+    //--------------------------------------------------------------------------
+    public JButton getBtn_buscar() {
+        return btn_buscar;
+    }
+
+    public void setBtn_buscar(JButton btn_buscar) {
+        this.btn_buscar = btn_buscar;
+    }
+
+    public JComboBox<String> getcBox_filtro() {
+        return cBox_filtro;
+    }
+
+    public void setcBox_filtro(JComboBox<String> cBox_filtro) {
+        this.cBox_filtro = cBox_filtro;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JSeparator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(JSeparator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JLabel getLbl_clientes() {
+        return lbl_clientes;
+    }
+
+    public void setLbl_clientes(JLabel lbl_clientes) {
+        this.lbl_clientes = lbl_clientes;
+    }
+
+    public JTable getTbl_clientes() {
+        return tbl_clientes;
+    }
+
+    public void setTbl_clientes(JTable tbl_clientes) {
+        this.tbl_clientes = tbl_clientes;
+    }
+
+    public JTextField getTxt_buscador() {
+        return txt_buscador;
+    }
+
+    public void setTxt_buscador(JTextField txt_buscador) {
+        this.txt_buscador = txt_buscador;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -138,20 +207,21 @@ public class MostrarClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MostrarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MostrarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MostrarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MostrarClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MostrarClientes().setVisible(true);
+                new MostrarSocio().setVisible(true);
             }
         });
     }
