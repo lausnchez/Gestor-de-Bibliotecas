@@ -8,6 +8,9 @@ package modelo;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author
@@ -28,35 +31,62 @@ public class Socio {
         MURCIA
     }
     private int id;
+    private String bibliotecaAsociada;
     private String dni;
     private String nombre;
     private String apellidos;
     private String telefono;
     private String email;
-    private boolean cuotaPagada; 
+    private boolean pago; 
     private List<Sancion> sanciones;
     private List<Prestamo> prestamos;
-    private Date fechaAlta;
-    private UBICACION ubicacion;
+    private UBICACION provincia;
+    private int numSanciones;
+    private String cuentaBancaria;
     
-    // Constructor
-    public Socio(int id, String dni, String nombre, String apellidos, String telefono, String email, boolean cuotaPagada, List<Sancion> sanciones, List<Prestamo> prestamos, Date fecha_alta, UBICACION ubicacion) {
+    // Constructores
+    //--------------------------------------------------------------------------
+    public Socio
+        (int id, String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,UBICACION provincia, int numSanciones, String cuentaBancaria) {
         this.id = id;
+        this.bibliotecaAsociada = bibliotecaAsociada;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.email = email;
-        this.cuotaPagada = cuotaPagada;
+        this.pago = pago;
         this.sanciones = sanciones;
         this.prestamos = prestamos;
-        this.fechaAlta = fecha_alta;
-        this.ubicacion = ubicacion;
+        this.provincia = provincia;
+        this.numSanciones = numSanciones;
+        this.cuentaBancaria = cuentaBancaria;
     }
-    
-     // Getters y setters
-    private Socio(int idSocio, String nombre, String dni, boolean cuotaPagada) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public Socio(){
+        this.id = -1;
+        this.bibliotecaAsociada = "";
+        this.dni = "";
+        this.nombre = "";
+        this.apellidos = "";
+        this.telefono = "";
+        this.email = "";
+        this.pago = false;
+        this.sanciones = null;
+        this.prestamos = null;
+        this.provincia = null;
+        this.numSanciones = 0;
+        this.cuentaBancaria = "";
+    }
+
+    // Getters & Setters
+    //--------------------------------------------------------------------------
+    public BaseDatos getBaseDeDatos() {
+        return baseDeDatos;
+    }
+
+    public void setBaseDeDatos(BaseDatos baseDeDatos) {
+        this.baseDeDatos = baseDeDatos;
     }
 
     public int getId() {
@@ -65,6 +95,14 @@ public class Socio {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getBibliotecaAsociada() {
+        return bibliotecaAsociada;
+    }
+
+    public void setBibliotecaAsociada(String bibliotecaAsociada) {
+        this.bibliotecaAsociada = bibliotecaAsociada;
     }
 
     public String getDni() {
@@ -107,12 +145,12 @@ public class Socio {
         this.email = email;
     }
 
-    public boolean isCuotaPagada() {
-        return cuotaPagada;
+    public boolean isPago() {
+        return pago;
     }
 
-    public void setCuotaPagada(boolean cuotaPagada) {
-        this.cuotaPagada = cuotaPagada;
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 
     public List<Sancion> getSanciones() {
@@ -131,28 +169,37 @@ public class Socio {
         this.prestamos = prestamos;
     }
 
-    public Date getFecha_alta() {
-        return fechaAlta;
+    public UBICACION getProvincia() {
+        return provincia;
     }
 
-    public void setFecha_alta(Date fecha_alta) {
-        this.fechaAlta = fecha_alta;
+    public void setProvincia(UBICACION provincia) {
+        this.provincia = provincia;
     }
 
-    public UBICACION getUbicacion() {
-        return ubicacion;
+    public int getNumSanciones() {
+        return numSanciones;
     }
 
-    public void setUbicacion(UBICACION ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setNumSanciones(int numSanciones) {
+        this.numSanciones = numSanciones;
+    }
+
+    public String getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    public void setCuentaBancaria(String cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
     }
 
     // Métodos
+    //--------------------------------------------------------------------------
     /**
      * Método para añadir un préstamo a la lista de libros prestados
      * @param prestamo 
      */
-    public void añadirPrestamo(Prestamo prestamo) {
+    public void agregarPrestamo(Prestamo prestamo) {
         this.prestamos.add(prestamo);
     }
 
@@ -160,30 +207,30 @@ public class Socio {
      * Método para añadir una sanción
      * @param sancion 
      */
-    public void añadirSancion(Sancion sancion) {
+    public void agregarSancion(Sancion sancion) {
         this.sanciones.add(sancion);
     }
 
     /**
      * Método para actualizar el estado de la cuota
-     * @param idSocio
-     * @param cuotaPagada 
+     * @param idSocio -> id del socio que queremos actualizar
+     * @param pago -> estado al que queremos actualizar el pago
      */
-    public static void actualizarCuota(int idSocio, boolean cuotaPagada) {
+    public static void actualizarCuota(int idSocio, boolean pago) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "UPDATE socios SET cuota_pagada_soc = ? WHERE id_soc = ?";
+            String sql = "UPDATE clientes SET pago = ? WHERE idCliente = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setBoolean(1, cuotaPagada);
+            stmt.setBoolean(1, pago);
             stmt.setInt(2, idSocio);
 
             int filasActualizadas = stmt.executeUpdate();
             if (filasActualizadas > 0) {
                 System.out.println("Estado de la cuota actualizado correctamente.");
-            }
+            }else System.out.println("No se actualizaron datos");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -206,16 +253,17 @@ public class Socio {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "INSERT INTO socios (dni_soc, nombre_soc, apellidos_soc, tel_soc, email_soc, f_alta_soc, ubi_soc, cuota_pagada_soc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO clientes(dni, nombre, apellidos, telefono, email, provincia, pago, bibliotecaAsociada, cuentaBancaria) VALUES (?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, socio.getDni());
             stmt.setString(2, socio.getNombre());
             stmt.setString(3, socio.getApellidos());
             stmt.setString(4, socio.getTelefono());
             stmt.setString(5, socio.getEmail());
-            stmt.setDate(6, socio.getFecha_alta());
-            stmt.setString(7, socio.getUbicacion().toString());
-            stmt.setBoolean(8, socio.isCuotaPagada());
+            stmt.setString(6, socio.getProvincia().toString());
+            stmt.setBoolean(7, socio.isPago());
+            stmt.setString(8, socio.getBibliotecaAsociada());
+            stmt.setString(9, socio.getCuentaBancaria());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -243,16 +291,18 @@ public class Socio {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM socios WHERE id_soc = ?";
+            String sql = "SELECT * FROM clientes WHERE idCliente = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idSocio);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String nombre = rs.getString("nombre_soc");
-                String dni = rs.getString("dni_soc");
-                boolean cuotaPagada = rs.getBoolean("cuota_pagada_soc");
-                socio = new Socio(idSocio, nombre, dni, cuotaPagada);
+                String nombre = rs.getString("nombre");
+                String dni = rs.getString("dni");
+                boolean pago = rs.getBoolean("pago");
+                //socio = new Socio(idSocio, nombre, dni, pago);
+                
+                socio = new Socio(idSocio, dni, dni, nombre, dni, dni, dni, pago, UBICACION.PALENCIA, idSocio, nombre);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -348,5 +398,21 @@ public class Socio {
                 e.printStackTrace();
             }
         }
+    }
+    
+    
+    
+    public static HashMap obtenerTodosLosSocios(){
+        HashMap<Integer, Socio> listado = new HashMap<>();
+        ResultSet resultado;
+        try {
+            resultado= BaseDatos.miStatement.executeQuery("SELECT * FROM clientes");
+            while(resultado.next()){
+               Socio nuevoSocio = new Socio();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Socio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new HashMap();
     }
 }
