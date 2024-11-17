@@ -20,19 +20,17 @@ public class Libro {
     private String isbn;
     private String titulo;
     private String autor;
-    private String genero;
     private String editorial;
     private float precio;
     private UbiBiblio biblioteca;
     private boolean disponible;
     
     // Constructor
-    public Libro(int id, String isbn, String titulo, String autor,String genero, String editorial,float precio, UbiBiblio biblioteca, boolean disponible) {
+    public Libro(int id, String isbn, String titulo, String autor, String editorial,float precio, UbiBiblio biblioteca, boolean disponible) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
-        this.genero = genero;
         this.editorial = editorial;
         this.precio = precio;
         this.biblioteca = biblioteca;
@@ -71,14 +69,7 @@ public class Libro {
         this.autor = autor;
     }
 
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
+  
     public String getEditorial() {
         return editorial;
     }
@@ -118,8 +109,8 @@ public class Libro {
      * Método para agregar un libro a la base de datos
      */
     public void agregarLibro() {
-        String sql = "INSERT INTO libros (id_lib, isbn_lib, titulo_lib, autor_lib, genero_lib, editorial_lib, precio_lib, estado_lib) " +
-                 "VALUES (" + this.id + ", '" + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.genero + "', '" + this.editorial + "', " + this.precio + ",'" + this.biblioteca.toString() + "' " + (this.disponible ? 1 : 0) + ")";
+        String sql = "INSERT INTO libros (id_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
+                 "VALUES (" + this.id + ", '" + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.editorial + "', " + this.precio + ",'" + this.biblioteca.toString() + "' " + (this.disponible ? 1 : 0) + ")";
         BaseDatos.ejecutarUpdate(sql);
     }
 
@@ -133,19 +124,28 @@ public class Libro {
 
     // Método para obtener un libro de la base de datos por su ID
     public static Libro obtenerLibroPorId(int id) {
-        String sql = "SELECT * FROM libros WHERE id_lib = " + id;
+        String sql = "SELECT * FROM libros WHERE idLibros = " + id;
+        
+        System.out.println("Libro seleccionado con ID: "+id);
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
-            if (rs != null && rs.next()) {
-                String isbn = rs.getString("isbn_lib");
-                String titulo = rs.getString("titulo_lib");
-                String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
-                String editorial=rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                return new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
+            if (rs != null && rs.next()) {   
+                System.out.println("Libro encontrado: " + rs.getString("nombre"));
+                String isbn = rs.getString("isbn");
+                String titulo = rs.getString("nombre");
+                String autor = rs.getString("autor");
+                String editorial=rs.getString("editorial");
+                float precio=rs.getFloat("precio");
+                String dbValue = rs.getString("bibliotecaAsociada");
+                UbiBiblio biblioteca = UbiBiblio.ALMERIA;
+                boolean disponible = rs.getBoolean("estado");
+                System.out.println("ISBN: " + isbn + ", Titulo: " + titulo + ", Autor: " + autor);
+                
+                
+                Libro libro=new Libro(id,isbn, titulo, autor, editorial, precio, biblioteca, disponible);
+                System.out.println("Libro encontrado con ID " + id + ": " + libro); // Verifica si el libro está siendo creado
+                return libro;
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,20 +159,31 @@ public class Libro {
      */
     public static List<Libro> obtenerTodosLosLibros() {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT * FROM libros";
+        String sql = "SELECT l.idLibros, l.isbn, l.nombre, l.autor, l.editorial, l.precio, l.estado, b.provincia " +
+             "FROM libros l " +
+             "JOIN bibliotecas b ON l.bibliotecaAsociada = b.idBibliotecas";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                int id = rs.getInt("id_lib");
-                String isbn = rs.getString("isbn_lib");
-                String titulo = rs.getString("titulo_lib");
-                String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
-                String editorial = rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                libros.add(new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible));
+                System.out.println("Procesando libro...");
+                int id = rs.getInt("idLibros");
+                String isbn = rs.getString("isbn");
+                String titulo = rs.getString("nombre");
+                String autor = rs.getString("autor");
+                String editorial = rs.getString("editorial");
+                float precio=rs.getFloat("precio");
+                String estadoStr = rs.getString("estado");
+
+            // Convertir el estado de String a booleano (Puedes ajustarlo si es necesario)
+            boolean disponible = false;
+            if ("Disponible".equalsIgnoreCase(estadoStr)) {
+                disponible = true;
+            } else if ("Prestado".equalsIgnoreCase(estadoStr)) {
+                disponible = false;
+            }
+                
+                System.out.println("ID: " + id + ", Titulo: " + titulo + ", Autor: " + autor);
+                libros.add(new Libro(id,isbn, titulo, autor, editorial, precio, null, disponible));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -193,12 +204,11 @@ public class Libro {
                 int id = rs.getInt("id_lib");
                 String titulo = rs.getString("titulo_lib");
                 String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
                 String editorial = rs.getString("editorial_lib");
                 float precio=rs.getFloat("precio_lib");
                 UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
                 boolean disponible = rs.getBoolean("estado_lib");
-                return new Libro(id, isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
+                return new Libro(id, isbn, titulo, autor, editorial, precio, biblioteca, disponible);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,7 +221,9 @@ public class Libro {
      * @param id 
      */
     public static void eliminarLibro(int id) {
-        String sql = "DELETE FROM libros WHERE id_lib = " + id;
+        String sql = "DELETE FROM libros WHERE idLibros = " + id;
+        
+        System.out.println("Ejecutando SQL: " + sql); 
         BaseDatos.ejecutarUpdate(sql);
     }
 
@@ -293,6 +305,6 @@ public class Libro {
    
     @Override
     public String toString() {
-        return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", genero=" + genero + ", editorial=" + editorial + ", precio=" + precio + ", biblioteca=" + biblioteca + ", disponible=" + disponible + '}';
+        return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", precio=" + precio + ", biblioteca=" + biblioteca + ", disponible=" + disponible + '}';
     }
 }

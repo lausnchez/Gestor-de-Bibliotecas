@@ -95,7 +95,10 @@ public class Usuario {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM usuarios WHERE id_us = ? AND password = ?";
+           String sql = "SELECT idUsuarios, nombreUsuario, password " +
+                     "FROM usuarios " +
+                     "JOIN almacen ON usuarios.almacen = almacen.idAlmacen " +
+                     "WHERE nombreUsuario = ? AND almacen.password = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usuario);
             stmt.setString(2, password);

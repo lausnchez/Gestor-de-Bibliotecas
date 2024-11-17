@@ -14,11 +14,9 @@ import java.util.List;
  *
  * @author Paula
  */
-class Biblioteca {
+public class Biblioteca {
 
-    Biblioteca(int id, UbiBiblio provincia1, String telefono1) {
-    }
-      public enum UbiBiblio {
+    public enum UbiBiblio {
         MADRID("Madrid"),
         BARCELONA("Barcelona"),
         VALENCIA("Valencia"),
@@ -43,10 +41,15 @@ class Biblioteca {
         }
     }
 
-    // Atributos de la clase Biblioteca
     private int idBiblioteca;
     private UbiBiblio provincia;
     private String telefono;
+
+    public Biblioteca(int id, UbiBiblio provincia, String telefono) {
+        this.idBiblioteca = id;
+        this.provincia = provincia;
+        this.telefono = telefono;
+    }
 
     public int getIdBiblioteca() {
         return idBiblioteca;
