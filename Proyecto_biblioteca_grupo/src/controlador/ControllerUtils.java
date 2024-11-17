@@ -8,6 +8,7 @@ package controlador;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.BaseDatos;
 
 /**
@@ -19,8 +20,7 @@ public class ControllerUtils {
 
     // Constructores
     //--------------------------------------------------------------------------
-    public ControllerUtils() {
-        
+    public ControllerUtils() {   
     }
 
     
@@ -36,8 +36,8 @@ public class ControllerUtils {
     
     // Métodos
     //--------------------------------------------------------------------------
-    public ArrayList<String> obtenerProvincias(){
-        ArrayList<String> provincias = new ArrayList<>();
+    public static List<String> obtenerProvinciasArrayList(){
+        List<String> provincias = new ArrayList<>();
         ResultSet resultado;
         try {
             resultado = BaseDatos.miStatement.executeQuery
@@ -52,5 +52,12 @@ public class ControllerUtils {
         return provincias;
     }
     
-    
+    public static String crearEnumProvincia(){
+        String valoresEnum = "";
+        List<String> provincias = obtenerProvinciasArrayList();
+        for(String valor: provincias){
+            valoresEnum.concat(valor + ", ");
+        }
+        return valoresEnum;
+    }
 }

@@ -8,6 +8,7 @@ package controlador;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import modelo.Socio;
@@ -99,6 +100,7 @@ public class ControladorMostrarSocio implements ActionListener{
     public void agregarTodos(){
         modeloTabla.setRowCount(0);  // Vaciar tabla
         List<Socio> listadoSocios = modelo.obtenerSocios();
+        Collections.sort(listadoSocios);
         for(int i=0; i<listadoSocios.size(); i++){
             Socio nuevoSocio = listadoSocios.get(i);
             String pago;
@@ -111,7 +113,7 @@ public class ControladorMostrarSocio implements ActionListener{
                 nuevoSocio.getEmail(),
                 nuevoSocio.getBibliotecaAsociada(),
                 nuevoSocio.getProvincia(),
-                nuevoSocio.getSanciones(),
+                nuevoSocio.getNumSanciones(),
                 nuevoSocio.getCuentaBancaria(),
                 pago       
             });

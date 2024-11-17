@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import controlador.ControllerUtils;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,26 +16,63 @@ import java.util.logging.Logger;
  *
  * @author
  */
-public class Socio {
+public class Socio implements Comparable<Socio>{
     private BaseDatos baseDeDatos;
     
     public enum UBICACION {
-        MADRID,
-        BARCELONA,
-        VALENCIA,
-        TOLEDO,
-        BILBAO,
-        CANTABRIA,
-        LUGO,
-        PALENCIA,
-        ASTURIAS,
-        MURCIA,
-        SEVILLA,
-        ZARAGOZA,
-        MÁLAGA,
-        ALICANTE,
-        GRANADA
-    }
+    A_CORUÑA,
+    ÁLAVA,
+    ALBACETE,
+    ALICANTE,
+    ALMERÍA,
+    ASTURIAS,
+    ÁVILA,
+    BADAJOZ,
+    BARCELONA,
+    BURGOS,
+    CÁDIZ,
+    CANTABRIA,
+    CASTELLÓN,
+    CEUTA,
+    CÓRDOBA,
+    LA_CORUÑA,
+    CUENCA,
+    GERONA,
+    GRANADA,
+    GUADALAJARA,
+    GIPUZKOA,
+    HUELVA,
+    HUESCA,
+    ISLAS_BALEARES,
+    JAÉN,
+    LA_RIOJA,
+    LAS_PALMAS,
+    LEÓN,
+    LLEIDA,
+    LUGO,
+    MADRID,
+    MÁLAGA,
+    MURCIA,
+    NAVARRA,
+    OURENSE,
+    PALENCIA,
+    PONTEVEDRA,
+    SALAMANCA,
+    SANTA_CRUZ_DE_TENERIFE,
+    SEGOVIA,
+    SEVILLA,
+    SORIA,
+    TARRAGONA,
+    TERUEL,
+    TOLEDO,
+    VALENCIA,
+    VALLADOLID,
+    VIZCAYA,
+    ZAMORA,
+    ZARAGOZA
+}
+
+ 
     private int id;
     private String bibliotecaAsociada;
     private String dni;
@@ -200,6 +238,12 @@ public class Socio {
 
     // Métodos
     //--------------------------------------------------------------------------
+    @Override
+    public int compareTo(Socio o) {
+        if(this.getId() > o.getId()) return 1;
+        else return -1;
+    }
+    
     /**
      * Método para añadir un préstamo a la lista de libros prestados
      * @param prestamo 
@@ -454,7 +498,7 @@ public class Socio {
                 String tlf = rs.getString("tlf_soc");
                 String email = rs.getString("email_soc");
                 String provincia = rs.getString("provincia_soc");
-                int numSanciones = Integer.parseInt(rs.getString("numSanciones_soc"));
+                int numSanciones = rs.getInt("numSanciones_soc");
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
