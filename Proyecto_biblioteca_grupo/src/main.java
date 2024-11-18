@@ -1,4 +1,5 @@
 
+import controlador.ControladorAgregarUsuario;
 import controlador.ControladorMostrarSocio;
 
 /*
@@ -13,6 +14,7 @@ import controlador.ControladorMostrarSocio;
  */
 public class main {
     public static void main(String[] args) {
+        //new ControladorAgregarUsuario();
         new ControladorMostrarSocio();
     }
 }

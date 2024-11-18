@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class Socio implements Comparable<Socio>{
     private BaseDatos baseDeDatos;
     
+   /* 
     public enum UBICACION {
     A_CORUÑA,
     ÁLAVA,
@@ -70,8 +71,8 @@ public class Socio implements Comparable<Socio>{
     VIZCAYA,
     ZAMORA,
     ZARAGOZA
-}
-
+    }   
+*/
  
     private int id;
     private String bibliotecaAsociada;
@@ -83,14 +84,14 @@ public class Socio implements Comparable<Socio>{
     private boolean pago; 
     private List<Sancion> sanciones;
     private List<Prestamo> prestamos;
-    private UBICACION provincia;
+    private String provincia;
     private int numSanciones;
     private String cuentaBancaria;
     
     // Constructores
     //--------------------------------------------------------------------------
     public Socio
-        (int id, String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,UBICACION provincia, int numSanciones, String cuentaBancaria) {
+        (int id, String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,String provincia, int numSanciones, String cuentaBancaria) {
         this.id = id;
         this.bibliotecaAsociada = bibliotecaAsociada;
         this.dni = dni;
@@ -106,6 +107,22 @@ public class Socio implements Comparable<Socio>{
         this.cuentaBancaria = cuentaBancaria;
     }
 
+    public Socio
+        (String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,String provincia, int numSanciones, String cuentaBancaria) {
+        this.bibliotecaAsociada = bibliotecaAsociada;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.email = email;
+        this.pago = pago;
+        this.sanciones = sanciones;
+        this.prestamos = prestamos;
+        this.provincia = provincia;
+        this.numSanciones = numSanciones;
+        this.cuentaBancaria = cuentaBancaria;
+    }    
+        
     public Socio(){
         this.id = -1;
         this.bibliotecaAsociada = "";
@@ -212,11 +229,11 @@ public class Socio implements Comparable<Socio>{
         this.prestamos = prestamos;
     }
 
-    public UBICACION getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(UBICACION provincia) {
+    public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
@@ -238,6 +255,11 @@ public class Socio implements Comparable<Socio>{
 
     // Métodos
     //--------------------------------------------------------------------------
+    /**
+     * Ordenar la lista de Socios por ID
+     * @param o
+     * @return 
+     */
     @Override
     public int compareTo(Socio o) {
         if(this.getId() > o.getId()) return 1;
@@ -316,12 +338,14 @@ public class Socio implements Comparable<Socio>{
 
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.err.println("Error al insertar cliente");
             e.printStackTrace();
         } finally {
             try {
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
             } catch (SQLException e) {
+                System.err.println("Error al cerrar conexión");
                 e.printStackTrace();
             }
         }
@@ -358,7 +382,7 @@ public class Socio implements Comparable<Socio>{
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
-                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -403,7 +427,7 @@ public class Socio implements Comparable<Socio>{
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
-                Socio socio = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
+                Socio socio = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
                 socios.add(socio);
             }
         } catch (SQLException e) {
@@ -502,7 +526,7 @@ public class Socio implements Comparable<Socio>{
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
-                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, UBICACION.valueOf(provincia.toUpperCase()), numSanciones, cuentaBancaria);
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
                 listado.add(socioNuevo);
             }
         } catch (SQLException e) {

@@ -37,6 +37,7 @@ public class ControladorMostrarSocio implements ActionListener{
     
     // Getters & Setters
     //--------------------------------------------------------------------------
+    
     public MostrarSocio getVista() {
         return vista;
     }
@@ -61,7 +62,6 @@ public class ControladorMostrarSocio implements ActionListener{
         this.modeloTabla = modeloTabla;
     }
     
-    
     // Métodos
     //--------------------------------------------------------------------------
     /**
@@ -70,7 +70,18 @@ public class ControladorMostrarSocio implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getSource() == this.vista.getBtn_buscar()){
+            
+        }
+        if(e.getSource() == this.vista.getBtn_editar()){
+            
+        }
+        if(e.getSource() == this.vista.getBtn_eliminar()){
+            
+        }
+        if(e.getSource() == this.vista.getBtn_agregarUsuario()){
+            
+        }
     }
     
     /**
@@ -78,6 +89,7 @@ public class ControladorMostrarSocio implements ActionListener{
      */
     public void inicializarAL(){
         this.vista.getBtn_buscar().addActionListener(this);
+        
     }
     
     /**
@@ -120,5 +132,6 @@ public class ControladorMostrarSocio implements ActionListener{
         }
         this.vista.getTbl_clientes().setModel(modeloTabla);
     }
+    
     
 }
