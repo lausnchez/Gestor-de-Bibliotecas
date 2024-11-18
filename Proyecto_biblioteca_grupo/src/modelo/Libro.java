@@ -122,37 +122,51 @@ public class Libro {
         BaseDatos.ejecutarUpdate(sql);
     }
 
-    // Método para obtener un libro de la base de datos por su ID
-    public static Libro obtenerLibroPorId(int id) {
-        String sql = "SELECT * FROM libros WHERE idLibros = " + id;
-        
-        System.out.println("Libro seleccionado con ID: "+id);
-        ResultSet rs = BaseDatos.ejecutarSelect(sql);
-        try {
-            if (rs != null && rs.next()) {   
-                System.out.println("Libro encontrado: " + rs.getString("nombre"));
-                String isbn = rs.getString("isbn");
-                String titulo = rs.getString("nombre");
-                String autor = rs.getString("autor");
-                String editorial=rs.getString("editorial");
-                float precio=rs.getFloat("precio");
-                String dbValue = rs.getString("bibliotecaAsociada");
-                UbiBiblio biblioteca = UbiBiblio.ALMERIA;
-                boolean disponible = rs.getBoolean("estado");
-                System.out.println("ISBN: " + isbn + ", Titulo: " + titulo + ", Autor: " + autor);
-                
-                
-                Libro libro=new Libro(id,isbn, titulo, autor, editorial, precio, biblioteca, disponible);
-                System.out.println("Libro encontrado con ID " + id + ": " + libro); // Verifica si el libro está siendo creado
-                return libro;
-                
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null; // Si no se encuentra el libro
-    }
+    /**
+     * 
+     * @param Método para obtener un libro pasandole el id
+     * @return devuelve un libro
+     */
+   public static Libro obtenerLibroPorId(int id) {
+    String sql = "SELECT * FROM libros WHERE idLibros = ?";
 
+    System.out.println("Libro seleccionado con ID: "+id);
+    try (Connection conn = BaseDatos.obtenerConnection(); 
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, id); // como el binparam
+        ResultSet rs = stmt.executeQuery();
+        if (rs != null && rs.next()) {   
+            System.out.println("Libro encontrado: " + rs.getString("nombre"));
+            String isbn = rs.getString("isbn");
+            String titulo = rs.getString("nombre");
+            String autor = rs.getString("autor");
+            String editorial = rs.getString("editorial");
+            float precio = rs.getFloat("precio");
+            String dbValue = rs.getString("bibliotecaAsociada");
+
+            // Necesito obtener el valor de "estado" como String
+            String estadoStr = rs.getString("estado");
+            boolean disponible = false;
+            if ("Disponible".equalsIgnoreCase(estadoStr)) {
+                disponible = true;
+            } else if ("Prestado".equalsIgnoreCase(estadoStr)) {
+                disponible = false;
+            } else if ("Extraviado".equalsIgnoreCase(estadoStr)) {
+                disponible = false; // El libro está extraviado (no disponible)
+            }
+
+            System.out.println("ISBN: " + isbn + ", Titulo: " + titulo + ", Autor: " + autor);
+
+            Libro libro = new Libro(id, isbn, titulo, autor, editorial, precio, UbiBiblio.ALMERIA, disponible);
+            System.out.println("Libro encontrado con ID " + id + ": " + libro);
+            return libro;
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null; 
+}
     /**
      * Método para obtener todos los libros de la base de datos
      * @return 
@@ -220,12 +234,25 @@ public class Libro {
      * Método para eliminar un libro de la base de datos
      * @param id 
      */
-    public static void eliminarLibro(int id) {
-        String sql = "DELETE FROM libros WHERE idLibros = " + id;
+public static void eliminarLibro(int id) {
+    String sql = "DELETE FROM libros WHERE idLibros = ?";
+    System.out.println("Ejecutando SQL: " + sql);
+
+    try (Connection conn = BaseDatos.obtenerConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
         
-        System.out.println("Ejecutando SQL: " + sql); 
-        BaseDatos.ejecutarUpdate(sql);
+        stmt.setInt(1, id); // Establecer el valor del parámetro en la consulta
+        int rowsAffected = stmt.executeUpdate();  // Obtener el número de filas afectadas
+
+        if (rowsAffected > 0) {
+            System.out.println("El libro con ID " + id + " ha sido eliminado.");
+        } else {
+            System.out.println("No se encontró un libro con ID " + id + " para eliminar.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     
     public boolean validarDatos(String id, String isbn, String titulo, String autor, String genero, String editorial, String precio, String ubicacion) {
