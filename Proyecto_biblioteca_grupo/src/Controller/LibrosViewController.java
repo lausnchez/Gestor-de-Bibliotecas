@@ -106,13 +106,10 @@ public class LibrosViewController implements ActionListener {
         String idStr = JOptionPane.showInputDialog("Introduzca el ID del libro que desea eliminar:");
         System.out.println("ID ingresado: '" + idStr + "'"); 
 
-        // Verifica que el ID no sea nulo y no esté vacío
         if (idStr != null && !idStr.trim().isEmpty()) {
-            // Verificar si la entrada es un número válido antes de intentar convertirlo
             if (esNumero(idStr.trim())) {
                 int id = Integer.parseInt(idStr.trim());  // Convertimos la cadena del ID a un número entero
 
-                // Verificar si el libro existe antes de eliminarlo
                 Libro libro = this.libroModelo.obtenerLibroPorId(id);
 
                 if (libro != null) { 
@@ -129,18 +126,22 @@ public class LibrosViewController implements ActionListener {
                 JOptionPane.showMessageDialog(librosView, "El ID introducido no es un número válido. Por favor ingrese un número entero.",
                         "Error en ID", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
+         } else {
             JOptionPane.showMessageDialog(librosView, "Debe introducir un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+         }
+        } else if (e.getSource() == this.librosView.getBtn_agregar()) {
+            agregarLibro = new agregarLibro(); 
+            Libro libroModelo = new Libro();
+        // Crear el controlador de agregar libro y asociarlo con la vista
+         agregarLibroController controlador = new agregarLibroController(libroModelo);
+    
+            agregarLibro.setVisible(true); 
+        } else if (e.getSource() == this.librosView.getBtn_editar()) {
+            // Lógica para editar libro
         }
-    } else if (e.getSource() == this.librosView.getBtn_agregar()) {
-        agregarLibro = new agregarLibro(); 
-        agregarLibro.setVisible(true); 
-    } else if (e.getSource() == this.librosView.getBtn_editar()) {
-        // Lógica para editar libro
     }
-}
 
-// Método auxiliar para verificar si una cadena es un número válido
+// Método para verificar si una cadena es un número válido
 private boolean esNumero(String str) {
     try {
         Integer.parseInt(str);

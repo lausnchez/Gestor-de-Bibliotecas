@@ -5,6 +5,7 @@
  */
 package vista;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,6 +20,10 @@ public class agregarLibro extends javax.swing.JFrame {
       public agregarLibro() {
         initComponents();
         setTitle("Agregar Libro");
+        
+    ButtonGroup grupoEstado = new ButtonGroup();
+    grupoEstado.add(rBtn_disponible);
+    grupoEstado.add(rBtn_presado);
     }
 
     public JButton getBtn_agregarLibro() {
@@ -107,24 +112,26 @@ public class agregarLibro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
+        txt_genero = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cBox_editorial = new javax.swing.JComboBox<>();
         txt_id = new javax.swing.JTextField();
         txt_isbn = new javax.swing.JTextField();
         txt_titulo = new javax.swing.JTextField();
         txt_autor = new javax.swing.JTextField();
-        txt_genero = new javax.swing.JTextField();
         cBox_ubicacion = new javax.swing.JComboBox<>();
         rBtn_presado = new javax.swing.JRadioButton();
         rBtn_disponible = new javax.swing.JRadioButton();
         btn_agregarLibro = new javax.swing.JButton();
         txt_precio = new javax.swing.JTextField();
+
+        jLabel6.setText("GENERO");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,11 +146,9 @@ public class agregarLibro extends javax.swing.JFrame {
 
         jLabel5.setText("AUTOR");
 
-        jLabel6.setText("GENERO");
-
         jLabel7.setText("PRECIO");
 
-        cBox_editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EDITORIAL" }));
+        cBox_editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EDITORIAL", "Planeta", "Alfaguara", "Penguin Random House", "RBA", "Anagrama", "Editorial Norma", "Espasa", "Tusquets", "Alianza Editorial", "Ediciones Destino" }));
 
         cBox_ubicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UBICACIÓN", " MADRID", "BARCELONA", "VALENCIA", "SEVILLA", "MÁLAGA", "CÓRDOBA", "ALMERÍA", "TOLEDO", "BILBAO", "CEUTA", "MELILLA" }));
 
@@ -157,17 +162,18 @@ public class agregarLibro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(rBtn_presado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_agregarLibro)
-                        .addGap(65, 65, 65))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
                             .addComponent(cBox_editorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cBox_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rBtn_disponible)
@@ -180,22 +186,22 @@ public class agregarLibro extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txt_precio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                        .addComponent(txt_genero, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_id, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_isbn, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_titulo, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_autor, javax.swing.GroupLayout.Alignment.LEADING)))))
-                        .addGap(0, 33, Short.MAX_VALUE))))
+                                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btn_agregarLibro)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txt_id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                            .addComponent(txt_isbn, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_titulo, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_autor, javax.swing.GroupLayout.Alignment.LEADING))))))
+                        .addGap(0, 114, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel2)
-                .addGap(35, 35, 35)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -211,29 +217,25 @@ public class agregarLibro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(txt_autor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(cBox_editorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(cBox_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(33, 33, 33)
+                        .addComponent(cBox_editorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(cBox_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
                         .addComponent(rBtn_presado)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rBtn_disponible)
+                        .addContainerGap(15, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_agregarLibro)
-                        .addGap(5, 5, 5)))
-                .addComponent(rBtn_disponible)
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(28, 28, 28))))
         );
 
         pack();

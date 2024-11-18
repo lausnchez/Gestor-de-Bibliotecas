@@ -109,8 +109,8 @@ public class Libro {
      * Método para agregar un libro a la base de datos
      */
     public void agregarLibro() {
-        String sql = "INSERT INTO libros (id_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
-                 "VALUES (" + this.id + ", '" + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.editorial + "', " + this.precio + ",'" + this.biblioteca.toString() + "' " + (this.disponible ? 1 : 0) + ")";
+        String sql = "INSERT INTO libros (idLibros, bibliotecaAsociada, isbn, nombre, autor, editorial, precio, estado) " +
+                 "VALUES (" + this.id + ", '" + this.biblioteca.toString() + "' " + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.editorial + "', " + this.precio + ",'" + (this.disponible ? 1 : 0) + ")";
         BaseDatos.ejecutarUpdate(sql);
     }
 
@@ -129,8 +129,8 @@ public class Libro {
      */
    public static Libro obtenerLibroPorId(int id) {
     String sql = "SELECT * FROM libros WHERE idLibros = ?";
-
     System.out.println("Libro seleccionado con ID: "+id);
+    
     try (Connection conn = BaseDatos.obtenerConnection(); 
         PreparedStatement stmt = conn.prepareStatement(sql)) {
         stmt.setInt(1, id); // como el binparam
@@ -169,7 +169,7 @@ public class Libro {
 }
     /**
      * Método para obtener todos los libros de la base de datos
-     * @return 
+     * @return todos los libros
      */
     public static List<Libro> obtenerTodosLosLibros() {
         List<Libro> libros = new ArrayList<>();
