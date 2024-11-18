@@ -20,7 +20,7 @@ import vista.AgregarSocio;
 public class ControladorAgregarUsuario implements ActionListener{
     private AgregarSocio vista;
     private Socio modelo;
-
+    private ControladorMostrarSocio vistaOriginal;
     
     
     // Contructores
@@ -149,7 +149,7 @@ public class ControladorAgregarUsuario implements ActionListener{
         Socio.registrarSocio(nuevoSocio);
         if(Socio.obtenerSocioPorDNI(nuevoSocio.getDni()) != null){
             JOptionPane.showMessageDialog(this.vista, "Usuario agregado con éxito", "Agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
-            this.vista.dispose();    
+            this.vista.dispose(); 
         }else JOptionPane.showMessageDialog(this.vista, "No se pudo agregar al usuario", "Error al agregar", JOptionPane.ERROR_MESSAGE);
     }
 }

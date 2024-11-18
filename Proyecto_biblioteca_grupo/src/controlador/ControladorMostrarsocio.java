@@ -79,14 +79,12 @@ public class ControladorMostrarSocio implements ActionListener{
         }
         if(e.getSource() == this.vista.getBtn_eliminar()){
             borrarSocio();
-            modeloTabla.setRowCount(0);
-            agregarTodos();
         }
         if(e.getSource() == this.vista.getBtn_agregarUsuario()){
             new ControladorAgregarUsuario();
-            modeloTabla.setRowCount(0);
-            agregarTodos();
-            
+        }
+        if(e.getSource() == this.vista.getBtn_refresh()){
+            actualizarTabla();
         }
     }
     
@@ -98,7 +96,15 @@ public class ControladorMostrarSocio implements ActionListener{
         this.vista.getBtn_agregarUsuario().addActionListener(this);
         this.vista.getBtn_editar().addActionListener(this);
         this.vista.getBtn_eliminar().addActionListener(this);
-        
+        this.vista.getBtn_refresh().addActionListener(this);   
+    }
+    
+    /**
+     * Actualiza los contenidos de la tabla
+     */
+    public void actualizarTabla(){
+        modeloTabla.setRowCount(0);  
+        agregarTodos();
     }
     
     /**
