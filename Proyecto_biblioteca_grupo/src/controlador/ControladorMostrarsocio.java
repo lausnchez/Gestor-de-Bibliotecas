@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Socio;
 import vista.MostrarSocio;
@@ -77,9 +78,14 @@ public class ControladorMostrarSocio implements ActionListener{
             
         }
         if(e.getSource() == this.vista.getBtn_eliminar()){
-            
+            borrarSocio();
+            modeloTabla.setRowCount(0);
+            agregarTodos();
         }
         if(e.getSource() == this.vista.getBtn_agregarUsuario()){
+            new ControladorAgregarUsuario();
+            modeloTabla.setRowCount(0);
+            agregarTodos();
             
         }
     }
@@ -89,6 +95,9 @@ public class ControladorMostrarSocio implements ActionListener{
      */
     public void inicializarAL(){
         this.vista.getBtn_buscar().addActionListener(this);
+        this.vista.getBtn_agregarUsuario().addActionListener(this);
+        this.vista.getBtn_editar().addActionListener(this);
+        this.vista.getBtn_eliminar().addActionListener(this);
         
     }
     
@@ -133,5 +142,24 @@ public class ControladorMostrarSocio implements ActionListener{
         this.vista.getTbl_clientes().setModel(modeloTabla);
     }
     
-    
+    //Métodos de borrar Socios
+    public void borrarSocio(){
+        int id = -1;
+        if(this.vista.getTbl_clientes().getSelectedRow() != -1){
+            Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0);
+            Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
+            
+            String mensaje = "¿Desea eliminar este usuario?" +
+                "\nDNI: " + socioEncontrado.getDni() +
+                "\nNombre: " + socioEncontrado.getNombre() + " " + socioEncontrado.getApellidos() +
+                "\nProvincia: " + socioEncontrado.getProvincia() + 
+                "\nTelefono: " + socioEncontrado.getTelefono() +
+                "\nEmail: " + socioEncontrado.getEmail() + "\n";
+            int opcion = JOptionPane.showConfirmDialog(this.vista, mensaje, "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(opcion == JOptionPane.YES_NO_OPTION){
+                Socio.eliminarSocio((int)idTabla);
+            }
+        }else
+            JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+    }
 }

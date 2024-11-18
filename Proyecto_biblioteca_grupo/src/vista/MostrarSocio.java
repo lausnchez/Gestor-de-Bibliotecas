@@ -76,6 +76,7 @@ public class MostrarSocio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_clientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbl_clientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbl_clientes);
         if (tbl_clientes.getColumnModel().getColumnCount() > 0) {

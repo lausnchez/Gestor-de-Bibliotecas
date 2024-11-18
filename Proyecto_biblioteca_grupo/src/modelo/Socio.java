@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.remote.JMXConnectorFactory;
+import javax.swing.JOptionPane;
 /**
  *
  * @author
@@ -383,7 +385,7 @@ public class Socio implements Comparable<Socio>{
                 boolean pago = rs.getBoolean("pago_soc");
 
                 socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
-            }
+            }else return null;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -398,6 +400,53 @@ public class Socio implements Comparable<Socio>{
         return socioNuevo;
     }
 
+    /**
+     * Método para obtener un socio por su DNI
+     * @param idSocio
+     * @return 
+     */
+    public static Socio obtenerSocioPorDNI(String DNISocio) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Socio socioNuevo = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM socios WHERE dni_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, DNISocio);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
+            }else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return socioNuevo;
+    }
+    
     /**
      * Método para obtener los socios con cuotas pendientes
      * @return 
@@ -541,5 +590,25 @@ public class Socio implements Comparable<Socio>{
             }
         }
         return listado;
+    }
+    
+    public static boolean eliminarSocio(int id){
+        Boolean validacion = false;
+        Connection conexion = null;
+        PreparedStatement prepStat = null;
+        ResultSet rs = null;
+        try {
+            conexion = BaseDatos.obtenerConnection();
+            String sql = "DELETE FROM socios WHERE id_soc = ?";
+            prepStat = conexion.prepareStatement(sql);
+            prepStat.setInt(1, id);
+            prepStat.executeUpdate();
+            if(Socio.obtenerSocioPorId(id) == null){
+                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente" , "Borrado correcto", JOptionPane.INFORMATION_MESSAGE);
+            }else JOptionPane.showMessageDialog(null, "El usuario no pudo ser borrado" , "Borrado incorrecto", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return validacion;
     }
 }

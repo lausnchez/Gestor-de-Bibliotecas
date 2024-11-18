@@ -62,9 +62,8 @@ public class ControladorAgregarUsuario implements ActionListener{
         if(e.getSource() == this.vista.getBtn_registrar()){
             if(comprobarCampos()){
                 agregarCliente();
-                JOptionPane.showMessageDialog(this.vista, "Usuario registrado con éxito", "Registro exitoso",JOptionPane.INFORMATION_MESSAGE);
             }  
-            else JOptionPane.showMessageDialog(this.vista, "No se pudo registrar al usuario", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
                 
         }
     }
@@ -148,5 +147,9 @@ public class ControladorAgregarUsuario implements ActionListener{
         
         Socio nuevoSocio = new Socio(String.valueOf(biblioteca), dni, nombre, apellidos, telefono, email, pago, provincia, 0, cBancaria);
         Socio.registrarSocio(nuevoSocio);
+        if(Socio.obtenerSocioPorDNI(nuevoSocio.getDni()) != null){
+            JOptionPane.showMessageDialog(this.vista, "Usuario agregado con éxito", "Agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
+            this.vista.dispose();    
+        }else JOptionPane.showMessageDialog(this.vista, "No se pudo agregar al usuario", "Error al agregar", JOptionPane.ERROR_MESSAGE);
     }
 }
