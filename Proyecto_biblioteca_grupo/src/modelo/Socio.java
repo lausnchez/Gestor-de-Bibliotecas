@@ -77,7 +77,7 @@ public class Socio implements Comparable<Socio>{
 */
  
     private int id;
-    private String bibliotecaAsociada;
+    private String biblioteca;
     private String dni;
     private String nombre;
     private String apellidos;
@@ -95,7 +95,7 @@ public class Socio implements Comparable<Socio>{
     public Socio
         (int id, String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,String provincia, int numSanciones, String cuentaBancaria) {
         this.id = id;
-        this.bibliotecaAsociada = bibliotecaAsociada;
+        this.biblioteca = bibliotecaAsociada;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -111,7 +111,7 @@ public class Socio implements Comparable<Socio>{
 
     public Socio
         (String bibliotecaAsociada, String dni, String nombre, String apellidos, String telefono, String email, boolean pago,String provincia, int numSanciones, String cuentaBancaria) {
-        this.bibliotecaAsociada = bibliotecaAsociada;
+        this.biblioteca = bibliotecaAsociada;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -127,7 +127,7 @@ public class Socio implements Comparable<Socio>{
         
     public Socio(){
         this.id = -1;
-        this.bibliotecaAsociada = "";
+        this.biblioteca = "";
         this.dni = "";
         this.nombre = "";
         this.apellidos = "";
@@ -159,12 +159,12 @@ public class Socio implements Comparable<Socio>{
         this.id = id;
     }
 
-    public String getBibliotecaAsociada() {
-        return bibliotecaAsociada;
+    public String getBiblioteca() {
+        return biblioteca;
     }
 
-    public void setBibliotecaAsociada(String bibliotecaAsociada) {
-        this.bibliotecaAsociada = bibliotecaAsociada;
+    public void setBiblioteca(String biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     public String getDni() {
@@ -335,7 +335,7 @@ public class Socio implements Comparable<Socio>{
             stmt.setString(5, socio.getEmail());
             stmt.setString(6, socio.getProvincia().toString());
             stmt.setBoolean(7, socio.isPago());
-            stmt.setString(8, socio.getBibliotecaAsociada());
+            stmt.setString(8, socio.getBiblioteca());
             stmt.setString(9, socio.getCuentaBancaria());
 
             stmt.executeUpdate();

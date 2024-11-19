@@ -42,19 +42,11 @@
                       <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                       <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lbl_provincia" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lbl_calle" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lbl_ciudad" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lbl_provincia" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_ciudad" max="32767" attributes="0"/>
-                              <Component id="txt_calle" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cBox_provincia" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="cBox_provincia" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jSeparator2" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lbl_biblioteca" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -131,16 +123,6 @@
                   <Component id="cBox_provincia" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_ciudad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txt_ciudad" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbl_calle" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txt_calle" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -149,7 +131,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btn_registrar" min="-2" pref="38" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -265,20 +247,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_ciudad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ciudad"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_ciudad">
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbl_calle">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Calle"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_calle">
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>

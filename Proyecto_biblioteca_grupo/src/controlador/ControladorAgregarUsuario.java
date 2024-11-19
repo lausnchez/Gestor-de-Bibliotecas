@@ -20,15 +20,39 @@ import vista.AgregarSocio;
 public class ControladorAgregarUsuario implements ActionListener{
     private AgregarSocio vista;
     private Socio modelo;
-    private ControladorMostrarSocio vistaOriginal;
+    private Socio actualizarSocio;
     
     
     // Contructores
     //--------------------------------------------------------------------------
+    // Agregar
     public ControladorAgregarUsuario(){
         this.vista = new AgregarSocio();
         this.modelo = new Socio();
         inicializarAL();
+        this.vista.setVisible(true);
+    }
+    
+    // Actualizar
+    public ControladorAgregarUsuario(Socio actualizarSocio){
+        this.vista = new AgregarSocio();
+        this.modelo = new Socio();
+        inicializarAL();
+        System.out.println(actualizarSocio.getBiblioteca());
+        // Ediciones de la vista
+        this.vista.getBtn_registrar().setText("Actualizar");
+        this.vista.getTxt_dni().setEnabled(false);
+        this.vista.getTxt_dni().setText(actualizarSocio.getDni());
+        this.vista.getTxt_nombre().setEnabled(false);
+        this.vista.getTxt_nombre().setText(actualizarSocio.getNombre());
+        this.vista.getTxt_apellidos().setEnabled(false);
+        this.vista.getTxt_apellidos().setText(actualizarSocio.getApellidos());
+        this.vista.getTxt_cuentaBancaria().setText(actualizarSocio.getCuentaBancaria());
+        this.vista.getTxt_email().setText(actualizarSocio.getEmail());
+        this.vista.getTxt_telefono().setText(actualizarSocio.getTelefono());
+        this.vista.getCheck_pago().setSelected(actualizarSocio.isPago());
+        this.vista.getcBox_biblioteca().setSelectedItem(actualizarSocio.getBiblioteca());
+        this.vista.getcBox_provincia().setSelectedItem(actualizarSocio.getProvincia());
         this.vista.setVisible(true);
     }
     
@@ -83,8 +107,6 @@ public class ControladorAgregarUsuario implements ActionListener{
        this.vista.getLbl_apellidos().setForeground(Color.BLACK);
        this.vista.getLbl_telefono().setForeground(Color.BLACK);
        this.vista.getLbl_email().setForeground(Color.BLACK);
-       this.vista.getLbl_ciudad().setForeground(Color.BLACK);
-       this.vista.getLbl_calle().setForeground(Color.BLACK);
        this.vista.getLbl_cuentaBancaria().setForeground(Color.BLACK);
        
        if(this.vista.getTxt_dni().getText().isEmpty()){
@@ -112,16 +134,6 @@ public class ControladorAgregarUsuario implements ActionListener{
            error.concat("Inserte un email\n");
            this.vista.getLbl_email().setForeground(Color.red);
        }
-       if(this.vista.getTxt_ciudad().getText().isEmpty()){
-           valido = false;
-           error.concat("Inserte una ciudad\n");
-           this.vista.getLbl_ciudad().setForeground(Color.red);
-       }
-       if(this.vista.getTxt_calle().getText().isEmpty()){
-           valido = false;
-           error.concat("Inserte una calle\n");
-           this.vista.getLbl_calle().setForeground(Color.red);
-       }
        if(this.vista.getTxt_cuentaBancaria().getText().isEmpty()){
            valido = false;
            error.concat("Inserte una cuenta bancaria\n");
@@ -137,8 +149,6 @@ public class ControladorAgregarUsuario implements ActionListener{
         String telefono = this.vista.getTxt_telefono().getText();
         String email = this.vista.getTxt_email().getText();
         String cBancaria = this.vista.getTxt_cuentaBancaria().getText();
-        String ciudad = this.vista.getTxt_ciudad().getText();
-        String calle = this.vista.getTxt_calle().getText();
         
         int biblioteca = ControllerUtils.idbiblioteca(this.vista.getcBox_biblioteca().getSelectedItem().toString());
         System.out.println(biblioteca);

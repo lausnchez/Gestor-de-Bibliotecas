@@ -75,7 +75,7 @@ public class ControladorMostrarSocio implements ActionListener{
             
         }
         if(e.getSource() == this.vista.getBtn_editar()){
-            
+            editarSocio();
         }
         if(e.getSource() == this.vista.getBtn_eliminar()){
             borrarSocio();
@@ -138,7 +138,7 @@ public class ControladorMostrarSocio implements ActionListener{
                 nuevoSocio.getNombre().concat(" ").concat(nuevoSocio.getApellidos()),
                 nuevoSocio.getTelefono(),
                 nuevoSocio.getEmail(),
-                nuevoSocio.getBibliotecaAsociada(),
+                nuevoSocio.getBiblioteca(),
                 nuevoSocio.getProvincia(),
                 nuevoSocio.getNumSanciones(),
                 nuevoSocio.getCuentaBancaria(),
@@ -167,5 +167,14 @@ public class ControladorMostrarSocio implements ActionListener{
             }
         }else
             JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void editarSocio(){
+        int id = -1;
+        if(this.vista.getTbl_clientes().getSelectedRow() != -1){
+            Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0);
+            Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
+            new ControladorAgregarUsuario(socioEncontrado);
+        }else JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

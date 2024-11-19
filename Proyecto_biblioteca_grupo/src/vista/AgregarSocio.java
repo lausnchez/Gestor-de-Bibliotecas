@@ -53,10 +53,6 @@ public class AgregarSocio extends javax.swing.JFrame {
         txt_email = new javax.swing.JTextField();
         lbl_provincia = new javax.swing.JLabel();
         cBox_provincia = new javax.swing.JComboBox<>();
-        lbl_ciudad = new javax.swing.JLabel();
-        txt_ciudad = new javax.swing.JTextField();
-        lbl_calle = new javax.swing.JLabel();
-        txt_calle = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         lbl_biblioteca = new javax.swing.JLabel();
         cBox_biblioteca = new javax.swing.JComboBox<>();
@@ -84,10 +80,6 @@ public class AgregarSocio extends javax.swing.JFrame {
         lbl_provincia.setText("Provincia");
 
         cBox_provincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A_CORUÑA", "ÁLAVA", "ALBACETE", "ALICANTE", "ALMERÍA", "ASTURIAS", "ÁVILA", "BADAJOZ", "BARCELONA", "BURGOS", "CÁDIZ", "CANTABRIA", "CASTELLÓN", "CEUTA", "CÓRDOBA", "LA_CORUÑA", "CUENCA", "GERONA", "GRANADA", "GUADALAJARA", "GIPUZKOA", "HUELVA", "HUESCA", "ISLAS_BALEARES", "JAÉN", "LA_RIOJA", "LAS_PALMAS", "LEÓN", "LLEIDA", "LUGO", "MADRID", "MÁLAGA", "MURCIA", "NAVARRA", "OURENSE", "PALENCIA", "PONTEVEDRA", "SALAMANCA", "SANTA_CRUZ_DE_TENERIFE", "SEGOVIA", "SEVILLA", "SORIA", "TARRAGONA", "TERUEL", "TOLEDO", "VALENCIA", "VALLADOLID", "VIZCAYA", "ZAMORA", "ZARAGOZA" }));
-
-        lbl_ciudad.setText("Ciudad");
-
-        lbl_calle.setText("Calle");
 
         lbl_biblioteca.setText("Biblioteca");
 
@@ -120,16 +112,10 @@ public class AgregarSocio extends javax.swing.JFrame {
                         .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lbl_provincia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_calle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_provincia)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_ciudad)
-                                .addComponent(txt_calle)
-                                .addComponent(cBox_provincia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cBox_provincia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSeparator2)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(lbl_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,14 +175,6 @@ public class AgregarSocio extends javax.swing.JFrame {
                     .addComponent(lbl_provincia)
                     .addComponent(cBox_provincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_ciudad)
-                    .addComponent(txt_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_calle)
-                    .addComponent(txt_calle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -204,7 +182,7 @@ public class AgregarSocio extends javax.swing.JFrame {
                     .addComponent(cBox_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -334,22 +312,6 @@ public class AgregarSocio extends javax.swing.JFrame {
         this.lbl_biblioteca = lbl_biblioteca;
     }
 
-    public JLabel getLbl_calle() {
-        return lbl_calle;
-    }
-
-    public void setLbl_calle(JLabel lbl_calle) {
-        this.lbl_calle = lbl_calle;
-    }
-
-    public JLabel getLbl_ciudad() {
-        return lbl_ciudad;
-    }
-
-    public void setLbl_ciudad(JLabel lbl_ciudad) {
-        this.lbl_ciudad = lbl_ciudad;
-    }
-
     public JLabel getLbl_dni() {
         return lbl_dni;
     }
@@ -396,22 +358,6 @@ public class AgregarSocio extends javax.swing.JFrame {
 
     public void setTxt_apellidos(JTextField txt_apellidos) {
         this.txt_apellidos = txt_apellidos;
-    }
-
-    public JTextField getTxt_calle() {
-        return txt_calle;
-    }
-
-    public void setTxt_calle(JTextField txt_calle) {
-        this.txt_calle = txt_calle;
-    }
-
-    public JTextField getTxt_ciudad() {
-        return txt_ciudad;
-    }
-
-    public void setTxt_ciudad(JTextField txt_ciudad) {
-        this.txt_ciudad = txt_ciudad;
     }
 
     public JTextField getTxt_dni() {
@@ -482,8 +428,6 @@ public class AgregarSocio extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel lbl_apellidos;
     private javax.swing.JLabel lbl_biblioteca;
-    private javax.swing.JLabel lbl_calle;
-    private javax.swing.JLabel lbl_ciudad;
     private javax.swing.JLabel lbl_cuentaBancaria;
     private javax.swing.JLabel lbl_dni;
     private javax.swing.JLabel lbl_email;
@@ -491,8 +435,6 @@ public class AgregarSocio extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_provincia;
     private javax.swing.JLabel lbl_telefono;
     private javax.swing.JTextField txt_apellidos;
-    private javax.swing.JTextField txt_calle;
-    private javax.swing.JTextField txt_ciudad;
     private javax.swing.JTextField txt_cuentaBancaria;
     private javax.swing.JTextField txt_dni;
     private javax.swing.JTextField txt_email;
