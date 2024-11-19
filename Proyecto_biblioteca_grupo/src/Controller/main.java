@@ -34,7 +34,7 @@ public class main {
             "Autor de prueba", 
             "Editorial de prueba", 
             29.99f,
-            Biblioteca.UbiBiblio.BILBAO,
+            '1',
             true);
         // Crear el controlador y asociarlo con la vista y el modelo
         LibrosViewController controller = new LibrosViewController(libroModelo);

@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.List;
 public class Biblioteca {
 
     public enum UbiBiblio {
-        MADRID("Madrid"),
+        Madrid("Madrid"),
         BARCELONA("Barcelona"),
         VALENCIA("Valencia"),
         SEVILLA("Sevilla"),
@@ -87,20 +89,44 @@ public class Biblioteca {
                      "', tel_biblioteca = '" + this.telefono + "' WHERE id_biblioteca = " + this.idBiblioteca;
         BaseDatos.ejecutarUpdate(sql);
     }
+    
+    
+public int obtenerIdBibliotecaPorProvincia(String provincia) {
 
+    // Consulta SQL para obtener el ID de la biblioteca a partir de la provincia
+    String sql = "SELECT idBibliotecas FROM bibliotecas WHERE provincia = ?";
+
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, provincia);  // Establecer la provincia seleccionada
+
+        // Ejecutar la consulta
+        ResultSet rs = stmt.executeQuery();
+
+        // Si se encuentra una biblioteca con esa provincia, obtener su ID
+        if (rs.next()) {
+            idBiblioteca = rs.getInt("idBibliotecas");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();  // Es útil para depurar el error
+    }
+
+    return idBiblioteca;  // Retorna el ID de la biblioteca o 0 si no se encontró
+}
     /**
      * Método que devuelve la biblioteca por su id
      * @param id
      * @return 
      */
     public static Biblioteca obtenerBibliotecaPorId(int id) {
-        String sql = "SELECT * FROM bibliotecas WHERE id_biblioteca = " + id;
+        String sql = "SELECT * FROM bibliotecas WHERE idBibliotecas = " + id;
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             if (rs != null && rs.next()) {
-                String provinciaStr = rs.getString("ubi_biblioteca");
+                String provinciaStr = rs.getString("provincia");
                 UbiBiblio provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("tel_biblioteca");
+                String telefono = rs.getString("telefono");
                 return new Biblioteca(id, provincia, telefono);
             }
         } catch (SQLException e) {
@@ -146,36 +172,4 @@ public class Biblioteca {
     public String toString() {
         return "Biblioteca{id=" + idBiblioteca + ", provincia='" + provincia.getNombre() + "', telefono='" + telefono + "'}";
     }
-
-    // Método principal para probar la clase
-    public static void main(String[] args) {
-        // Crear una biblioteca
-        Biblioteca biblio1 = new Biblioteca(1, UbiBiblio.MADRID, "912345678");
-
-        // Agregar la biblioteca a la base de datos
-        biblio1.agregarBiblioteca();
-
-        // Mostrar la información de la biblioteca
-        System.out.println(biblio1.toString());
-
-        // Obtener la biblioteca desde la base de datos
-        Biblioteca biblioRecuperada = Biblioteca.obtenerBibliotecaPorId(1);
-        if (biblioRecuperada != null) {
-            System.out.println("Biblioteca recuperada: " + biblioRecuperada.toString());
-        }
-
-        // Actualizar la biblioteca
-        biblio1.setTelefono("987654321");
-        biblio1.actualizarBiblioteca();
-
-        // Mostrar la biblioteca actualizada
-        biblioRecuperada = Biblioteca.obtenerBibliotecaPorId(1);
-        if (biblioRecuperada != null) {
-            System.out.println("Biblioteca después de la actualización: " + biblioRecuperada.toString());
-        }
-
-        // Eliminar la biblioteca
-        Biblioteca.eliminarBiblioteca(1);
-    }
-
 }

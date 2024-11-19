@@ -86,7 +86,7 @@ public class LibrosViewController implements ActionListener {
             libro.getAutor(),
             libro.getEditorial(),
             libro.getPrecio(),
-            libro.getBiblioteca() != null ? libro.getBiblioteca().getNombre() : "N/A", // Asegúrate de mostrar algo si biblioteca es null
+            libro.getBiblioteca(), // Asegúrate de mostrar algo si biblioteca es null
             estado
                 
         });  System.out.println("Columnas: " + modeloTabla.getColumnCount());
@@ -130,12 +130,10 @@ public class LibrosViewController implements ActionListener {
             JOptionPane.showMessageDialog(librosView, "Debe introducir un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
          }
         } else if (e.getSource() == this.librosView.getBtn_agregar()) {
-            agregarLibro = new agregarLibro(); 
-            Libro libroModelo = new Libro();
-        // Crear el controlador de agregar libro y asociarlo con la vista
-         agregarLibroController controlador = new agregarLibroController(libroModelo);
-    
-            agregarLibro.setVisible(true); 
+            agregarLibro vistaAgregarLibro = new agregarLibro();
+            Libro modeloLibro = new Libro();
+            agregarLibroController controller = new agregarLibroController(vistaAgregarLibro, modeloLibro);
+            vistaAgregarLibro.setVisible(true);
         } else if (e.getSource() == this.librosView.getBtn_editar()) {
             // Lógica para editar libro
         }

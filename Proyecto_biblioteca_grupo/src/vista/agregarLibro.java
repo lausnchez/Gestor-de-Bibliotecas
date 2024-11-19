@@ -148,9 +148,9 @@ public class agregarLibro extends javax.swing.JFrame {
 
         jLabel7.setText("PRECIO");
 
-        cBox_editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EDITORIAL", "Planeta", "Alfaguara", "Penguin Random House", "RBA", "Anagrama", "Editorial Norma", "Espasa", "Tusquets", "Alianza Editorial", "Ediciones Destino" }));
+        cBox_editorial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planeta", "Alfaguara", "Penguin Random House", "RBA", "Anagrama", "Editorial Norma", "Espasa", "Tusquets", "Alianza Editorial", "Ediciones Destino" }));
 
-        cBox_ubicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "UBICACIÓN", " MADRID", "BARCELONA", "VALENCIA", "SEVILLA", "MÁLAGA", "CÓRDOBA", "ALMERÍA", "TOLEDO", "BILBAO", "CEUTA", "MELILLA" }));
+        cBox_ubicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Madrid", "BARCELONA", "VALENCIA", "SEVILLA", "MÁLAGA", "CÓRDOBA", "ALMERÍA", "TOLEDO", "BILBAO", "CEUTA", "MELILLA" }));
 
         rBtn_presado.setText("PRESTADO");
 
