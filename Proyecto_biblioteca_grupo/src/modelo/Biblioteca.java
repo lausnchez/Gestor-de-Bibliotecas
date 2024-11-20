@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -231,6 +233,10 @@ public class Biblioteca {
         Biblioteca.eliminarBiblioteca(1);
     }
 
+    /**
+     * Nos devuelve una lista de Strings para implementar a los combobox
+     * @return 
+     */
     public static List<String> recogerNombreBibliotecas(){
         List<String> bibliotecas = new ArrayList<>();
         String sql = "SELECT DISTINCT nombre_biblio FROM bibliotecas.bibliotecas";
@@ -245,4 +251,79 @@ public class Biblioteca {
         return bibliotecas;
     }
     
+    /**
+     * Nos devuelve las bibliotecas que hay en una provincia escogida
+     * @return 
+     */
+    public static List<String> recogerBibliotecasPorProvincia(String provincia){
+        List<String> bibliotecas = new ArrayList<>();
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT DISTINCT nombre_biblio FROM bibliotecas.bibliotecas WHERE provincias_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, provincia);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                bibliotecas.add(rs.getString("nombre_biblio"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al recoger bibliotecas");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bibliotecas;
+    }
+    
+    /*
+    Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Socio socioNuevo = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM socios WHERE id_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idSocio);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
+            }else return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return socioNuevo;
+    */
 }

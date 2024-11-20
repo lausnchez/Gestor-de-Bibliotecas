@@ -32,12 +32,6 @@ public class ControladorAgregarUsuario implements ActionListener{
         this.vista = new AgregarSocio();
         this.modelo = new Socio();
         inicializarAL();
-        // Volvar bibliotecas en el comboBox
-        this.vista.getcBox_biblioteca().removeAllItems();
-        List<String> bibliotecas = Biblioteca.recogerNombreBibliotecas();
-        for(String biblioteca: bibliotecas){
-            this.vista.getcBox_biblioteca().addItem(biblioteca);
-        }
         
         this.vista.setVisible(true);
     }
@@ -98,10 +92,18 @@ public class ControladorAgregarUsuario implements ActionListener{
             else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
                 
         }
+        if(e.getSource() == this.vista.getcBox_provincia()){
+            this.vista.getcBox_biblioteca().removeAllItems();
+            List<String> bibliotecas = Biblioteca.recogerBibliotecasPorProvincia(this.vista.getcBox_provincia().getSelectedItem().toString());
+            for(String valor: bibliotecas){
+                this.vista.getcBox_biblioteca().addItem(valor);
+            }
+        }
     }
     
     public void inicializarAL(){
         this.vista.getBtn_registrar().addActionListener(this);
+        this.vista.getcBox_provincia().addActionListener(this);
     }  
     
     
@@ -116,6 +118,8 @@ public class ControladorAgregarUsuario implements ActionListener{
        this.vista.getLbl_telefono().setForeground(Color.BLACK);
        this.vista.getLbl_email().setForeground(Color.BLACK);
        this.vista.getLbl_cuentaBancaria().setForeground(Color.BLACK);
+       this.vista.getLbl_biblioteca().setForeground(Color.BLACK);
+       this.vista.getLbl_provincia().setForeground(Color.BLACK);
        
        if(this.vista.getTxt_dni().getText().isEmpty()){
           valido = false;
@@ -146,6 +150,16 @@ public class ControladorAgregarUsuario implements ActionListener{
            valido = false;
            error.concat("Inserte una cuenta bancaria\n");
            this.vista.getLbl_cuentaBancaria().setForeground(Color.red);
+       }
+       if(this.vista.getcBox_provincia().getSelectedIndex() == 0){
+           valido = false;
+           error.concat("Seleccione una provincia\n");
+           this.vista.getLbl_provincia().setForeground(Color.red);
+       }
+       if(this.vista.getcBox_biblioteca().getSelectedItem().equals(" ")){
+           valido = false;
+           error.concat("Seleccione una biblioteca\n");
+           this.vista.getLbl_biblioteca().setForeground(Color.red);
        }
        return valido; 
     }

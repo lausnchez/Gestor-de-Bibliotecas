@@ -79,11 +79,11 @@ public class AgregarSocio extends javax.swing.JFrame {
 
         lbl_provincia.setText("Provincia");
 
-        cBox_provincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A_CORUÑA", "ÁLAVA", "ALBACETE", "ALICANTE", "ALMERÍA", "ASTURIAS", "ÁVILA", "BADAJOZ", "BARCELONA", "BURGOS", "CÁDIZ", "CANTABRIA", "CASTELLÓN", "CEUTA", "CÓRDOBA", "LA_CORUÑA", "CUENCA", "GERONA", "GRANADA", "GUADALAJARA", "GIPUZKOA", "HUELVA", "HUESCA", "ISLAS_BALEARES", "JAÉN", "LA_RIOJA", "LAS_PALMAS", "LEÓN", "LLEIDA", "LUGO", "MADRID", "MÁLAGA", "MURCIA", "NAVARRA", "OURENSE", "PALENCIA", "PONTEVEDRA", "SALAMANCA", "SANTA_CRUZ_DE_TENERIFE", "SEGOVIA", "SEVILLA", "SORIA", "TARRAGONA", "TERUEL", "TOLEDO", "VALENCIA", "VALLADOLID", "VIZCAYA", "ZAMORA", "ZARAGOZA" }));
+        cBox_provincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "A_CORUÑA", "ÁLAVA", "ALBACETE", "ALICANTE", "ALMERÍA", "ASTURIAS", "ÁVILA", "BADAJOZ", "BARCELONA", "BURGOS", "CÁDIZ", "CANTABRIA", "CASTELLÓN", "CEUTA", "CÓRDOBA", "LA_CORUÑA", "CUENCA", "GERONA", "GRANADA", "GUADALAJARA", "GIPUZKOA", "HUELVA", "HUESCA", "ISLAS_BALEARES", "JAÉN", "LA_RIOJA", "LAS_PALMAS", "LEÓN", "LLEIDA", "LUGO", "MADRID", "MÁLAGA", "MURCIA", "NAVARRA", "OURENSE", "PALENCIA", "PONTEVEDRA", "SALAMANCA", "SANTA_CRUZ_DE_TENERIFE", "SEGOVIA", "SEVILLA", "SORIA", "TARRAGONA", "TERUEL", "TOLEDO", "VALENCIA", "VALLADOLID", "VIZCAYA", "ZAMORA", "ZARAGOZA" }));
 
         lbl_biblioteca.setText("Biblioteca");
 
-        cBox_biblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Biblioteca Central", "Biblioteca La Paz", "Biblioteca del Norte", "Biblioteca Sur", "Biblioteca Municipal", "Biblioteca de la Playa", "Biblioteca El Parque", "Biblioteca Las Flores", "Biblioteca de la Montaña", "Biblioteca del Mar" }));
+        cBox_biblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
         btn_registrar.setText("Registrar");
 

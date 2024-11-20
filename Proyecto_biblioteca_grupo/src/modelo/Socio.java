@@ -21,61 +21,6 @@ import javax.swing.JOptionPane;
 public class Socio implements Comparable<Socio>{
     private BaseDatos baseDeDatos;
     
-   /* 
-    public enum UBICACION {
-    A_CORUÑA,
-    ÁLAVA,
-    ALBACETE,
-    ALICANTE,
-    ALMERÍA,
-    ASTURIAS,
-    ÁVILA,
-    BADAJOZ,
-    BARCELONA,
-    BURGOS,
-    CÁDIZ,
-    CANTABRIA,
-    CASTELLÓN,
-    CEUTA,
-    CÓRDOBA,
-    LA_CORUÑA,
-    CUENCA,
-    GERONA,
-    GRANADA,
-    GUADALAJARA,
-    GIPUZKOA,
-    HUELVA,
-    HUESCA,
-    ISLAS_BALEARES,
-    JAÉN,
-    LA_RIOJA,
-    LAS_PALMAS,
-    LEÓN,
-    LLEIDA,
-    LUGO,
-    MADRID,
-    MÁLAGA,
-    MURCIA,
-    NAVARRA,
-    OURENSE,
-    PALENCIA,
-    PONTEVEDRA,
-    SALAMANCA,
-    SANTA_CRUZ_DE_TENERIFE,
-    SEGOVIA,
-    SEVILLA,
-    SORIA,
-    TARRAGONA,
-    TERUEL,
-    TOLEDO,
-    VALENCIA,
-    VALLADOLID,
-    VIZCAYA,
-    ZAMORA,
-    ZARAGOZA
-    }   
-*/
- 
     private int id;
     private String biblioteca;
     private String dni;
