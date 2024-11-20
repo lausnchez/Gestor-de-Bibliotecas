@@ -503,6 +503,7 @@ public class Socio implements Comparable<Socio>{
                 " socios.pago_soc\n" +
                 " FROM socios, bibliotecas\n" +
                 " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " AND actual_soc = 1" +
                 " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
@@ -537,7 +538,10 @@ public class Socio implements Comparable<Socio>{
         return listado;
     }
     
-    public static boolean eliminarSocio(int id){
+    public static void eliminarSocio(int id){
+        /*
+        BORRADO FISICO ---------------------------------------------------------
+        
         Boolean validacion = false;
         Connection conexion = null;
         PreparedStatement prepStat = null;
@@ -555,5 +559,30 @@ public class Socio implements Comparable<Socio>{
             e.printStackTrace();
         } 
         return validacion;
+        */
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "UPDATE socios SET actual_soc = 0 WHERE id_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Socio " + id + " eliminado correctamente");
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
