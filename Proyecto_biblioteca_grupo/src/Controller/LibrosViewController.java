@@ -71,12 +71,11 @@ public class LibrosViewController implements ActionListener {
         return;
     }
 
-    // Aquí añadimos cada libro al modelo de la tabla
+    // Añadimos cada libro al modelo de la tabla
     for (Libro libro : listadoLibros) {
         String estado = libro.isDisponible() ? "Disponible" : "Prestado";
         
         
-        // Verificar que los datos se están agregando al modelo
         System.out.println("Agregando libro: " + libro.getTitulo());
         
         modeloTabla.addRow(new Object[] {
@@ -86,13 +85,13 @@ public class LibrosViewController implements ActionListener {
             libro.getAutor(),
             libro.getEditorial(),
             libro.getPrecio(),
-            libro.getBiblioteca(), // Asegúrate de mostrar algo si biblioteca es null
+            libro.getBiblioteca(), 
             estado
                 
         });  System.out.println("Columnas: " + modeloTabla.getColumnCount());
         System.out.println("Filas: " + modeloTabla.getRowCount());
         
-        System.out.println("La tabla es visible: " + tbl_libros.isVisible());//hace que se vean los libtros
+        System.out.println("La tabla es visible: " + tbl_libros.isVisible());
     // actualiza
         modeloTabla.fireTableDataChanged();
     }
@@ -135,7 +134,11 @@ public class LibrosViewController implements ActionListener {
             agregarLibroController controller = new agregarLibroController(vistaAgregarLibro, modeloLibro);
             vistaAgregarLibro.setVisible(true);
         } else if (e.getSource() == this.librosView.getBtn_editar()) {
-            // Lógica para editar libro
+            int filaSeleccionada = tbl_libros.getSelectedRow();
+            if(e.getSource() == this.librosView.getBtn_guardar()){
+                System.out.println("Ha dado a guardar");
+            }
+            
         }
     }
 

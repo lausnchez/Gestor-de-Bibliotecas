@@ -100,7 +100,75 @@ public class Libro {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
+    
+    /**
+     * 
+     * @param
+     * @return un autor
+     */
+    public static int insertarAutor(String nombreAutor) {
+    int idAutor = -1;
+    String sql = "INSERT INTO autores (nombreCompleto) VALUES (?)";
 
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        
+        stmt.setString(1, nombreAutor);
+        int filasAfectadas = stmt.executeUpdate();
+        
+        // Si se insertó correctamente, obtener el idAutor generado
+        if (filasAfectadas > 0) {
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                idAutor = rs.getInt(1); 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return idAutor;  // Devuelve el idAutor insertado
+}
+    
+    public static void registrarLibro(Libro libro) {
+         int idAutor = insertarAutor(libro.getAutor());  
+
+    // Si el autor no se pudo insertar (por algún error), no continuamos con el registro del libro
+        if (idAutor == -1) {
+            System.out.println("Error al registrar el autor.");
+            return;
+        }
+        // Consulta SQL 
+        String sql = "INSERT INTO libros (bibliotecaAsociada, isbn, nombre, autor, editorial, precio, estado) " +
+                     "VALUES (?, ?, ?, ?, ?, ?,?)";
+
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Establecer los valores de los parámetros de la consulta SQL
+            stmt.setInt(1, libro.getBiblioteca());
+            stmt.setString(2, libro.getIsbn());
+            stmt.setString(3, libro.getTitulo());
+            stmt.setInt(4, idAutor);
+            stmt.setString(5, libro.getEditorial());
+            stmt.setFloat(6, libro.getPrecio());
+            stmt.setBoolean(7, libro.isDisponible());
+            System.out.println(libro.precio);
+            // Ejecutar
+            int filasAfectadas = stmt.executeUpdate();
+            System.out.println("Precio ingresado: " + libro.getPrecio());
+            System.out.println("ID Biblioteca: " + libro.getBiblioteca());
+            
+            if (filasAfectadas > 0) {
+                System.out.println("Libro registrado con éxito.");
+            } else {
+                System.out.println("Error al registrar el libro.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
    /**
     * Método para agregar un libro
     */
@@ -110,8 +178,8 @@ public class Libro {
         throw new IllegalArgumentException("Faltan campos obligatorios para agregar el libro.");
     }
 
-    // Validar que el ComboBox tiene un valor seleccionado
-    if (this.biblioteca == 0) {  // Si el ID de la biblioteca es 0, es un valor no válido
+    // Validar ComboBox valor seleccionado
+    if (this.biblioteca == 0) { 
         throw new IllegalArgumentException("Debe seleccionar una biblioteca válida.");
     }
 
@@ -122,7 +190,7 @@ public class Libro {
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         // Establecer los valores en la consulta
-        stmt.setInt(1, this.biblioteca);  // ID de la biblioteca
+        stmt.setInt(1, this.biblioteca);
         stmt.setString(2, this.isbn);
         stmt.setString(3, this.titulo);
         stmt.setString(4, this.autor);

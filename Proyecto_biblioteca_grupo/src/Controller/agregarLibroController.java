@@ -5,12 +5,12 @@
  */
 package Controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Libro;
 import vista.agregarLibro;
-import modelo.Biblioteca;
 
 /**
  *
@@ -19,12 +19,10 @@ import modelo.Biblioteca;
 public class agregarLibroController implements ActionListener{
     private agregarLibro vista;
     private Libro libroModelo;
-    private Biblioteca biblioteca;
 
     public agregarLibroController(agregarLibro vista,Libro libroModelo) {
         this.vista = vista;
         this.libroModelo = libroModelo;
-        this.biblioteca=biblioteca;
 
         // añadir los eventos a los botones
         
@@ -32,46 +30,82 @@ public class agregarLibroController implements ActionListener{
         this.vista.getBtn_agregarLibro().addActionListener(this);
         this.vista.getrBtn_presado().addActionListener(this);
         this.vista.getrBtn_disponible().addActionListener(this);
+        this.vista.getrBtn_disponible().addActionListener(this);
         //no hace falta añadir el set visible aqui porque loa ñadimos en librosViewController
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-   if (e.getSource() == this.vista.getBtn_agregarLibro()) {
-        System.out.println("Has pulsado el botón de agregar");
-
-        try {
-            // Obtener la provincia seleccionada
-            String provinciaSeleccionada = (String) vista.getcBox_ubicacion().getSelectedItem();
-            provinciaSeleccionada = provinciaSeleccionada != null ? provinciaSeleccionada.trim() : null;
-
-            // Validar que la provincia seleccionada no sea vacía o nula
-            if (provinciaSeleccionada == null || provinciaSeleccionada.isEmpty()) {
-                JOptionPane.showMessageDialog(vista, "Por favor, selecciona una provincia válida.",
-                        "Provincia Inválida", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si la provincia no es válida
+        if (e.getSource() == this.vista.getBtn_agregarLibro()) {
+            if (comprobarCampos()) {
+                agregarLibro();
+                JOptionPane.showMessageDialog(this.vista, "Libro registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else {
+                JOptionPane.showMessageDialog(this.vista, "No se pudo registrar el libro", "Registro erróneo", JOptionPane.ERROR_MESSAGE);
             }
-
-            System.out.println("Provincia seleccionada: " + provinciaSeleccionada);
-
-            // Resto del código para procesar el libro
-            int bibliotecaId = biblioteca.obtenerIdBibliotecaPorProvincia(provinciaSeleccionada);
-            System.out.println("ID de la biblioteca: " + bibliotecaId);
-
-            // Validar que el ID de la biblioteca sea válido
-            if (bibliotecaId == 0) {
-                JOptionPane.showMessageDialog(vista, "No se encontró la biblioteca para la provincia seleccionada.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // (Continúa con la lógica para agregar el libro)
-        } catch (Exception ex) {
-            // Manejo de errores
-            JOptionPane.showMessageDialog(vista, "Ha ocurrido un error al agregar el libro: " + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
         }
-   }
+    }
+    
+    public void inicializarAL() {
+        this.vista.getBtn_agregarLibro().addActionListener(this);
+    }
+
+    public Boolean comprobarCampos() {
+        Boolean valido = true;
+
+        // Limpiar errores previos
+        this.vista.getLbl_titulo().setForeground(Color.BLACK);
+        this.vista.getLbl_autor().setForeground(Color.BLACK);
+        this.vista.getLbl_isbn().setForeground(Color.BLACK);
+        this.vista.getLbl_editorial().setForeground(Color.BLACK);
+        this.vista.getLbl_precio().setForeground(Color.BLACK);
+        
+        // Comprobar campos vacíos
+        if (this.vista.getTxt_titulo().getText().isEmpty()) {
+            valido = false;
+            this.vista.getLbl_titulo().setForeground(Color.red);
+        }
+        if (this.vista.getTxt_autor().getText().isEmpty()) {
+            valido = false;
+            this.vista.getLbl_autor().setForeground(Color.red);
+        }
+        if (this.vista.getTxt_isbn().getText().isEmpty()) {
+            valido = false;
+            this.vista.getLbl_isbn().setForeground(Color.red);
+        }
+        if (this.vista.getTxt_editorial().getText().isEmpty()) {
+            valido = false;
+            this.vista.getLbl_editorial().setForeground(Color.red);
+        }
+        if (this.vista.getTxt_precio().getText().isEmpty()) {
+            valido = false;
+            this.vista.getLbl_precio().setForeground(Color.red);
+        }
+        
+        return valido;
+    }
+
+    public void agregarLibro() {
+        String titulo = this.vista.getTxt_titulo().getText();
+        String autor = this.vista.getTxt_autor().getText();
+        String isbn = this.vista.getTxt_isbn().getText();
+        String editorial = this.vista.getTxt_editorial().getText();
+        String precioString = this.vista.getTxt_precio().getText();
+        
+        // Validar y convertir el precio de String a float
+    float precio = 0;
+    try {
+        precio = Float.parseFloat(precioString);
+    } catch (NumberFormatException e) {
+        System.out.println("Error al convertir el precio: " + precioString);
+        // Aquí podrías poner un valor por defecto o mostrar un mensaje de error
+    }
+    
+        int bibliotecaId = ControllerUtils.idbiblioteca(this.vista.getcBox_ubicacion().getSelectedItem().toString()); 
+
+        Libro nuevoLibro = new Libro(bibliotecaId, isbn, titulo, autor, editorial, bibliotecaId, bibliotecaId, true);
+        
+        Libro.registrarLibro(nuevoLibro); 
     }
 }
