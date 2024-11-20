@@ -98,7 +98,7 @@ public class MostrarSocio extends javax.swing.JFrame {
 
         btn_buscar.setText("Buscar");
 
-        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria", "Estado del pago" }));
+        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria", "Estado del pago" }));
 
         btn_eliminar.setBackground(new java.awt.Color(51, 51, 51));
         btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));

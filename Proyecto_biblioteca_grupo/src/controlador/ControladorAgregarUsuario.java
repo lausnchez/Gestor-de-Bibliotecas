@@ -20,7 +20,7 @@ import vista.AgregarSocio;
 public class ControladorAgregarUsuario implements ActionListener{
     private AgregarSocio vista;
     private Socio modelo;
-    private Socio actualizarSocio;
+    private Socio actualizarSocio = null;
     
     
     // Contructores

@@ -125,4 +125,29 @@ public class ControllerUtils {
         } 
         return id;
     }
+    
+    /***
+     * Pide un id de una biblioteca y devuelve el nombre correspondiente
+     * @param idBiblioteca
+     * @return 
+     */
+    public static String nombreBiblioteca(int idBiblioteca){
+        String nombre = "";
+        Connection conexion = null;
+        PreparedStatement prepStat = null;
+        ResultSet rs = null;
+        try {
+            conexion = BaseDatos.obtenerConnection();
+            String sql = "SELECT nombre_biblio FROM bibliotecas WHERE id_biblio = ?;";
+            prepStat = conexion.prepareStatement(sql);
+            prepStat.setInt(1, idBiblioteca);
+            rs = prepStat.executeQuery();
+            if(rs.next()) nombre = rs.getString("nombre_biblio");
+            BaseDatos.cerrarConnection(conexion);
+        } catch (Exception e) {
+            System.err.println("No se encontró un resultado");
+            e.printStackTrace();
+        } 
+        return nombre;
+    }
 }

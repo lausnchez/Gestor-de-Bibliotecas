@@ -72,7 +72,7 @@ public class ControladorMostrarSocio implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.vista.getBtn_buscar()){
-            
+            buscarSocio();
         }
         if(e.getSource() == this.vista.getBtn_editar()){
             editarSocio();
@@ -81,7 +81,7 @@ public class ControladorMostrarSocio implements ActionListener{
             borrarSocio();
         }
         if(e.getSource() == this.vista.getBtn_agregarUsuario()){
-            new ControladorAgregarUsuario();
+            editarSocio();
         }
         if(e.getSource() == this.vista.getBtn_refresh()){
             actualizarTabla();
@@ -174,7 +174,14 @@ public class ControladorMostrarSocio implements ActionListener{
         if(this.vista.getTbl_clientes().getSelectedRow() != -1){
             Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0);
             Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
+            int idBiblio = Integer.parseInt(socioEncontrado.getBiblioteca());
+            socioEncontrado.setBiblioteca(ControllerUtils.nombreBiblioteca(idBiblio));
             new ControladorAgregarUsuario(socioEncontrado);
         }else JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
+    public void buscarSocio(){
+        
     }
 }
