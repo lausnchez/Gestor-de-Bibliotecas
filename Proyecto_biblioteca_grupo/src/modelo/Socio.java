@@ -330,7 +330,10 @@ public class Socio implements Comparable<Socio>{
                 boolean pago = rs.getBoolean("pago_soc");
 
                 socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
-            }else return null;
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -346,11 +349,27 @@ public class Socio implements Comparable<Socio>{
     }
 
     /**
+     * Transforma el resultado del método obtenerSocioPorID en una Lista de Socios
+     * @param socio
+     * @return 
+     */
+    public static List<Socio> buscarPorIDList(Socio socio){
+        List<Socio> resultado = new ArrayList<>();
+        if(socio != null){
+            resultado.add(socio);
+            return resultado;
+        }
+        else{
+            return null;
+        }
+    }
+    
+    /**
      * Método para obtener un socio por su DNI
      * @param idSocio
      * @return 
      */
-    public static Socio obtenerSocioPorDNI(String DNISocio) {
+    public static List<Socio> obtenerSocioPorDNI(String DNISocio) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -377,7 +396,10 @@ public class Socio implements Comparable<Socio>{
                 boolean pago = rs.getBoolean("pago_soc");
 
                 socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
-            }else return null;
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -389,7 +411,179 @@ public class Socio implements Comparable<Socio>{
                 e.printStackTrace();
             }
         }
-        return socioNuevo;
+        List<Socio> resultado = new ArrayList<>();
+        resultado.add(socioNuevo);
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener un socio por su teléfono
+     * @param buscar
+     * @return 
+     */
+    public static List<Socio> obtenerSocioPorTelefono(String buscar) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Socio> resultado = new ArrayList<>();
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM socios WHERE tlf_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String telefono = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                resultado.add(new Socio(id, biblioteca, dni, nombre, apellidos, telefono, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria));
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener un socio por su Email
+     * @param buscar
+     * @return 
+     */
+    public static List<Socio> obtenerSocioPorEmail(String buscar) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Socio> resultado = new ArrayList<>();
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM socios WHERE email_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("biblioteca_soc");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                resultado.add(new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria));
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener un socio por su Provincia
+     * @param buscar
+     * @return 
+     */
+    public static List<Socio> obtenerSocioPorProvincia(String buscar) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Socio> resultado = new ArrayList<>();
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+           /* String sql = "SELECT * FROM socios, bibliotecas"
+                    + " WHERE bibliotecas.id_biblio = socios.biblioteca_soc"
+                    + " AND provincia_soc = ?";
+            */
+           String sql = "select socios.id_soc,\n" +
+                " bibliotecas.nombre_biblio,\n" +
+                " socios.dni_soc,\n" +
+                " socios.nombre_soc,\n" +
+                " socios.apellidos_soc,\n" +
+                " socios.tlf_soc,\n" +
+                " socios.email_soc,\n" +
+                " socios.provincia_soc,\n" +
+                " socios.numSanciones_soc,\n" +
+                " socios.cuentaBancaria_soc,\n" +
+                " socios.pago_soc\n" +
+                " FROM socios, bibliotecas\n" +
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " AND provincia_soc = ?" +
+                " ORDER BY id_soc ASC;";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, buscar);
+            rs = stmt.executeQuery();
+            int contador = 0;
+            while(rs.next()){
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("bibliotecas.nombre_biblio");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                resultado.add(new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria));
+                contador++;
+            }
+            if(contador == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        };
+        return resultado;
     }
     
     /**
@@ -537,6 +731,70 @@ public class Socio implements Comparable<Socio>{
         }
         return listado;
     }
+    
+    /**
+     * Nos pasa un listado de socios buscando por nombre
+     * @param nombreBuscar
+     * @return 
+     */
+    public static List<Socio> obtenerSociosDNI(String nombreBuscar) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Socio socioNuevo = null;
+        List<Socio> listado = new ArrayList<>();
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "select socios.id_soc,\n" +
+                " bibliotecas.nombre_biblio,\n" +
+                " socios.dni_soc,\n" +
+                " socios.nombre_soc,\n" +
+                " socios.apellidos_soc,\n" +
+                " socios.tlf_soc,\n" +
+                " socios.email_soc,\n" +
+                " socios.provincia_soc,\n" +
+                " socios.numSanciones_soc,\n" +
+                " socios.cuentaBancaria_soc,\n" +
+                " socios.pago_soc\n" +
+                " FROM socios, bibliotecas\n" +
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " AND actual_soc = 1"+
+                " AND nombre_soc" +
+                " ORDER BY id_soc ASC;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("nombre_biblio");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
+                listado.add(socioNuevo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return listado;
+    }
+    
+    
     
     /**
      * Nos devuelve una lista de antiguos socios para importar a la ventana

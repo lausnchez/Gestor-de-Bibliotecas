@@ -72,7 +72,8 @@ public class ControladorMostrarSocio implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.vista.getBtn_buscar()){
-            buscarSocio();
+            if(!this.vista.getTxt_buscador().getText().trim().isEmpty()) 
+                buscarSocio();
         }
         if(e.getSource() == this.vista.getBtn_editar()){
             editarSocio();
@@ -148,6 +149,34 @@ public class ControladorMostrarSocio implements ActionListener{
         this.vista.getTbl_clientes().setModel(modeloTabla);
     }
     
+    /**
+     * Recibe una lista que filtra por un parámetro específico
+     */
+    public void agregarPorParametro(List<Socio> listadoSocios){
+        modeloTabla.setRowCount(0);  // Vaciar tabla
+        //Collections.sort(listadoSocios);
+        if(listadoSocios != null){
+            for(int i=0; i<listadoSocios.size(); i++){
+                Socio nuevoSocio = listadoSocios.get(i);
+                String pago;
+                if(nuevoSocio.isPago()) pago = "PAGADO"; else pago = "NO PAGADO";
+                this.modeloTabla.addRow(new Object[]{
+                    nuevoSocio.getId(),
+                    nuevoSocio.getDni(),
+                    nuevoSocio.getNombre().concat(" ").concat(nuevoSocio.getApellidos()),
+                    nuevoSocio.getTelefono(),
+                    nuevoSocio.getEmail(),
+                    nuevoSocio.getBiblioteca(),
+                    nuevoSocio.getProvincia(),
+                    nuevoSocio.getNumSanciones(),
+                    nuevoSocio.getCuentaBancaria(),
+                    pago       
+                });
+            }
+        }
+        this.vista.getTbl_clientes().setModel(modeloTabla);
+    }
+    
     //Métodos de borrar Socios
     public void borrarSocio(){
         int id = -1;
@@ -168,6 +197,7 @@ public class ControladorMostrarSocio implements ActionListener{
         }else
             JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     
     public void editarSocio(){
         int id = -1;
@@ -183,6 +213,41 @@ public class ControladorMostrarSocio implements ActionListener{
     
     
     public void buscarSocio(){
-        
+        int selector = this.vista.getcBox_filtro().getSelectedIndex();
+        String busqueda = this.vista.getTxt_buscador().getText().trim();
+        modeloTabla.setRowCount(0);
+        switch(selector){
+            case 0:     // Mostrar todos
+                agregarTodos();
+                break;
+            case 1:     // ID
+                int id = Integer.parseInt(busqueda);
+                agregarPorParametro(Socio.buscarPorIDList(Socio.obtenerSocioPorId(id)));
+                break;
+            case 2:     // Nombre completo
+                
+                break;
+            case 3:     // DNI
+                agregarPorParametro(Socio.obtenerSocioPorDNI(busqueda));
+                break;
+            case 4:     // Teléfono
+                agregarPorParametro(Socio.obtenerSocioPorTelefono(busqueda));
+                break;
+            case 5:     // Email
+                agregarPorParametro(Socio.obtenerSocioPorEmail(busqueda));
+                break;
+            case 6:     // Provincia
+                agregarPorParametro(Socio.obtenerSocioPorProvincia(busqueda));
+                break;
+            case 7:     // Número de sanciones
+                
+                break;
+            case 8:     // Cuenta bancaria
+                
+                break;
+            case 9:    // Estado del pago
+                
+                break;
+        }
     }
 }
