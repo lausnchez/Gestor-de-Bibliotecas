@@ -172,10 +172,11 @@ public class ControladorMostrarSocio implements ActionListener{
     public void editarSocio(){
         int id = -1;
         if(this.vista.getTbl_clientes().getSelectedRow() != -1){
-            Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0);
-            Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
+            Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0); // Cogemos la fila
+            Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);  // Creamos un socio con los datos seleccionados
+            System.out.println(socioEncontrado.getBiblioteca());
             int idBiblio = Integer.parseInt(socioEncontrado.getBiblioteca());
-            socioEncontrado.setBiblioteca(ControllerUtils.nombreBiblioteca(idBiblio));
+            //socioEncontrado.setBiblioteca(ControllerUtils.nombreBiblioteca(idBiblio));
             new ControladorAgregarUsuario(socioEncontrado);
         }else JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
     }

@@ -645,4 +645,55 @@ public class Socio implements Comparable<Socio>{
             }
         }
     }
+    
+    /**
+     * Edita un socio que le pasamos
+     * @param id ID original del usuario
+     * @param telefono Nuevo teléfono
+     * @param email Nuevo email
+     * @param provincia Nueva provincia
+     * @param biblioteca Nueva biblioteca
+     * @param cBancaria Nueva cuenta bancaria
+     */
+    public static void actualizarSocio(int id, String nombre, String telefono, String email, String provincia, String biblioteca, String cBancaria){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "UPDATE socios "
+                    + "SET tlf_soc = ?,"
+                    + "email_soc = ?,"
+                    + "cuentaBancaria_soc = ?,"
+                    + "provincia_soc = ?,"
+                    + "biblioteca_soc = ?"
+                    + "  WHERE id_soc = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, telefono);
+            stmt.setString(2, email);
+            stmt.setString(3, cBancaria);
+            stmt.setString(4, provincia);
+            stmt.setInt(5, Biblioteca.obtenerIDBibliotecaPorNombre(biblioteca));
+            stmt.setInt(6, id);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                String mensaje = "Nuevos datos del usuario:" +
+                "\nNombre: " + nombre +
+                "\nProvincia: " + provincia + 
+                "\nTelefono: " + telefono +
+                "\nEmail: " + email + "\n";
+                JOptionPane.showMessageDialog(null, mensaje, "Usuario actualizado", JOptionPane.INFORMATION_MESSAGE);
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

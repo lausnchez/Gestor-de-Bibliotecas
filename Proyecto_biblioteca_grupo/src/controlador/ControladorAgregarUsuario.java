@@ -39,6 +39,7 @@ public class ControladorAgregarUsuario implements ActionListener{
     // Actualizar
     public ControladorAgregarUsuario(Socio actualizarSocio){
         this.vista = new AgregarSocio();
+        this.actualizarSocio = actualizarSocio;
         this.modelo = new Socio();
         inicializarAL();
         // Ediciones de la vista
@@ -85,19 +86,45 @@ public class ControladorAgregarUsuario implements ActionListener{
     //--------------------------------------------------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.vista.getBtn_registrar()){
-            if(comprobarCampos()){
-                agregarCliente();
-            }  
-            else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
-                
-        }
-        if(e.getSource() == this.vista.getcBox_provincia()){
-            this.vista.getcBox_biblioteca().removeAllItems();
-            List<String> bibliotecas = Biblioteca.recogerBibliotecasPorProvincia(this.vista.getcBox_provincia().getSelectedItem().toString());
-            for(String valor: bibliotecas){
-                this.vista.getcBox_biblioteca().addItem(valor);
+        if(this.actualizarSocio == null){
+            if(e.getSource() == this.vista.getBtn_registrar()){
+                if(comprobarCampos()){
+                    agregarCliente();
+                }  
+                else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
+                }
+            if(e.getSource() == this.vista.getcBox_provincia()){
+                this.vista.getcBox_biblioteca().removeAllItems();
+                List<String> bibliotecas = Biblioteca.recogerBibliotecasPorProvincia(this.vista.getcBox_provincia().getSelectedItem().toString());
+                for(String valor: bibliotecas){
+                    this.vista.getcBox_biblioteca().addItem(valor);
+                }
             }
+        }else{
+            if(e.getSource() == this.vista.getBtn_registrar()){
+                System.out.println(this.actualizarSocio.getNombre());
+                    if(comprobarCampos()){
+                        actualizarSocio.setTelefono(this.vista.getTxt_telefono().getText().toString());
+                        actualizarSocio.setEmail(this.vista.getTxt_email().getText().toString());
+                        actualizarSocio.setProvincia(this.vista.getcBox_provincia().getSelectedItem().toString());
+                        Socio.actualizarSocio(this.actualizarSocio.getId(),
+                                this.vista.getTxt_nombre().getText() + " " + this.vista.getTxt_apellidos().getText(),
+                                this.vista.getTxt_telefono().getText(),
+                                this.vista.getTxt_email().getText(),
+                                this.vista.getcBox_provincia().getSelectedItem().toString(),
+                                this.vista.getcBox_biblioteca().getSelectedItem().toString(),
+                                this.vista.getTxt_cuentaBancaria().getText());
+                        this.vista.dispose();
+                    }  
+                    else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Actualización errónea",JOptionPane.ERROR_MESSAGE);
+                    }
+                if(e.getSource() == this.vista.getcBox_provincia()){
+                    this.vista.getcBox_biblioteca().removeAllItems();
+                    List<String> bibliotecas = Biblioteca.recogerBibliotecasPorProvincia(this.vista.getcBox_provincia().getSelectedItem().toString());
+                    for(String valor: bibliotecas){
+                        this.vista.getcBox_biblioteca().addItem(valor);
+                    }
+            }    
         }
     }
     
@@ -110,7 +137,6 @@ public class ControladorAgregarUsuario implements ActionListener{
     
     public Boolean comprobarCampos(){
        Boolean valido = true;
-       String error = "";
        
        this.vista.getLbl_dni().setForeground(Color.BLACK);
        this.vista.getLbl_nombre().setForeground(Color.BLACK);
@@ -123,42 +149,34 @@ public class ControladorAgregarUsuario implements ActionListener{
        
        if(this.vista.getTxt_dni().getText().isEmpty()){
           valido = false;
-           error.concat("Inserte un DNI\n");
            this.vista.getLbl_dni().setForeground(Color.red);
        }
        if(this.vista.getTxt_nombre().getText().isEmpty()){
            valido = false;
-           error.concat("Inserte un nombre\n");
            this.vista.getLbl_nombre().setForeground(Color.red);
        }
        if(this.vista.getTxt_apellidos().getText().isEmpty()){
            valido = false;
-           error.concat("Inserte apellidos\n");
            this.vista.getLbl_apellidos().setForeground(Color.red);
        }
        if(this.vista.getTxt_telefono().getText().isEmpty()){
            valido = false;
-           error.concat("Inserte un teléfono\n");
            this.vista.getLbl_telefono().setForeground(Color.red);
        }
        if(this.vista.getTxt_email().getText().isEmpty()){
            valido = false;
-           error.concat("Inserte un email\n");
            this.vista.getLbl_email().setForeground(Color.red);
        }
        if(this.vista.getTxt_cuentaBancaria().getText().isEmpty()){
            valido = false;
-           error.concat("Inserte una cuenta bancaria\n");
            this.vista.getLbl_cuentaBancaria().setForeground(Color.red);
        }
        if(this.vista.getcBox_provincia().getSelectedIndex() == 0){
            valido = false;
-           error.concat("Seleccione una provincia\n");
            this.vista.getLbl_provincia().setForeground(Color.red);
        }
-       if(this.vista.getcBox_biblioteca().getSelectedItem().equals(" ")){
+       if(this.vista.getcBox_biblioteca().getSelectedItem() == null){
            valido = false;
-           error.concat("Seleccione una biblioteca\n");
            this.vista.getLbl_biblioteca().setForeground(Color.red);
        }
        return valido; 

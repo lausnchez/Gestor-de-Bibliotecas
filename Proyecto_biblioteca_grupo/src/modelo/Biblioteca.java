@@ -149,7 +149,7 @@ public class Biblioteca {
      * @return 
      */
     public static Biblioteca obtenerBibliotecaPorId(int id) {
-        String sql = "SELECT * FROM bibliotecas WHERE id_biblioteca = " + id;
+        String sql = "SELECT * FROM bibliotecas WHERE id_biblio = " + id;
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             if (rs != null && rs.next()) {
@@ -164,6 +164,24 @@ public class Biblioteca {
         return null; // Si no se encuentra la biblioteca
     }
 
+    /**
+     * Nos pide un nombre de una biblioteca y nos devuelve su ID
+     * @param nombreBiblioteca
+     * @return 
+     */
+    public static int obtenerIDBibliotecaPorNombre(String nombreBiblioteca){
+        int id = -1;
+        String sql = "SELECT id_biblio FROM bibliotecas WHERE nombre_biblio LIKE \"" + nombreBiblioteca + "\"";
+        ResultSet rs = BaseDatos.ejecutarSelect(sql);
+        try {
+            while(rs != null && rs.next()){
+                id = rs.getInt("id_biblio");
+            }
+        } catch (SQLException e) {
+        }
+        return id;
+    }
+    
     /**
      * Método para obtener todas las Bibliotecas
      * Devuelve las bibliotecas
@@ -202,6 +220,7 @@ public class Biblioteca {
         return "Biblioteca{id=" + idBiblioteca + ", provincia='" + provincia + "', telefono='" + telefono + "'}";
     }
 
+    /*
     // Método principal para probar la clase
     public static void main(String[] args) {
         // Crear una biblioteca
