@@ -38,7 +38,6 @@ public class ControladorAgregarUsuario implements ActionListener{
         this.vista = new AgregarSocio();
         this.modelo = new Socio();
         inicializarAL();
-        System.out.println(actualizarSocio.getBiblioteca());
         // Ediciones de la vista
         this.vista.getBtn_registrar().setText("Actualizar");
         this.vista.getTxt_dni().setEnabled(false);

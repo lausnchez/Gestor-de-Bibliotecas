@@ -545,7 +545,6 @@ public class Socio implements Comparable<Socio>{
         List<Socio> listado = new ArrayList<>();
         try {
             conn = BaseDatos.obtenerConnection();
-            //String sql = "SELECT * FROM socios;";
             String sql = "select socios.id_soc,\n" +
                 " bibliotecas.nombre_biblio,\n" +
                 " socios.dni_soc,\n" +
@@ -558,7 +557,8 @@ public class Socio implements Comparable<Socio>{
                 " socios.cuentaBancaria_soc,\n" +
                 " socios.pago_soc\n" +
                 " FROM socios, bibliotecas\n" +
-                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio;";
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 

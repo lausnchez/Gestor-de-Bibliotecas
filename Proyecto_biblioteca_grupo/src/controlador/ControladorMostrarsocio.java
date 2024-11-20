@@ -127,7 +127,7 @@ public class ControladorMostrarSocio implements ActionListener{
     public void agregarTodos(){
         modeloTabla.setRowCount(0);  // Vaciar tabla
         List<Socio> listadoSocios = modelo.obtenerSocios();
-        Collections.sort(listadoSocios);
+        //Collections.sort(listadoSocios);
         for(int i=0; i<listadoSocios.size(); i++){
             Socio nuevoSocio = listadoSocios.get(i);
             String pago;
