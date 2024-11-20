@@ -81,7 +81,7 @@ public class ControladorMostrarSocio implements ActionListener{
             borrarSocio();
         }
         if(e.getSource() == this.vista.getBtn_agregarUsuario()){
-            editarSocio();
+            new ControladorAgregarUsuario();
         }
         if(e.getSource() == this.vista.getBtn_refresh()){
             actualizarTabla();

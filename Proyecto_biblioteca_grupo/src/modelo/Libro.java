@@ -8,7 +8,7 @@ package modelo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Biblioteca.UbiBiblio;
+import modelo.Biblioteca.UBICACION;
 
 /**
  *
@@ -22,11 +22,11 @@ public class Libro {
     private String genero;
     private String editorial;
     private float precio;
-    private UbiBiblio biblioteca;
+    private UBICACION biblioteca;
     private boolean disponible;
     
     // Constructor
-    public Libro(int id, String isbn, String titulo, String autor,String genero, String editorial,float precio, UbiBiblio biblioteca, boolean disponible) {
+    public Libro(int id, String isbn, String titulo, String autor,String genero, String editorial,float precio, UBICACION biblioteca, boolean disponible) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
@@ -94,11 +94,11 @@ public class Libro {
         this.precio = precio;
     }
 
-    public UbiBiblio getBiblioteca() {
+    public UBICACION getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UbiBiblio biblioteca) {
+    public void setBiblioteca(UBICACION biblioteca) {
         this.biblioteca = biblioteca;
     }
 
@@ -142,7 +142,7 @@ public class Libro {
                 String genero= rs.getString("genero_lib");
                 String editorial=rs.getString("editorial_lib");
                 float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
                 boolean disponible = rs.getBoolean("estado_lib");
                 return new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
             }
@@ -169,7 +169,7 @@ public class Libro {
                 String genero= rs.getString("genero_lib");
                 String editorial = rs.getString("editorial_lib");
                 float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
                 boolean disponible = rs.getBoolean("estado_lib");
                 libros.add(new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible));
             }
@@ -195,7 +195,7 @@ public class Libro {
                 String genero= rs.getString("genero_lib");
                 String editorial = rs.getString("editorial_lib");
                 float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
                 boolean disponible = rs.getBoolean("estado_lib");
                 return new Libro(id, isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
             }

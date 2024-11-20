@@ -8,8 +8,10 @@ package controlador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.BaseDatos;
+import modelo.Biblioteca;
 import modelo.Socio;
 import vista.AgregarSocio;
 
@@ -30,6 +32,13 @@ public class ControladorAgregarUsuario implements ActionListener{
         this.vista = new AgregarSocio();
         this.modelo = new Socio();
         inicializarAL();
+        // Volvar bibliotecas en el comboBox
+        this.vista.getcBox_biblioteca().removeAllItems();
+        List<String> bibliotecas = Biblioteca.recogerNombreBibliotecas();
+        for(String biblioteca: bibliotecas){
+            this.vista.getcBox_biblioteca().addItem(biblioteca);
+        }
+        
         this.vista.setVisible(true);
     }
     

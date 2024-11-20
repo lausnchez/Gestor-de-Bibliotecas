@@ -1,6 +1,7 @@
 
 import controlador.ControladorAgregarUsuario;
 import controlador.ControladorMostrarSocio;
+import modelo.Biblioteca;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
