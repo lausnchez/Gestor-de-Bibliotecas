@@ -23,17 +23,17 @@ DROP TABLE IF EXISTS `prestamos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prestamos` (
-  `idPrestamos` int NOT NULL,
-  `usuario` int NOT NULL,
-  `biblioteca` int NOT NULL,
-  `fecha` varchar(45) NOT NULL,
-  `libro` varchar(45) NOT NULL,
-  `estado` varchar(45) NOT NULL,
-  PRIMARY KEY (`idPrestamos`,`usuario`,`biblioteca`),
-  KEY `Usuario_idx` (`usuario`),
-  KEY `Biblioteca_idx` (`biblioteca`),
-  CONSTRAINT `Biblioteca_FK` FOREIGN KEY (`biblioteca`) REFERENCES `bibliotecas` (`idBibliotecas`),
-  CONSTRAINT `Usuario_FK` FOREIGN KEY (`usuario`) REFERENCES `clientes` (`idCliente`)
+  `id_prest` int NOT NULL,
+  `id_socio_prest` int NOT NULL,
+  `biblioteca_prest` int NOT NULL,
+  `fecha_prest` varchar(45) NOT NULL,
+  `libro_prest` varchar(45) NOT NULL,
+  `devuelto_prest` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_prest`,`id_socio_prest`,`biblioteca_prest`),
+  KEY `Biblioteca_idx` (`biblioteca_prest`),
+  KEY `Socios_DK_idx` (`id_socio_prest`),
+  CONSTRAINT `Biblioteca_FK` FOREIGN KEY (`biblioteca_prest`) REFERENCES `bibliotecas` (`id_biblio`),
+  CONSTRAINT `Socios_DK` FOREIGN KEY (`id_socio_prest`) REFERENCES `socios` (`id_soc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:34
+-- Dump completed on 2024-11-20 16:37:15

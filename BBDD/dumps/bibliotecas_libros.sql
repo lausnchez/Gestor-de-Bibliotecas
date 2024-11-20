@@ -23,17 +23,17 @@ DROP TABLE IF EXISTS `libros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `libros` (
-  `idLibros` int NOT NULL,
-  `bibliotecaAsociada` int NOT NULL,
-  `isbn` varchar(45) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `autor` int NOT NULL,
-  `editorial` varchar(45) NOT NULL,
-  `precio` int NOT NULL,
-  `estado` varchar(45) NOT NULL,
-  PRIMARY KEY (`idLibros`),
-  KEY `BibliotecaLibros_FK_idx` (`bibliotecaAsociada`),
-  CONSTRAINT `BibliotecaLibros_FK` FOREIGN KEY (`bibliotecaAsociada`) REFERENCES `bibliotecas` (`idBibliotecas`)
+  `idL_lib` int NOT NULL,
+  `biblioteca_lib` int NOT NULL,
+  `isbn_lib` varchar(45) NOT NULL,
+  `titulo_lib` varchar(45) NOT NULL,
+  `autor_lib` int NOT NULL,
+  `editorial_lib` varchar(45) NOT NULL,
+  `precio_lib` int NOT NULL,
+  `estado_lib` varchar(45) NOT NULL,
+  PRIMARY KEY (`idL_lib`),
+  KEY `BibliotecaLibros_FK_idx` (`biblioteca_lib`),
+  CONSTRAINT `BibliotecaLibros_FK` FOREIGN KEY (`biblioteca_lib`) REFERENCES `bibliotecas` (`id_biblio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:34
+-- Dump completed on 2024-11-20 16:37:15

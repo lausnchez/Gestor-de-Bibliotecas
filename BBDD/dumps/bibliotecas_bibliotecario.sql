@@ -23,15 +23,15 @@ DROP TABLE IF EXISTS `bibliotecario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bibliotecario` (
-  `idBibliotecario` int NOT NULL,
-  `bibliotecaAsociada` int NOT NULL,
-  `dni` varchar(45) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `apellidos` varchar(45) NOT NULL,
-  `usuario` int NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`idBibliotecario`)
+  `id_trab` int NOT NULL,
+  `biblioteca_trab` int NOT NULL,
+  `dni_trab` varchar(45) NOT NULL,
+  `nombre_trab` varchar(45) NOT NULL,
+  `apellidos_trab` varchar(45) NOT NULL,
+  `usuario_trab` int NOT NULL,
+  `telefono_trab` varchar(45) NOT NULL,
+  `email_trab` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_trab`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:34
+-- Dump completed on 2024-11-20 16:37:15
