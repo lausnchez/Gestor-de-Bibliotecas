@@ -205,7 +205,7 @@
     <Component class="javax.swing.JComboBox" name="cBox_filtro">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="10">
+          <StringArray count="9">
             <StringItem index="0" value="Mostrar todos"/>
             <StringItem index="1" value="ID"/>
             <StringItem index="2" value="Nombre completo"/>
@@ -215,7 +215,6 @@
             <StringItem index="6" value="Provincia"/>
             <StringItem index="7" value="N&#xfa;mero de Sanciones"/>
             <StringItem index="8" value="Cuenta Bancaria"/>
-            <StringItem index="9" value="Estado del pago"/>
           </StringArray>
         </Property>
       </Properties>
@@ -228,7 +227,7 @@
     <Component class="javax.swing.JButton" name="btn_eliminarUsuario">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="33" red="33" type="rgb"/>
+          <Color blue="0" green="0" red="66" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -239,7 +238,7 @@
     <Component class="javax.swing.JButton" name="btn_editarUsuario">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="33" red="33" type="rgb"/>
+          <Color blue="0" green="0" red="66" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -250,7 +249,7 @@
     <Component class="javax.swing.JButton" name="btn_agregarUsuario">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="33" red="33" type="rgb"/>
+          <Color blue="0" green="0" red="66" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>

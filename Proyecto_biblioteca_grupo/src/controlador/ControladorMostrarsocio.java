@@ -221,11 +221,13 @@ public class ControladorMostrarSocio implements ActionListener{
                 agregarTodos();
                 break;
             case 1:     // ID
-                int id = Integer.parseInt(busqueda);
-                agregarPorParametro(Socio.buscarPorIDList(Socio.obtenerSocioPorId(id)));
+                if(ControllerUtils.controlarInt(busqueda)){
+                    int id = Integer.parseInt(busqueda);
+                    agregarPorParametro(Socio.buscarPorIDList(Socio.obtenerSocioPorId(id)));
+                }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 2:     // Nombre completo
-                
+                agregarPorParametro(Socio.obtenerSocioPorNombreApellidos(busqueda));
                 break;
             case 3:     // DNI
                 agregarPorParametro(Socio.obtenerSocioPorDNI(busqueda));
@@ -239,14 +241,14 @@ public class ControladorMostrarSocio implements ActionListener{
             case 6:     // Provincia
                 agregarPorParametro(Socio.obtenerSocioPorProvincia(busqueda));
                 break;
-            case 7:     // Número de sanciones
-                
+            case 7:     // Número de sanciones 
+                if(ControllerUtils.controlarInt(busqueda)){
+                    int num = Integer.parseInt(busqueda);
+                    agregarPorParametro(Socio.obtenerSocioPorSanciones(num));
+                }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);                
                 break;
             case 8:     // Cuenta bancaria
-                
-                break;
-            case 9:    // Estado del pago
-                
+                agregarPorParametro(Socio.obtenerSocioPorCBancaria(busqueda));
                 break;
         }
     }

@@ -92,7 +92,7 @@ public class ControllerUtils {
      * @param valor
      * @return 
      */
-    public boolean controlarInt(String valor){
+    public static boolean controlarInt(String valor){
         try {
             Integer.parseInt(valor);
             return true;

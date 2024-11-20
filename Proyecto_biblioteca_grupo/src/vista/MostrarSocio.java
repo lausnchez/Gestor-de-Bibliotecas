@@ -98,17 +98,17 @@ public class MostrarSocio extends javax.swing.JFrame {
 
         btn_buscar.setText("Buscar");
 
-        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria", "Estado del pago" }));
+        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria" }));
 
-        btn_eliminarUsuario.setBackground(new java.awt.Color(51, 51, 51));
+        btn_eliminarUsuario.setBackground(new java.awt.Color(102, 0, 0));
         btn_eliminarUsuario.setForeground(new java.awt.Color(255, 255, 255));
         btn_eliminarUsuario.setText("Eliminar usuario");
 
-        btn_editarUsuario.setBackground(new java.awt.Color(51, 51, 51));
+        btn_editarUsuario.setBackground(new java.awt.Color(102, 0, 0));
         btn_editarUsuario.setForeground(new java.awt.Color(255, 255, 255));
         btn_editarUsuario.setText("Editar usuario");
 
-        btn_agregarUsuario.setBackground(new java.awt.Color(51, 51, 51));
+        btn_agregarUsuario.setBackground(new java.awt.Color(102, 0, 0));
         btn_agregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregarUsuario.setText("Agregar usuario");
 
