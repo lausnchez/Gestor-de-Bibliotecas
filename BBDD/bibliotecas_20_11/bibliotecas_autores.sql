@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bibliotecas
@@ -16,27 +18,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `informepagos`
+-- Table structure for table `autores`
 --
 
-DROP TABLE IF EXISTS `informepagos`;
+DROP TABLE IF EXISTS `autores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `informepagos` (
-  `idInformePagos` int NOT NULL,
-  `cliente` int NOT NULL,
-  `pagoRealizado` tinyint NOT NULL,
-  PRIMARY KEY (`idInformePagos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `autores` (
+  `id_aut` int NOT NULL AUTO_INCREMENT,
+  `nombre_aut` varchar(45) NOT NULL,
+  `email_aut` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_aut`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `informepagos`
+-- Dumping data for table `autores`
 --
 
-LOCK TABLES `informepagos` WRITE;
-/*!40000 ALTER TABLE `informepagos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `informepagos` ENABLE KEYS */;
+LOCK TABLES `autores` WRITE;
+/*!40000 ALTER TABLE `autores` DISABLE KEYS */;
+INSERT INTO `autores` VALUES (1,'Miguel de Cervantes','miguel.cervantes@example.com'),(2,'Gabriel García Márquez','gabriel.garcia@example.com'),(3,'Carlos Ruiz Zafón','carlos.ruiz@example.com'),(4,'George Orwell','george.orwell@example.com'),(5,'Antoine de Saint-Exupéry','antoine.saint@example.com'),(6,'Ken Follett','ken.follett@example.com'),(7,'Julio Cortázar','julio.cortazar@example.com'),(8,'Isabel Allende','isabel.allende@example.com');
+/*!40000 ALTER TABLE `autores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:34
+-- Dump completed on 2024-11-20 16:50:09

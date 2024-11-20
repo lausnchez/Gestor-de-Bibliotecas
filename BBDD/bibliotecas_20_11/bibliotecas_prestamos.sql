@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bibliotecas
@@ -16,35 +18,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `antiguosclientes`
+-- Table structure for table `prestamos`
 --
 
-DROP TABLE IF EXISTS `antiguosclientes`;
+DROP TABLE IF EXISTS `prestamos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `antiguosclientes` (
-  `idAntiguoCliente` int NOT NULL,
-  `bibliotecaAsociada` int NOT NULL,
-  `dni` varchar(45) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `apellidos` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `provincia` varchar(45) NOT NULL,
-  `ciudad` varchar(45) NOT NULL,
-  `calle` varchar(45) NOT NULL,
-  `cuentaBancaria` varchar(45) NOT NULL,
-  PRIMARY KEY (`idAntiguoCliente`)
+CREATE TABLE `prestamos` (
+  `id_prest` int NOT NULL,
+  `id_socio_prest` int NOT NULL,
+  `biblioteca_prest` int NOT NULL,
+  `fecha_prest` varchar(45) NOT NULL,
+  `libro_prest` varchar(45) NOT NULL,
+  `devuelto_prest` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_prest`,`id_socio_prest`,`biblioteca_prest`),
+  KEY `Biblioteca_idx` (`biblioteca_prest`),
+  KEY `Socios_DK_idx` (`id_socio_prest`),
+  CONSTRAINT `Biblioteca_FK` FOREIGN KEY (`biblioteca_prest`) REFERENCES `bibliotecas` (`id_biblio`),
+  CONSTRAINT `Socios_DK` FOREIGN KEY (`id_socio_prest`) REFERENCES `socios` (`id_soc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `antiguosclientes`
+-- Dumping data for table `prestamos`
 --
 
-LOCK TABLES `antiguosclientes` WRITE;
-/*!40000 ALTER TABLE `antiguosclientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `antiguosclientes` ENABLE KEYS */;
+LOCK TABLES `prestamos` WRITE;
+/*!40000 ALTER TABLE `prestamos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prestamos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-19 10:41:09
+-- Dump completed on 2024-11-20 16:50:09

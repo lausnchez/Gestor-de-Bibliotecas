@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bibliotecas
@@ -23,12 +25,12 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
-  `idUsuarios` int NOT NULL,
-  `nombreUsuario` varchar(45) NOT NULL,
-  `almacen` int NOT NULL,
-  PRIMARY KEY (`idUsuarios`),
-  KEY `almacen_FK_idx` (`almacen`),
-  CONSTRAINT `almacen_FK` FOREIGN KEY (`almacen`) REFERENCES `almacen` (`idAlmacen`)
+  `id_usu` int NOT NULL,
+  `nombre_usu` varchar(45) NOT NULL,
+  `almacen_usu` int NOT NULL,
+  PRIMARY KEY (`id_usu`),
+  KEY `almacen_FK_idx` (`almacen_usu`),
+  CONSTRAINT `almacen_FK` FOREIGN KEY (`almacen_usu`) REFERENCES `almacen` (`id_almacen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:34
+-- Dump completed on 2024-11-20 16:50:09

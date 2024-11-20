@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bibliotecas
@@ -16,30 +18,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `antiguosclientes`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `antiguosclientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `id_usu` int NOT NULL,
-  `nombre_usu` varchar(45) NOT NULL,
-  `almacen_usu` int NOT NULL,
-  PRIMARY KEY (`id_usu`),
-  KEY `almacen_FK_idx` (`almacen_usu`),
-  CONSTRAINT `almacen_FK` FOREIGN KEY (`almacen_usu`) REFERENCES `almacen` (`id_almacen`)
+CREATE TABLE `antiguosclientes` (
+  `idAntiguoCliente` int NOT NULL,
+  `bibliotecaAsociada` int NOT NULL,
+  `dni` varchar(45) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `apellidos` varchar(45) NOT NULL,
+  `telefono` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `provincia` varchar(45) NOT NULL,
+  `ciudad` varchar(45) NOT NULL,
+  `calle` varchar(45) NOT NULL,
+  `cuentaBancaria` varchar(45) NOT NULL,
+  PRIMARY KEY (`idAntiguoCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `antiguosclientes`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'laura.perez',1),(2,'mario.lopez',2),(3,'sofia.martinez',3),(4,'andres.garcia',4),(5,'maria.hernandez',5),(6,'pablo.jimenez',6),(7,'elena.ortega',7),(8,'carlos.santos',8),(9,'alicia.nunez',9),(10,'david.castillo',10),(11,'ana.ramirez',11),(12,'luis.gomez',12),(13,'carla.torres',13),(14,'manuel.luna',14),(15,'lucia.navarro',15),(16,'rafael.serrano',16),(17,'sonia.flores',17),(18,'diego.sanchez',18),(19,'marta.blanco',19),(20,'roberto.paredes',20),(21,'admin.lauraperez',21),(22,'admin.mariolopez',22),(23,'admin.sofiamartinez',23),(24,'admin.andresgarcia',24),(25,'admin.mariahernandez',25),(26,'admin.pablojimenez',26),(27,'admin.elenaortega',27),(28,'admin.carlossantos',28),(29,'admin.alicianunez',29),(30,'admin.davidcastillo',30);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `antiguosclientes` WRITE;
+/*!40000 ALTER TABLE `antiguosclientes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `antiguosclientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-19 10:41:08
+-- Dump completed on 2024-11-20 16:50:09

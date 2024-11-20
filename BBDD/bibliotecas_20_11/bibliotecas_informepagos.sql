@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bibliotecas
@@ -16,27 +18,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `almacen`
+-- Table structure for table `informepagos`
 --
 
-DROP TABLE IF EXISTS `almacen`;
+DROP TABLE IF EXISTS `informepagos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `almacen` (
-  `idAlmacen` int NOT NULL,
-  `password` varchar(45) NOT NULL,
-  PRIMARY KEY (`idAlmacen`)
+CREATE TABLE `informepagos` (
+  `id_ipa` int NOT NULL,
+  `cliente_ipa` int NOT NULL,
+  `estado_ipa` tinyint NOT NULL,
+  PRIMARY KEY (`id_ipa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `almacen`
+-- Dumping data for table `informepagos`
 --
 
-LOCK TABLES `almacen` WRITE;
-/*!40000 ALTER TABLE `almacen` DISABLE KEYS */;
-INSERT INTO `almacen` VALUES (1,'password123'),(2,'securePass456'),(3,'biblioteca789'),(4,'libros321'),(5,'claveBiblioteca'),(6,'passLibro23'),(7,'bookSecure90'),(8,'readLib456'),(9,'libAdmin12'),(10,'secureKey678'),(11,'access456'),(12,'shelfPass90'),(13,'libraryKey'),(14,'openBook!23'),(15,'readerSafe90'),(16,'guarded123'),(17,'pageSecure!56'),(18,'keyLibro$12'),(19,'safeLibrary90'),(20,'bookKey!88'),(21,'adminPass123'),(22,'adminSecure456'),(23,'manageLibrary789'),(24,'adminKey321'),(25,'controlLib56'),(26,'adminSecurePass789'),(27,'libraryAdmin987'),(28,'bookControl654'),(29,'adminAccess123'),(30,'libAdmin!456');
-/*!40000 ALTER TABLE `almacen` ENABLE KEYS */;
+LOCK TABLES `informepagos` WRITE;
+/*!40000 ALTER TABLE `informepagos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `informepagos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-14 16:40:35
+-- Dump completed on 2024-11-20 16:50:09
