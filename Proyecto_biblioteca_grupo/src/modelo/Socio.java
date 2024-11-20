@@ -538,6 +538,66 @@ public class Socio implements Comparable<Socio>{
         return listado;
     }
     
+    /**
+     * Nos devuelve una lista de antiguos socios para importar a la ventana
+     * @return 
+     */
+    public static List<Socio> obtenerAntiguosSocios() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Socio socioNuevo = null;
+        List<Socio> listado = new ArrayList<>();
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "select socios.id_soc,\n" +
+                " bibliotecas.nombre_biblio,\n" +
+                " socios.dni_soc,\n" +
+                " socios.nombre_soc,\n" +
+                " socios.apellidos_soc,\n" +
+                " socios.tlf_soc,\n" +
+                " socios.email_soc,\n" +
+                " socios.provincia_soc,\n" +
+                " socios.numSanciones_soc,\n" +
+                " socios.cuentaBancaria_soc,\n" +
+                " socios.pago_soc\n" +
+                " FROM socios, bibliotecas\n" +
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " AND actual_soc = 0" +
+                " ORDER BY id_soc ASC;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("nombre_biblio");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
+                listado.add(socioNuevo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return listado;
+    }
+    
     public static void eliminarSocio(int id){
         /*
         BORRADO FISICO ---------------------------------------------------------

@@ -1,5 +1,6 @@
 
 import controlador.ControladorAgregarUsuario;
+import controlador.ControladorMostrarAntiguosSocios;
 import controlador.ControladorMostrarSocio;
 import modelo.Biblioteca;
 
@@ -15,6 +16,6 @@ import modelo.Biblioteca;
  */
 public class main {
     public static void main(String[] args) {
-        new ControladorMostrarSocio();
+        new ControladorMostrarAntiguosSocios();
     }
 }
