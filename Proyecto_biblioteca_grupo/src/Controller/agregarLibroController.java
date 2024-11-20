@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Libro;
 import vista.agregarLibro;
+import modelo.Biblioteca;
 
 /**
  *
@@ -18,10 +19,12 @@ import vista.agregarLibro;
 public class agregarLibroController implements ActionListener{
     private agregarLibro vista;
     private Libro libroModelo;
+    private Biblioteca biblioteca;
 
     public agregarLibroController(agregarLibro vista,Libro libroModelo) {
         this.vista = vista;
         this.libroModelo = libroModelo;
+        this.biblioteca=biblioteca;
 
         // añadir los eventos a los botones
         
@@ -34,86 +37,41 @@ public class agregarLibroController implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == this.vista.getBtn_agregarLibro()) {
+   if (e.getSource() == this.vista.getBtn_agregarLibro()) {
         System.out.println("Has pulsado el botón de agregar");
 
-        // Obtención de datos de la vista
         try {
-            String isbn = vista.getTxt_isbn().getText().trim();
-            String titulo = vista.getTxt_titulo().getText().trim();
-            String autor = vista.getTxt_autor().getText().trim();
-            String editorial = (String) vista.getcBox_editorial().getSelectedItem();
-            String precioStr = vista.getTxt_precio().getText().trim();
-            boolean disponible = vista.getrBtn_disponible().isSelected();
-
-            // Validar que los campos no estén vacíos
-            if (isbn.isEmpty() || titulo.isEmpty() || autor.isEmpty() || editorial == null || precioStr.isEmpty()) {
-                JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.",
-                        "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
-                return; // Salir si algún campo está vacío
-            }
-
-            // Validar el precio
-            float precio;
-            try {
-                precio = Float.parseFloat(precioStr);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(vista, "Por favor ingrese un valor numérico válido en el precio.",
-                        "Error en el Precio", JOptionPane.ERROR_MESSAGE);
-                return; // Salir si el precio no es válido
-            }
-
             // Obtener la provincia seleccionada
             String provinciaSeleccionada = (String) vista.getcBox_ubicacion().getSelectedItem();
-            provinciaSeleccionada = provinciaSeleccionada.trim();
-              System.out.println("Provincia seleccionada: " + provinciaSeleccionada);
+            provinciaSeleccionada = provinciaSeleccionada != null ? provinciaSeleccionada.trim() : null;
 
-            // Verificar que la provincia seleccionada no sea vacía o nula
-            if (provinciaSeleccionada != null && !provinciaSeleccionada.isEmpty()) {
-                // Obtener el ID de la biblioteca de la provincia seleccionada
-                int bibliotecaId = obtenerIdBibliotecaPorProvincia(provinciaSeleccionada);
- System.out.println("ID de la biblioteca: " + bibliotecaId);
-
-                // Verificar si se obtuvo un ID válido (diferente de 0)
-                if (bibliotecaId != 0) {
-                    // Establecer los valores en el modelo
-                    libroModelo.setIsbn(isbn);
-                    libroModelo.setTitulo(titulo);
-                    libroModelo.setAutor(autor);
-                    libroModelo.setEditorial(editorial);
-                    libroModelo.setPrecio(precio);
-                    libroModelo.setDisponible(disponible);
-                    libroModelo.setBiblioteca(bibliotecaId);  // Asignar el ID de la biblioteca
-
-                    // Llamar al método para agregar el libro en el modelo
-                    libroModelo.agregarLibro();
-
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(vista, "El libro se ha agregado con éxito.",
-                            "Libro Agregado", JOptionPane.INFORMATION_MESSAGE);
-
-                    // Limpiar los campos de la vista después de agregar el libro
-                    vista.getTxt_isbn().setText("");
-                    vista.getTxt_titulo().setText("");
-                    vista.getTxt_autor().setText("");
-                    vista.getTxt_precio().setText("");
-                    vista.getcBox_editorial().setSelectedIndex(0);
-                    vista.getrBtn_disponible().setSelected(true);
-                } else {
-                    JOptionPane.showMessageDialog(vista, "No se encontró la biblioteca para la provincia seleccionada.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
+            // Validar que la provincia seleccionada no sea vacía o nula
+            if (provinciaSeleccionada == null || provinciaSeleccionada.isEmpty()) {
                 JOptionPane.showMessageDialog(vista, "Por favor, selecciona una provincia válida.",
                         "Provincia Inválida", JOptionPane.ERROR_MESSAGE);
+                return; // Salir del método si la provincia no es válida
             }
 
+            System.out.println("Provincia seleccionada: " + provinciaSeleccionada);
+
+            // Resto del código para procesar el libro
+            int bibliotecaId = biblioteca.obtenerIdBibliotecaPorProvincia(provinciaSeleccionada);
+            System.out.println("ID de la biblioteca: " + bibliotecaId);
+
+            // Validar que el ID de la biblioteca sea válido
+            if (bibliotecaId == 0) {
+                JOptionPane.showMessageDialog(vista, "No se encontró la biblioteca para la provincia seleccionada.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // (Continúa con la lógica para agregar el libro)
         } catch (Exception ex) {
-            // Captura cualquier excepción inesperada
+            // Manejo de errores
             JOptionPane.showMessageDialog(vista, "Ha ocurrido un error al agregar el libro: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace(); // Esto es útil para depurar, se puede quitar en producción
+            ex.printStackTrace();
         }
-    }
+   }
     }
 }

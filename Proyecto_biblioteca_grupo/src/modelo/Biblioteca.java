@@ -92,7 +92,10 @@ public class Biblioteca {
     
     
 public int obtenerIdBibliotecaPorProvincia(String provincia) {
-
+        if (provincia == null || provincia.isEmpty()) {
+        throw new IllegalArgumentException("La provincia no puede ser nula o vacía.");
+    }
+    int idBiblioteca = 0;
     // Consulta SQL para obtener el ID de la biblioteca a partir de la provincia
     String sql = "SELECT idBibliotecas FROM bibliotecas WHERE provincia = ?";
 
