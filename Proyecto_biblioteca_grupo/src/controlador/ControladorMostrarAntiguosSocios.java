@@ -8,6 +8,7 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Socio;
 import vista.MostrarAntiguosSocios;
@@ -126,7 +127,72 @@ public class ControladorMostrarAntiguosSocios implements ActionListener{
         this.vista.getTbl_clientes().setModel(modeloTabla);
     }
     
+    /**
+     * Recibe una lista que filtra por un parámetro específico
+     */
+    public void agregarPorParametro(List<Socio> listadoSocios){
+        modeloTabla.setRowCount(0);  // Vaciar tabla
+        //Collections.sort(listadoSocios);
+        if(listadoSocios != null){
+            for(int i=0; i<listadoSocios.size(); i++){
+                Socio nuevoSocio = listadoSocios.get(i);
+                String pago;
+                if(nuevoSocio.isPago()) pago = "PAGADO"; else pago = "NO PAGADO";
+                this.modeloTabla.addRow(new Object[]{
+                    nuevoSocio.getId(),
+                    nuevoSocio.getDni(),
+                    nuevoSocio.getNombre().concat(" ").concat(nuevoSocio.getApellidos()),
+                    nuevoSocio.getTelefono(),
+                    nuevoSocio.getEmail(),
+                    nuevoSocio.getBiblioteca(),
+                    nuevoSocio.getProvincia(),
+                    nuevoSocio.getNumSanciones(),
+                    nuevoSocio.getCuentaBancaria(),
+                    pago       
+                });
+            }
+        }
+        this.vista.getTbl_clientes().setModel(modeloTabla);
+    }
+    
     public void buscarSocio(){
-        
+        int selector = this.vista.getcBox_filtro().getSelectedIndex();
+        String busqueda = this.vista.getTxt_buscador().getText().trim();
+        modeloTabla.setRowCount(0);
+        switch(selector){
+            case 0:     // Mostrar todos
+                agregarTodos();
+                break;
+            case 1:     // ID
+                if(ControllerUtils.controlarInt(busqueda)){
+                    int id = Integer.parseInt(busqueda);
+                    agregarPorParametro(Socio.buscarPorIDList(Socio.obtenerSocioPorId(id)));
+                }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case 2:     // Nombre completo
+                agregarPorParametro(Socio.obtenerSocioPorNombreApellidos(busqueda, false));
+                break;
+            case 3:     // DNI
+                agregarPorParametro(Socio.obtenerSocioPorDNI(busqueda, false));
+                break;
+            case 4:     // Teléfono
+                agregarPorParametro(Socio.obtenerSocioPorTelefono(busqueda, false));
+                break;
+            case 5:     // Email
+                agregarPorParametro(Socio.obtenerSocioPorEmail(busqueda, false));
+                break;
+            case 6:     // Provincia
+                agregarPorParametro(Socio.obtenerSocioPorProvincia(busqueda, false));
+                break;
+            case 7:     // Número de sanciones 
+                if(ControllerUtils.controlarInt(busqueda)){
+                    int num = Integer.parseInt(busqueda);
+                    agregarPorParametro(Socio.obtenerSocioPorSanciones(num));
+                }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);                
+                break;
+            case 8:     // Cuenta bancaria
+                agregarPorParametro(Socio.obtenerSocioPorCBancaria(busqueda, false));
+                break;
+        }
     }
 }

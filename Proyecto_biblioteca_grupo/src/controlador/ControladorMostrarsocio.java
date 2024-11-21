@@ -227,19 +227,19 @@ public class ControladorMostrarSocio implements ActionListener{
                 }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 2:     // Nombre completo
-                agregarPorParametro(Socio.obtenerSocioPorNombreApellidos(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorNombreApellidos(busqueda, true));
                 break;
             case 3:     // DNI
-                agregarPorParametro(Socio.obtenerSocioPorDNI(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorDNI(busqueda, true));
                 break;
             case 4:     // Teléfono
-                agregarPorParametro(Socio.obtenerSocioPorTelefono(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorTelefono(busqueda, true));
                 break;
             case 5:     // Email
-                agregarPorParametro(Socio.obtenerSocioPorEmail(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorEmail(busqueda, true));
                 break;
             case 6:     // Provincia
-                agregarPorParametro(Socio.obtenerSocioPorProvincia(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorProvincia(busqueda, true));
                 break;
             case 7:     // Número de sanciones 
                 if(ControllerUtils.controlarInt(busqueda)){
@@ -248,7 +248,7 @@ public class ControladorMostrarSocio implements ActionListener{
                 }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);                
                 break;
             case 8:     // Cuenta bancaria
-                agregarPorParametro(Socio.obtenerSocioPorCBancaria(busqueda));
+                agregarPorParametro(Socio.obtenerSocioPorCBancaria(busqueda, true));
                 break;
         }
     }

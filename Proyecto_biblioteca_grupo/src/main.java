@@ -16,6 +16,7 @@ import modelo.Biblioteca;
  */
 public class main {
     public static void main(String[] args) {
-        new ControladorMostrarSocio();
+        //new ControladorMostrarSocio();
+        new ControladorMostrarAntiguosSocios();
     }
 }

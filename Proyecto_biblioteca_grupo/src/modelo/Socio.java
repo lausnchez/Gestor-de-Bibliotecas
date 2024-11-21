@@ -369,7 +369,7 @@ public class Socio implements Comparable<Socio>{
      * @param idSocio
      * @return 
      */
-    public static List<Socio> obtenerSocioPorDNI(String DNISocio) {
+    public static List<Socio> obtenerSocioPorDNI(String DNISocio, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -377,9 +377,10 @@ public class Socio implements Comparable<Socio>{
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM socios WHERE dni_soc LIKE ?";
+            String sql = "SELECT * FROM socios WHERE dni_soc LIKE ? AND actual_soc = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + DNISocio + "%");
+            stmt.setBoolean(2, actual);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -421,7 +422,7 @@ public class Socio implements Comparable<Socio>{
      * @param buscar
      * @return 
      */
-    public static List<Socio> obtenerSocioPorTelefono(String buscar) {
+    public static List<Socio> obtenerSocioPorTelefono(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -429,9 +430,10 @@ public class Socio implements Comparable<Socio>{
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM socios WHERE tlf_soc LIKE ?";
+            String sql = "SELECT * FROM socios WHERE tlf_soc LIKE \"%?%\" AND actual_soc = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + buscar + "%");
+            stmt.setBoolean(2, actual);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -471,7 +473,7 @@ public class Socio implements Comparable<Socio>{
      * @param buscar
      * @return 
      */
-    public static List<Socio> obtenerSocioPorEmail(String buscar) {
+    public static List<Socio> obtenerSocioPorEmail(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -479,27 +481,25 @@ public class Socio implements Comparable<Socio>{
 
         try {
             conn = BaseDatos.obtenerConnection();
-           /* String sql = "SELECT * FROM socios, bibliotecas"
-                    + " WHERE bibliotecas.id_biblio = socios.biblioteca_soc"
-                    + " AND provincia_soc = ?";
-            */
-           String sql = "select socios.id_soc,\n" +
-                " bibliotecas.nombre_biblio,\n" +
-                " socios.dni_soc,\n" +
-                " socios.nombre_soc,\n" +
-                " socios.apellidos_soc,\n" +
-                " socios.tlf_soc,\n" +
-                " socios.email_soc,\n" +
-                " socios.provincia_soc,\n" +
-                " socios.numSanciones_soc,\n" +
-                " socios.cuentaBancaria_soc,\n" +
-                " socios.pago_soc\n" +
-                " FROM socios, bibliotecas\n" +
-                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
-                " AND email_soc LIKE ?" +
-                " ORDER BY id_soc ASC;";
+           String sql = "SELECT socios.id_soc,"
+                    + " bibliotecas.nombre_biblio,"
+                    + " socios.dni_soc,"
+                    + " socios.nombre_soc,"
+                    + " socios.apellidos_soc,"
+                    + " socios.tlf_soc,"
+                    + " socios.email_soc,"
+                    + " socios.provincia_soc,"
+                    + " socios.numSanciones_soc,"
+                    + " socios.cuentaBancaria_soc,"
+                    + " socios.pago_soc "
+                    + "FROM socios, bibliotecas "
+                    + "WHERE socios.biblioteca_soc = bibliotecas.id_biblio "
+                    + "AND email_soc LIKE ? "
+                    + " AND actual_soc = ?"
+                    + " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + buscar + "%");
+            stmt.setBoolean(2, actual);
             rs = stmt.executeQuery();
             int contador = 0;
             while(rs.next()){
@@ -541,34 +541,32 @@ public class Socio implements Comparable<Socio>{
      * @param buscar
      * @return 
      */
-    public static List<Socio> obtenerSocioPorProvincia(String buscar) {
+    public static List<Socio> obtenerSocioPorProvincia(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Socio> resultado = new ArrayList<>();
         try {
             conn = BaseDatos.obtenerConnection();
-           /* String sql = "SELECT * FROM socios, bibliotecas"
-                    + " WHERE bibliotecas.id_biblio = socios.biblioteca_soc"
-                    + " AND provincia_soc = ?";
-            */
-           String sql = "select socios.id_soc,\n" +
-                " bibliotecas.nombre_biblio,\n" +
-                " socios.dni_soc,\n" +
-                " socios.nombre_soc,\n" +
-                " socios.apellidos_soc,\n" +
-                " socios.tlf_soc,\n" +
-                " socios.email_soc,\n" +
-                " socios.provincia_soc,\n" +
-                " socios.numSanciones_soc,\n" +
-                " socios.cuentaBancaria_soc,\n" +
-                " socios.pago_soc\n" +
-                " FROM socios, bibliotecas\n" +
-                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
-                " AND provincia_soc LIKE ?" +
-                " ORDER BY id_soc ASC;";
+           String sql = "SELECT socios.id_soc,"
+                    + " bibliotecas.nombre_biblio,"
+                    + " socios.dni_soc,"
+                    + " socios.nombre_soc,"
+                    + " socios.apellidos_soc,"
+                    + " socios.tlf_soc,"
+                    + " socios.email_soc,"
+                    + " socios.provincia_soc,"
+                    + " socios.numSanciones_soc,"
+                    + " socios.cuentaBancaria_soc,"
+                    + " socios.pago_soc "
+                    + "FROM socios, bibliotecas "
+                    + "WHERE socios.biblioteca_soc = bibliotecas.id_biblio "
+                    + "AND provincia_soc LIKE ? "
+                    + " AND actual_soc = ?"
+                    + " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + buscar + "%");
+            stmt.setBoolean(2, actual);
             rs = stmt.executeQuery();
             int contador = 0;
             while(rs.next()){
@@ -611,30 +609,33 @@ public class Socio implements Comparable<Socio>{
      * @param buscar
      * @return 
      */
-    public static List<Socio> obtenerSocioPorCBancaria(String buscar) {
+    public static List<Socio> obtenerSocioPorCBancaria(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Socio> resultado = new ArrayList<>();
         try {
             conn = BaseDatos.obtenerConnection();
-           String sql = "select socios.id_soc,\n" +
-                " bibliotecas.nombre_biblio,\n" +
-                " socios.dni_soc,\n" +
-                " socios.nombre_soc,\n" +
-                " socios.apellidos_soc,\n" +
-                " socios.tlf_soc,\n" +
-                " socios.email_soc,\n" +
-                " socios.provincia_soc,\n" +
-                " socios.numSanciones_soc,\n" +
-                " socios.cuentaBancaria_soc,\n" +
-                " socios.pago_soc\n" +
-                " FROM socios, bibliotecas\n" +
-                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
-                " AND cuentaBancaria_soc LIKE ?" +
-                " ORDER BY id_soc ASC;";
+            String sql = "SELECT socios.id_soc,"
+                    + " bibliotecas.nombre_biblio,"
+                    + " socios.dni_soc,"
+                    + " socios.nombre_soc,"
+                    + " socios.apellidos_soc,"
+                    + " socios.tlf_soc,"
+                    + " socios.email_soc,"
+                    + " socios.provincia_soc,"
+                    + " socios.numSanciones_soc,"
+                    + " socios.cuentaBancaria_soc,"
+                    + " socios.pago_soc "
+                    + "FROM socios, bibliotecas "
+                    + "WHERE socios.biblioteca_soc = bibliotecas.id_biblio "
+                    + "AND (nombre_soc LIKE ? OR apellidos_soc LIKE ?)"
+                    + " AND actual_soc = ?"
+                    + " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + buscar + "%");
+            stmt.setString(2, "%" + buscar + "%");
+            stmt.setBoolean(3, actual);
             rs = stmt.executeQuery();
             int contador = 0;
             while(rs.next()){
@@ -676,7 +677,7 @@ public class Socio implements Comparable<Socio>{
      * @param buscar
      * @return 
      */
-    public static List<Socio> obtenerSocioPorNombreApellidos(String buscar) {
+    public static List<Socio> obtenerSocioPorNombreApellidos(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -700,11 +701,13 @@ public class Socio implements Comparable<Socio>{
                  " socios.pago_soc\n" +
                  " FROM socios\n" +
                  " INNER JOIN bibliotecas ON socios.biblioteca_soc = bibliotecas.id_biblio\n" +
-                 " WHERE LOWER(nombre_soc) LIKE LOWER(?) OR LOWER(apellidos_soc) LIKE LOWER(?)\n" +
+                 " WHERE (LOWER(nombre_soc) LIKE LOWER(?) OR LOWER(apellidos_soc) LIKE LOWER(?))" +
+                 " AND actual_soc = ?" +
                  " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + buscar + "%");
             stmt.setString(2, "%" + buscar + "%");
+            stmt.setBoolean(3, actual);
             rs = stmt.executeQuery();
             int contador = 0;
             while(rs.next()){
