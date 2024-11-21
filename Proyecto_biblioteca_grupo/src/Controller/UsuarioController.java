@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 import vista.MenuAdminView;
+import vista.MenuView;
 import vista.librosView;
 import vista.usuarioLoginView;
 
@@ -21,11 +22,11 @@ public class UsuarioController implements ActionListener{
     
     private usuarioLoginView usuarioView;
     private MenuAdminView vistaMenuAdmin;
+    private MenuView menuView;
 
     public UsuarioController(usuarioLoginView usuarioView) {
         this.usuarioView = usuarioView;
-        this.vistaMenuAdmin=vistaMenuAdmin;
-       //Añador los eventos actionListener para que se puedan usar los botones
+        // Añadir el actionListener para el botón de acceso
         this.usuarioView.getBtn_acceder().addActionListener(this);
         this.usuarioView.setVisible(true);
     }
@@ -36,18 +37,26 @@ public class UsuarioController implements ActionListener{
             String nombreUsuario = usuarioView.getTxt_usuario().getText();
             String password = usuarioView.getTxt_contrasenia().getText();
             String tipoUsuario = (String) usuarioView.getcBox_login().getSelectedItem();
-            
+
             // Convertir el tipo de usuario a un tipo del modelo (ADMINISTRADOR o BIBLIOTECARIO)
             Usuario.TIPO tipo = tipoUsuario.equals("ADMINISTRADOR/A") ? Usuario.TIPO.ADMINISTRADOR : Usuario.TIPO.TRABAJADOR;
 
-
+            // Autenticar al usuario
             if (Usuario.autenticarUsuario(nombreUsuario, password)) {
                 JOptionPane.showMessageDialog(usuarioView, "¡Bienvenido, " + nombreUsuario + "!", "Inicio de sesión exitoso", JOptionPane.INFORMATION_MESSAGE);
-                
                 usuarioView.dispose(); // Cerrar la ventana de login
-            MenuAdminView vistaMenuAdmin = new MenuAdminView();
-            MenuAdminController controller = new MenuAdminController(vistaMenuAdmin);
-            vistaMenuAdmin.setVisible(true);
+
+                // Si es ADMINISTRADOR/A, mostrar el menú de administrador
+                if (tipo == Usuario.TIPO.ADMINISTRADOR) {
+                    vistaMenuAdmin = new MenuAdminView();
+                    MenuAdminController controllerAdmin = new MenuAdminController(vistaMenuAdmin);
+                    vistaMenuAdmin.setVisible(true);
+                }
+                // Si es BIBLIOTECARIO/A, mostrar el menú de bibliotecario
+                else if (tipo == Usuario.TIPO.TRABAJADOR) {
+                    menuView = new MenuView();
+                    menuView.setVisible(true);
+                }
             } else {
                 // Si la autenticación falla
                 JOptionPane.showMessageDialog(usuarioView, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
