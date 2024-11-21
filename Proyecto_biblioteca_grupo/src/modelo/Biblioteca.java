@@ -23,12 +23,10 @@ public class Biblioteca {
         SEVILLA("Sevilla"),
         ZARAGOZA("Zaragoza"),
         MALAGA("Málaga"),
-        CORDOBA("Córdoba"),
-        ALMERIA("Almería"),
-        TOLEDO("Toledo"),
-        BILBAO("Bilbao"),
-        CEUTA("Ceuta"),
-        MELILLA("Melilla");
+        CORDOBA("Alicante"),
+        ALMERIA("Murcia"),
+        TOLEDO("Granada"),
+        BILBAO("Córdoba");
 
         private final String nombre;
 
