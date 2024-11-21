@@ -32,9 +32,9 @@ CREATE TABLE `prestamos` (
   `libro_prest` varchar(45) NOT NULL,
   `devuelto_prest` varchar(45) NOT NULL,
   PRIMARY KEY (`id_prest`,`id_socio_prest`,`biblioteca_prest`),
-  KEY `Biblioteca_idx` (`biblioteca_prest`),
   KEY `Socios_DK_idx` (`id_socio_prest`),
-  CONSTRAINT `Biblioteca_FK` FOREIGN KEY (`biblioteca_prest`) REFERENCES `bibliotecas` (`id_biblio`),
+  KEY `Biblioteca_DK_idx` (`biblioteca_prest`),
+  CONSTRAINT `Biblioteca_DK` FOREIGN KEY (`biblioteca_prest`) REFERENCES `bibliotecas` (`id_biblio`),
   CONSTRAINT `Socios_DK` FOREIGN KEY (`id_socio_prest`) REFERENCES `socios` (`id_soc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-21 17:13:49
+-- Dump completed on 2024-11-21 22:38:32

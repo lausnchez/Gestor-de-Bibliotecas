@@ -34,8 +34,8 @@ CREATE TABLE `libros` (
   `precio_lib` int NOT NULL,
   `estado_lib` varchar(45) NOT NULL,
   PRIMARY KEY (`idL_lib`),
-  KEY `BibliotecaLibros_FK_idx` (`biblioteca_lib`),
-  CONSTRAINT `BibliotecaLibros_FK` FOREIGN KEY (`biblioteca_lib`) REFERENCES `bibliotecas` (`id_biblio`)
+  KEY `BibliotecasLibros_FK_idx` (`biblioteca_lib`),
+  CONSTRAINT `BibliotecasLibros_FK` FOREIGN KEY (`biblioteca_lib`) REFERENCES `bibliotecas` (`id_biblio`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-21 17:13:50
+-- Dump completed on 2024-11-21 22:38:32

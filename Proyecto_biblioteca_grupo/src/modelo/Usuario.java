@@ -95,7 +95,7 @@ public class Usuario {
 
         try {
             conn = BaseDatos.obtenerConnection();
-           String sql = "SELECT id_usu, nombre_usu, password_almacen " +
+            String sql = "SELECT id_usu, nombre_usu, password_almacen " +
                      "FROM usuarios " +
                      "JOIN almacen ON usuarios.almacen_usu = almacen.id_almacen " +
                      "WHERE nombre_usu = ? AND almacen.password_almacen = ?";
