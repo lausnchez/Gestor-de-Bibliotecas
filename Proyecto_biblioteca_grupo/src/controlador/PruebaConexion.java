@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controlador;
 import modelo.BaseDatos; // Importa tu clase de conexión
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Biblioteca.UbiBiblio;
+import modelo.Biblioteca.UBICACION;
 
 /**
  *
@@ -26,10 +26,10 @@ public class Usuario {
     private TIPO tipo;
     private String nombre;
     private String password;
-    private UbiBiblio biblioteca;
+    private UBICACION biblioteca;
 
     // Constructor
-    public Usuario(int id, TIPO tipo, String nombre, String password, UbiBiblio biblioteca) {
+    public Usuario(int id, TIPO tipo, String nombre, String password, UBICACION biblioteca) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -70,11 +70,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public UbiBiblio getBiblioteca() {
+    public UBICACION getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UbiBiblio biblioteca) {
+    public void setBiblioteca(UBICACION biblioteca) {
         this.biblioteca = biblioteca;
     }
     
@@ -146,7 +146,7 @@ public class Usuario {
                 String nombre = rs.getString("nombre_us");
                 String password = rs.getString("password");
                 TIPO tipo = TIPO.valueOf(rs.getString("tipo_us"));
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_usu").toUpperCase());
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_usu").toUpperCase());
 
                 usuario = new Usuario(id, tipo, nombre,password,biblioteca);
             }
@@ -251,7 +251,7 @@ public class Usuario {
                 String nombre = rs.getString("nombre_us");
                 String usuario = rs.getString("usuario");
                 String password = rs.getString("password");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_usu").toUpperCase());
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_usu").toUpperCase());
                 TIPO tipo = TIPO.valueOf(rs.getString("tipo_us"));
 
                 Usuario nuevoUsuario = new Usuario(id, tipo, nombre, password, biblioteca);

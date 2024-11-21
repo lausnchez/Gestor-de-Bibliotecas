@@ -19,14 +19,14 @@ import vista.MostrarSocio;
  *
  * @author Laura Sánchez
  */
-public class ControladorMostrarSocio implements ActionListener{
+public class ControladorMostrarsocio implements ActionListener{
     private MostrarSocio vista;
     private Socio modelo;
     private DefaultTableModel modeloTabla;
 
     // Constructores
     //--------------------------------------------------------------------------
-    public ControladorMostrarSocio() {
+    public ControladorMostrarsocio() {
         this.vista = new MostrarSocio();
         this.modelo = new Socio();
         this.modeloTabla = null;
