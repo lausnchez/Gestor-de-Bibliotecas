@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `administradores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `administradores` (
-  `id_admin` int NOT NULL,
+  `id_admin` int NOT NULL AUTO_INCREMENT,
   `biblioteca_admin` int NOT NULL,
   `dni_admin` varchar(45) NOT NULL,
   `nombre_admin` varchar(45) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `administradores` (
   `email_admin` varchar(45) NOT NULL,
   `usuario_admin` int NOT NULL,
   PRIMARY KEY (`id_admin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 16:50:09
+-- Dump completed on 2024-11-21 13:14:47

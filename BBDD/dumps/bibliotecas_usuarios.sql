@@ -18,35 +18,30 @@ USE `bibliotecas`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `libros`
+-- Table structure for table `usuarios`
 --
 
-DROP TABLE IF EXISTS `libros`;
+DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `libros` (
-  `idL_lib` int NOT NULL,
-  `biblioteca_lib` int NOT NULL,
-  `isbn_lib` varchar(45) NOT NULL,
-  `titulo_lib` varchar(45) NOT NULL,
-  `autor_lib` int NOT NULL,
-  `editorial_lib` varchar(45) NOT NULL,
-  `precio_lib` int NOT NULL,
-  `estado_lib` varchar(45) NOT NULL,
-  PRIMARY KEY (`idL_lib`),
-  KEY `BibliotecaLibros_FK_idx` (`biblioteca_lib`),
-  CONSTRAINT `BibliotecaLibros_FK` FOREIGN KEY (`biblioteca_lib`) REFERENCES `bibliotecas` (`id_biblio`)
+CREATE TABLE `usuarios` (
+  `id_usu` int NOT NULL,
+  `nombre_usu` varchar(45) NOT NULL,
+  `almacen_usu` int NOT NULL,
+  PRIMARY KEY (`id_usu`),
+  KEY `almacen_FK_idx` (`almacen_usu`),
+  CONSTRAINT `almacen_FK` FOREIGN KEY (`almacen_usu`) REFERENCES `almacen` (`id_almacen`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `libros`
+-- Dumping data for table `usuarios`
 --
 
-LOCK TABLES `libros` WRITE;
-/*!40000 ALTER TABLE `libros` DISABLE KEYS */;
-INSERT INTO `libros` VALUES (1,1,'9780140449136','Don Quijote de la Mancha',1,'Penguin Classics',13,'Disponible'),(2,1,'9788420678212','Cien años de soledad',2,'Alfaguara',15,'Prestado'),(3,2,'9788491051420','La sombra del viento',3,'Planeta',19,'Disponible'),(4,2,'9788423347917','El amor en los tiempos del cólera',2,'Debolsillo',16,'En reparación'),(5,3,'9788478884452','1984',4,'Anagrama',15,'Disponible'),(6,3,'9788445000558','El Principito',5,'Salamandra',10,'Prestado'),(7,4,'9788466331979','Los pilares de la tierra',6,'DeBolsillo',21,'Disponible'),(8,4,'9788437604947','Rayuela',7,'Cátedra',14,'Extraviado'),(9,5,'9788467031709','La casa de los espíritus',8,'Plaza & Janés',17,'Disponible'),(10,5,'9788497939937','La sombra del viento',3,'Booket',13,'Prestado');
-/*!40000 ALTER TABLE `libros` ENABLE KEYS */;
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'laura.perez',1),(2,'mario.lopez',2),(3,'sofia.martinez',3),(4,'andres.garcia',4),(5,'maria.hernandez',5),(6,'pablo.jimenez',6),(7,'elena.ortega',7),(8,'carlos.santos',8),(9,'alicia.nunez',9),(10,'david.castillo',10),(11,'ana.ramirez',11),(12,'luis.gomez',12),(13,'carla.torres',13),(14,'manuel.luna',14),(15,'lucia.navarro',15),(16,'rafael.serrano',16),(17,'sonia.flores',17),(18,'diego.sanchez',18),(19,'marta.blanco',19),(20,'roberto.paredes',20),(21,'admin.lauraperez',21),(22,'admin.mariolopez',22),(23,'admin.sofiamartinez',23),(24,'admin.andresgarcia',24),(25,'admin.mariahernandez',25),(26,'admin.pablojimenez',26),(27,'admin.elenaortega',27),(28,'admin.carlossantos',28),(29,'admin.alicianunez',29),(30,'admin.davidcastillo',30);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 16:50:10
+-- Dump completed on 2024-11-21 13:14:47

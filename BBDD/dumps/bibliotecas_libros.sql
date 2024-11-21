@@ -18,28 +18,35 @@ USE `bibliotecas`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `autores`
+-- Table structure for table `libros`
 --
 
-DROP TABLE IF EXISTS `autores`;
+DROP TABLE IF EXISTS `libros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `autores` (
-  `id_aut` int NOT NULL AUTO_INCREMENT,
-  `nombre_aut` varchar(45) NOT NULL,
-  `email_aut` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_aut`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `libros` (
+  `idL_lib` int NOT NULL,
+  `biblioteca_lib` int NOT NULL,
+  `isbn_lib` varchar(45) NOT NULL,
+  `titulo_lib` varchar(45) NOT NULL,
+  `autor_lib` int NOT NULL,
+  `editorial_lib` varchar(45) NOT NULL,
+  `precio_lib` int NOT NULL,
+  `estado_lib` varchar(45) NOT NULL,
+  PRIMARY KEY (`idL_lib`),
+  KEY `BibliotecaLibros_FK_idx` (`biblioteca_lib`),
+  CONSTRAINT `BibliotecaLibros_FK` FOREIGN KEY (`biblioteca_lib`) REFERENCES `bibliotecas` (`id_biblio`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `autores`
+-- Dumping data for table `libros`
 --
 
-LOCK TABLES `autores` WRITE;
-/*!40000 ALTER TABLE `autores` DISABLE KEYS */;
-INSERT INTO `autores` VALUES (1,'Miguel de Cervantes','miguel.cervantes@example.com'),(2,'Gabriel García Márquez','gabriel.garcia@example.com'),(3,'Carlos Ruiz Zafón','carlos.ruiz@example.com'),(4,'George Orwell','george.orwell@example.com'),(5,'Antoine de Saint-Exupéry','antoine.saint@example.com'),(6,'Ken Follett','ken.follett@example.com'),(7,'Julio Cortázar','julio.cortazar@example.com'),(8,'Isabel Allende','isabel.allende@example.com');
-/*!40000 ALTER TABLE `autores` ENABLE KEYS */;
+LOCK TABLES `libros` WRITE;
+/*!40000 ALTER TABLE `libros` DISABLE KEYS */;
+INSERT INTO `libros` VALUES (1,1,'9780140449136','Don Quijote de la Mancha',1,'Penguin Classics',13,'Disponible'),(2,1,'9788420678212','Cien años de soledad',2,'Alfaguara',15,'Prestado'),(3,2,'9788491051420','La sombra del viento',3,'Planeta',19,'Disponible'),(4,2,'9788423347917','El amor en los tiempos del cólera',2,'Debolsillo',16,'En reparación'),(5,3,'9788478884452','1984',4,'Anagrama',15,'Disponible'),(6,3,'9788445000558','El Principito',5,'Salamandra',10,'Prestado'),(7,4,'9788466331979','Los pilares de la tierra',6,'DeBolsillo',21,'Disponible'),(8,4,'9788437604947','Rayuela',7,'Cátedra',14,'Extraviado'),(9,5,'9788467031709','La casa de los espíritus',8,'Plaza & Janés',17,'Disponible'),(10,5,'9788497939937','La sombra del viento',3,'Booket',13,'Prestado');
+/*!40000 ALTER TABLE `libros` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 16:50:09
+-- Dump completed on 2024-11-21 13:14:47

@@ -18,35 +18,27 @@ USE `bibliotecas`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `antiguosclientes`
+-- Table structure for table `informepagos`
 --
 
-DROP TABLE IF EXISTS `antiguosclientes`;
+DROP TABLE IF EXISTS `informepagos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `antiguosclientes` (
-  `idAntiguoCliente` int NOT NULL,
-  `bibliotecaAsociada` int NOT NULL,
-  `dni` varchar(45) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `apellidos` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `provincia` varchar(45) NOT NULL,
-  `ciudad` varchar(45) NOT NULL,
-  `calle` varchar(45) NOT NULL,
-  `cuentaBancaria` varchar(45) NOT NULL,
-  PRIMARY KEY (`idAntiguoCliente`)
+CREATE TABLE `informepagos` (
+  `id_ipa` int NOT NULL,
+  `cliente_ipa` int NOT NULL,
+  `estado_ipa` tinyint NOT NULL,
+  PRIMARY KEY (`id_ipa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `antiguosclientes`
+-- Dumping data for table `informepagos`
 --
 
-LOCK TABLES `antiguosclientes` WRITE;
-/*!40000 ALTER TABLE `antiguosclientes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `antiguosclientes` ENABLE KEYS */;
+LOCK TABLES `informepagos` WRITE;
+/*!40000 ALTER TABLE `informepagos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `informepagos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 16:50:09
+-- Dump completed on 2024-11-21 13:14:47
