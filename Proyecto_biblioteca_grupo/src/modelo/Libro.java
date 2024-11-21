@@ -5,10 +5,13 @@
  */
 package modelo;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Biblioteca.UBICACION;
 
 /**
  *
@@ -22,11 +25,11 @@ public class Libro {
     private String genero;
     private String editorial;
     private float precio;
-    private UBICACION biblioteca;
+    private int biblioteca;  // El ID de la biblioteca ahora es un int
     private boolean disponible;
     
     // Constructor
-    public Libro(int id, String isbn, String titulo, String autor,String genero, String editorial,float precio, UBICACION biblioteca, boolean disponible) {
+    public Libro(int id, String isbn, String titulo, String autor, String editorial, float precio, int biblioteca, boolean disponible) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
@@ -34,10 +37,15 @@ public class Libro {
         this.genero = genero;
         this.editorial = editorial;
         this.precio = precio;
-        this.biblioteca = biblioteca;
+        this.biblioteca = biblioteca; // ID de la biblioteca
         this.disponible = disponible;
     }
 
+    public Libro() {
+        // Constructor por defecto
+    }
+
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -70,14 +78,6 @@ public class Libro {
         this.autor = autor;
     }
 
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
     public String getEditorial() {
         return editorial;
     }
@@ -94,11 +94,11 @@ public class Libro {
         this.precio = precio;
     }
 
-    public UBICACION getBiblioteca() {
+    public int getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UBICACION biblioteca) {
+    public void setBiblioteca(int biblioteca) {
         this.biblioteca = biblioteca;
     }
 
@@ -109,69 +109,158 @@ public class Libro {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
-   
-
-    // Métodos
+    
     /**
-     * Método para agregar un libro a la base de datos
+     * 
+     * @param
+     * @return un autor
      */
+    public static int insertarAutor(String nombreAutor) {
+    int idAutor = -1;
+    String sql = "INSERT INTO autores (nombre_aut) VALUES (?)";
+
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        
+        stmt.setString(1, nombreAutor);
+        int filasAfectadas = stmt.executeUpdate();
+        
+        // Si se insertó correctamente, obtener el idAutor generado
+        if (filasAfectadas > 0) {
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                idAutor = rs.getInt(1); 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return idAutor;  // Devuelve el idAutor insertado
+}
+    
+    public static void registrarLibro(Libro libro) {
+         int idAutor = insertarAutor(libro.getAutor());  
+
+    // Si el autor no se pudo insertar (por algún error), no continuamos con el registro del libro
+        if (idAutor == -1) {
+            System.out.println("Error al registrar el autor.");
+            return;
+        }
+        // Consulta SQL 
+        String sql = "INSERT INTO libros (biblioteca_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
+                     "VALUES (?, ?, ?, ?, ?, ?,?)";
+
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Establecer los valores de los parámetros de la consulta SQL
+            stmt.setInt(1, libro.getBiblioteca());
+            stmt.setString(2, libro.getIsbn());
+            stmt.setString(3, libro.getTitulo());
+            stmt.setInt(4, idAutor);
+            stmt.setString(5, libro.getEditorial());
+            stmt.setFloat(6, libro.getPrecio());
+            stmt.setBoolean(7, libro.isDisponible());
+            System.out.println(libro.precio);
+            // Ejecutar
+            int filasAfectadas = stmt.executeUpdate();
+            System.out.println("Precio ingresado: " + libro.getPrecio());
+            System.out.println("ID Biblioteca: " + libro.getBiblioteca());
+            
+            if (filasAfectadas > 0) {
+                System.out.println("Libro registrado con éxito.");
+            } else {
+                System.out.println("Error al registrar el libro.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+   /**
+    * Método para agregar un libro
+    */
     public void agregarLibro() {
-        String sql = "INSERT INTO libros (id_lib, isbn_lib, titulo_lib, autor_lib, genero_lib, editorial_lib, precio_lib, estado_lib) " +
-                 "VALUES (" + this.id + ", '" + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.genero + "', '" + this.editorial + "', " + this.precio + ",'" + this.biblioteca.toString() + "' " + (this.disponible ? 1 : 0) + ")";
-        BaseDatos.ejecutarUpdate(sql);
+       // Validar los campos obligatorios
+    if (this.isbn == null || this.titulo == null || this.autor == null || this.editorial == null) {
+        throw new IllegalArgumentException("Faltan campos obligatorios para agregar el libro.");
     }
 
+    // Validar ComboBox valor seleccionado
+    if (this.biblioteca == 0) { 
+        throw new IllegalArgumentException("Debe seleccionar una biblioteca válida.");
+    }
+
+    String sql = "INSERT INTO libros (biblioteca_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        // Establecer los valores en la consulta
+        stmt.setInt(1, this.biblioteca);
+        stmt.setString(2, this.isbn);
+        stmt.setString(3, this.titulo);
+        stmt.setString(4, this.autor);
+        stmt.setString(5, this.editorial);
+        stmt.setFloat(6, this.precio);
+        stmt.setInt(7, this.disponible ? 1 : 0);  // Convertir booleano a entero (1 o 0)
+
+        // Ejecutar la consulta
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    }
     /**
-     * Método para actualizar la disponibilidad de un libro
+     * 
+     * @param id
+     * @return   Método para obtener un libro por su ID
      */
-    public void actualizarDisponibilidad() {
-        String sql = "UPDATE libros SET estado_lib = " + (this.disponible ? 1 : 0) + " WHERE id_lib = " + this.id;
-        BaseDatos.ejecutarUpdate(sql);
-    }
-
-    // Método para obtener un libro de la base de datos por su ID
     public static Libro obtenerLibroPorId(int id) {
-        String sql = "SELECT * FROM libros WHERE id_lib = " + id;
-        ResultSet rs = BaseDatos.ejecutarSelect(sql);
-        try {
-            if (rs != null && rs.next()) {
+        String sql = "SELECT idL_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib, biblioteca_lib FROM libros WHERE idL_lib = ?";
+        Libro libro = null;
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
                 String isbn = rs.getString("isbn_lib");
                 String titulo = rs.getString("titulo_lib");
                 String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
-                String editorial=rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                return new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
+                String editorial = rs.getString("editorial_lib");
+                float precio = rs.getFloat("precio_lib");
+                boolean disponible = "Disponible".equalsIgnoreCase(rs.getString("estado_lib"));
+                int bibliotecaId = rs.getInt("biblioteca_lib");
+
+                // Crear el libro con los datos obtenidos
+                libro = new Libro(id, isbn, titulo, autor, editorial, precio, bibliotecaId, disponible);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Si no se encuentra el libro
+        return libro;
     }
-
-    /**
-     * Método para obtener todos los libros de la base de datos
-     * @return 
-     */
+    
+    // Método para obtener todos los libros de la base de datos
     public static List<Libro> obtenerTodosLosLibros() {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT * FROM libros";
+        String sql = "SELECT idL_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib, biblioteca_lib FROM libros";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                int id = rs.getInt("id_lib");
+                int id = rs.getInt("idL_lib");
                 String isbn = rs.getString("isbn_lib");
                 String titulo = rs.getString("titulo_lib");
                 String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
                 String editorial = rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                libros.add(new Libro(id,isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible));
+                float precio = rs.getFloat("precio_lib");
+                boolean disponible = "Disponible".equalsIgnoreCase(rs.getString("estado_lib"));
+                int bibliotecaId = rs.getInt("biblioteca_lib");
+
+                // Crear el libro y añadirlo a la lista
+                libros.add(new Libro(id, isbn, titulo, autor, editorial, precio, bibliotecaId, disponible));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -179,39 +268,21 @@ public class Libro {
         return libros;
     }
 
-    /**
-     * Método para buscar un libro por su ISBN
-     * @param isbn
-     * @return 
-     */
-    public static Libro obtenerLibroPorIsbn(String isbn) {
-        String sql = "SELECT * FROM libros WHERE isbn_lib = '" + isbn + "'";
-        ResultSet rs = BaseDatos.ejecutarSelect(sql);
-        try {
-            if (rs != null && rs.next()) {
-                int id = rs.getInt("id_lib");
-                String titulo = rs.getString("titulo_lib");
-                String autor = rs.getString("autor_lib");
-                String genero= rs.getString("genero_lib");
-                String editorial = rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                return new Libro(id, isbn, titulo, autor, genero, editorial, precio, biblioteca, disponible);
+    // Método para eliminar un libro de la base de datos
+    public static void eliminarLibro(int id) {
+        String sql = "DELETE FROM libros WHERE idL_lib = ?";
+        try (Connection conn = BaseDatos.obtenerConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("El libro con ID " + id + " ha sido eliminado.");
+            } else {
+                System.out.println("No se encontró un libro con ID " + id + " para eliminar.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Si no se encuentra el libro
-    }
-
-    /**
-     * Método para eliminar un libro de la base de datos
-     * @param id 
-     */
-    public static void eliminarLibro(int id) {
-        String sql = "DELETE FROM libros WHERE id_lib = " + id;
-        BaseDatos.ejecutarUpdate(sql);
     }
 
     /**
@@ -219,9 +290,5 @@ public class Libro {
      * @return 
      */
    
-    @Override
-    public String toString() {
-        return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", genero=" + genero + ", editorial=" + editorial + ", precio=" + precio + ", biblioteca=" + biblioteca + ", disponible=" + disponible + '}';
-    }
-
+  
 }

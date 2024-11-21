@@ -5,10 +5,14 @@
  */
 package modelo;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import modelo.Biblioteca.UBICACION;
 
 /**
@@ -25,7 +29,7 @@ public class Prestamo {
     private boolean devuelto;
     
     // Constructor
-    public Prestamo(int id, Socio socio,UBICACION biblioteca, Date fechaPrestamo, Libro libro, Date fechaDevolucion, boolean devuelto) {
+    public Prestamo(int id, Socio socio, UBICACION biblioteca, Date fechaPrestamo, Libro libro, Date fechaDevolucion, boolean devuelto) {
         this.id = id;
         this.socio = socio;
         this.biblioteca = biblioteca;
