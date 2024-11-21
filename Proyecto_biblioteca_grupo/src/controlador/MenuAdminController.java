@@ -37,6 +37,7 @@ public class MenuAdminController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuAdminView.getBtn_biblioteca()) {
             System.out.println("Botón Biblioteca presionado");
+            new ControladorMostrarBibliotecas();
         } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
             System.out.println("Botón Préstamos presionado");
         } else if (e.getSource() == menuAdminView.getBtn_libros()) {

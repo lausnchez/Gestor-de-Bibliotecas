@@ -5,6 +5,7 @@
  */
 
 
+import controlador.ControladorMostrarBibliotecas;
 import controlador.UsuarioController;
 import modelo.Libro;
 import vista.librosView;
@@ -15,11 +16,12 @@ import vista.usuarioLoginView;
  * @author Paula
  */
 public class main {
-    public static void main(String[] args) {
-           // Crear la vista de login
-        usuarioLoginView loginView = new usuarioLoginView();
-        UsuarioController controller = new UsuarioController(loginView);
-        loginView.setVisible(true);  // Asegúrate de que la ventana sea visible
+    public static void main(String[] args) {  
+        new ControladorMostrarBibliotecas();
+        // Crear la vista de login
+        //usuarioLoginView loginView = new usuarioLoginView();
+        //UsuarioController controller = new UsuarioController(loginView);
+        //loginView.setVisible(true);  // Asegúrate de que la ventana sea visible
         
       /*
      // Crear la vista de libros
