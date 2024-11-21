@@ -5,12 +5,20 @@
         <group>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Usuario.java</file>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/agregarLibroController.java</file>
-            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Socio.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/PruebaConexion.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/LibrosViewController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/main.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/vista/librosView.java</file>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Biblioteca.java</file>
-            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/BaseDatos.java</file>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Libro.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/string.java</file>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Recibo.java</file>
             <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Prestamo.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/ControllerUtils.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/Controller/UsuarioController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Socio.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/vista/agregarLibro.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/BaseDatos.java</file>
         </group>
     </open-files>
 </project-private>

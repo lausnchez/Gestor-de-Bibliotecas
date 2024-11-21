@@ -15,12 +15,12 @@ import vista.usuarioLoginView;
  */
 public class main {
     public static void main(String[] args) {
-        /**    // Crear la vista de login
+           // Crear la vista de login
         usuarioLoginView loginView = new usuarioLoginView();
         UsuarioController controller = new UsuarioController(loginView);
-        loginView.setVisible(true);  // Asegúrate de que la ventana sea visible**/
+        loginView.setVisible(true);  // Asegúrate de que la ventana sea visible
         
-        
+      /*
      // Crear la vista de libros
         librosView librosView = new librosView();
 
@@ -34,7 +34,6 @@ public class main {
             '1',
             true);
         // Crear el controlador y asociarlo con la vista y el modelo
-        LibrosViewController controller = new LibrosViewController(libroModelo);
-        
+        LibrosViewController controller = new LibrosViewController(libroModelo);*/
     }
 }

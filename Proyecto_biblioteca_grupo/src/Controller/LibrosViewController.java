@@ -28,9 +28,9 @@ public class LibrosViewController implements ActionListener {
      private JTable tbl_libros;
      private DefaultTableModel modeloTabla;
 
-     public LibrosViewController(Libro libroModelo) {
+     public LibrosViewController(librosView librosView, Libro libroModelo) {
         this.libroModelo = libroModelo;
-        this.librosView = new librosView();
+        this.librosView =librosView;
         this.modeloTabla = new DefaultTableModel();
         tbl_libros = new JTable(modeloTabla);
         librosView.getTbl_libros().setModel(modeloTabla);

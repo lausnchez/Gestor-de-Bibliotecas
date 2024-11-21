@@ -140,7 +140,7 @@ public class agregarLibro extends javax.swing.JFrame {
 
         Lbl_precio.setText("PRECIO");
 
-        cBox_ubicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Madrid", "BARCELONA", "VALENCIA", "SEVILLA", "MÁLAGA", "CÓRDOBA", "ALMERÍA", "TOLEDO", "BILBAO", "CEUTA", "MELILLA" }));
+        cBox_ubicacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Alicante", "Murcia", "Granada", "Córdoba" }));
 
         rBtn_presado.setText("PRESTADO");
 

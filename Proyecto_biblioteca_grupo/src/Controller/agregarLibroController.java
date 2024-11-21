@@ -104,7 +104,7 @@ public class agregarLibroController implements ActionListener{
     
         int bibliotecaId = ControllerUtils.idbiblioteca(this.vista.getcBox_ubicacion().getSelectedItem().toString()); 
 
-        Libro nuevoLibro = new Libro(bibliotecaId, isbn, titulo, autor, editorial, bibliotecaId, bibliotecaId, true);
+        Libro nuevoLibro = new Libro(0, isbn, titulo, autor, editorial, precio, bibliotecaId, true);
         
         Libro.registrarLibro(nuevoLibro); 
     }
