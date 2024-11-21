@@ -373,8 +373,8 @@ public class Socio implements Comparable<Socio>{
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Socio socioNuevo = null;
-
+        List<Socio> resultado = new ArrayList<>();
+        
         try {
             conn = BaseDatos.obtenerConnection();
             String sql = "SELECT * FROM socios WHERE dni_soc LIKE ? AND actual_soc = ?";
@@ -396,10 +396,10 @@ public class Socio implements Comparable<Socio>{
                 String cuentaBancaria = rs.getString("cuentaBancaria_soc");
                 boolean pago = rs.getBoolean("pago_soc");
 
-                socioNuevo = new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria);
+                resultado.add(new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria));
             }else{
                 JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
-                return null;
+                return resultado;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -411,9 +411,7 @@ public class Socio implements Comparable<Socio>{
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        List<Socio> resultado = new ArrayList<>();
-        resultado.add(socioNuevo);
+        }  
         return resultado;
     }
     

@@ -197,7 +197,7 @@ public class ControladorAgregarUsuario implements ActionListener{
         
         Socio nuevoSocio = new Socio(String.valueOf(biblioteca), dni, nombre, apellidos, telefono, email, pago, provincia, 0, cBancaria);
         Socio.registrarSocio(nuevoSocio);
-        if(Socio.obtenerSocioPorDNI(nuevoSocio.getDni()) != null){
+        if(Socio.obtenerSocioPorDNI(nuevoSocio.getDni(), true) != null){
             JOptionPane.showMessageDialog(this.vista, "Usuario agregado con éxito", "Agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
             this.vista.dispose(); 
         }else JOptionPane.showMessageDialog(this.vista, "No se pudo agregar al usuario", "Error al agregar", JOptionPane.ERROR_MESSAGE);
