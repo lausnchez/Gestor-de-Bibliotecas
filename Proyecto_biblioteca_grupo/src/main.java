@@ -1,5 +1,8 @@
 
+import controlador.ControladorAgregarUsuario;
+import controlador.ControladorMostrarAntiguosSocios;
 import controlador.ControladorMostrarSocio;
+import modelo.Biblioteca;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +16,7 @@ import controlador.ControladorMostrarSocio;
  */
 public class main {
     public static void main(String[] args) {
-        new ControladorMostrarSocio();
+        //new ControladorMostrarSocio();
+        new ControladorMostrarAntiguosSocios();
     }
 }

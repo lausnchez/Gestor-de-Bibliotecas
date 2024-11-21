@@ -36,8 +36,7 @@
                                   </Group>
                                   <Component id="jSeparator1" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btn_refresh" min="-2" pref="175" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="txt_buscador" max="32767" attributes="0"/>
@@ -45,12 +44,7 @@
                               <Component id="cBox_filtro" min="-2" pref="295" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_buscar" min="-2" pref="134" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_agregarUsuario" min="-2" pref="175" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_editarUsuario" min="-2" pref="175" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_eliminarUsuario" min="-2" pref="175" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="543" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -67,24 +61,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="37" pref="33" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btn_refresh" min="-2" pref="44" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="lbl_clientes" min="-2" pref="43" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <Component id="lbl_clientes" min="-2" pref="43" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txt_buscador" min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="btn_eliminarUsuario" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="btn_editarUsuario" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="btn_agregarUsuario" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="btn_buscar" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="cBox_filtro" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
@@ -102,7 +85,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="24" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Control de usuarios"/>
+        <Property name="text" type="java.lang.String" value="Control de antiguos usuarios"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -205,7 +188,7 @@
     <Component class="javax.swing.JComboBox" name="cBox_filtro">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="9">
+          <StringArray count="10">
             <StringItem index="0" value="Mostrar todos"/>
             <StringItem index="1" value="ID"/>
             <StringItem index="2" value="Nombre completo"/>
@@ -215,6 +198,7 @@
             <StringItem index="6" value="Provincia"/>
             <StringItem index="7" value="N&#xfa;mero de Sanciones"/>
             <StringItem index="8" value="Cuenta Bancaria"/>
+            <StringItem index="9" value="Estado del pago"/>
           </StringArray>
         </Property>
       </Properties>
@@ -223,44 +207,6 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_buscador">
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_eliminarUsuario">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Eliminar usuario"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_editarUsuario">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Editar usuario"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_agregarUsuario">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Agregar usuario"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_refresh">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Refrescar tabla"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

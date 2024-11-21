@@ -5,7 +5,6 @@
  */
 package vista;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,18 +12,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableColumn;
 
 /**
  *
  * @author Laura Sánchez
  */
-public class MostrarSocio extends javax.swing.JFrame {
+public class MostrarAntiguosSocios extends javax.swing.JFrame {
 
     /**
      * Creates new form MostrarClientes
      */
-    public MostrarSocio() {
+    public MostrarAntiguosSocios() {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -46,15 +44,11 @@ public class MostrarSocio extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         cBox_filtro = new javax.swing.JComboBox<>();
         txt_buscador = new javax.swing.JTextField();
-        btn_eliminarUsuario = new javax.swing.JButton();
-        btn_editarUsuario = new javax.swing.JButton();
-        btn_agregarUsuario = new javax.swing.JButton();
-        btn_refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbl_clientes.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbl_clientes.setText("Control de usuarios");
+        lbl_clientes.setText("Control de antiguos usuarios");
 
         tbl_clientes.setForeground(new java.awt.Color(51, 51, 51));
         tbl_clientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -98,21 +92,7 @@ public class MostrarSocio extends javax.swing.JFrame {
 
         btn_buscar.setText("Buscar");
 
-        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria" }));
-
-        btn_eliminarUsuario.setBackground(new java.awt.Color(102, 0, 0));
-        btn_eliminarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btn_eliminarUsuario.setText("Eliminar usuario");
-
-        btn_editarUsuario.setBackground(new java.awt.Color(102, 0, 0));
-        btn_editarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btn_editarUsuario.setText("Editar usuario");
-
-        btn_agregarUsuario.setBackground(new java.awt.Color(102, 0, 0));
-        btn_agregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btn_agregarUsuario.setText("Agregar usuario");
-
-        btn_refresh.setText("Refrescar tabla");
+        cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre completo", "DNI", "Teléfono", "Email", "Provincia", "Número de Sanciones", "Cuenta Bancaria", "Estado del pago" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,20 +109,14 @@ public class MostrarSocio extends javax.swing.JFrame {
                                         .addComponent(lbl_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(jSeparator1))
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(193, 193, 193))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_buscador)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cBox_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_editarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(543, 543, 543))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(42, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1495, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -152,21 +126,13 @@ public class MostrarSocio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)))
+                .addComponent(lbl_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_eliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_editarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_agregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cBox_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,38 +200,6 @@ public class MostrarSocio extends javax.swing.JFrame {
     public void setTxt_buscador(JTextField txt_buscador) {
         this.txt_buscador = txt_buscador;
     }
-
-    public JButton getBtn_agregarUsuario() {
-        return btn_agregarUsuario;
-    }
-
-    public void setBtn_agregarUsuario(JButton btn_agregarUsuario) {
-        this.btn_agregarUsuario = btn_agregarUsuario;
-    }
-
-    public JButton getBtn_editar() {
-        return btn_editarUsuario;
-    }
-
-    public void setBtn_editar(JButton btn_editar) {
-        this.btn_editarUsuario = btn_editar;
-    }
-
-    public JButton getBtn_eliminar() {
-        return btn_eliminarUsuario;
-    }
-
-    public void setBtn_eliminar(JButton btn_eliminar) {
-        this.btn_eliminarUsuario = btn_eliminar;
-    }
-
-    public JButton getBtn_refresh() {
-        return btn_refresh;
-    }
-
-    public void setBtn_refresh(JButton btn_refresh) {
-        this.btn_refresh = btn_refresh;
-    }
         
     /**
      * @param args the command line arguments
@@ -284,31 +218,29 @@ public class MostrarSocio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarAntiguosSocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarAntiguosSocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarAntiguosSocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MostrarSocio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarAntiguosSocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MostrarSocio().setVisible(true);
+                new MostrarAntiguosSocios().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_agregarUsuario;
     private javax.swing.JButton btn_buscar;
-    private javax.swing.JButton btn_editarUsuario;
-    private javax.swing.JButton btn_eliminarUsuario;
-    private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cBox_filtro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
