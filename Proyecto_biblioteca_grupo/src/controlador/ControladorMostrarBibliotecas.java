@@ -81,7 +81,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
                 buscarSocio();
         }
         if(e.getSource() == this.vista.getBtn_editar()){
-            editarSocio();
+            //editarSocio();
         }
         if(e.getSource() == this.vista.getBtn_eliminar()){
             int id = this.vista.getTbl_biblio().getSelectedRow();
@@ -217,6 +217,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
         return validacion;     
     }
     
+    /*
     public void editarSocio(){
         int id = -1;
         if(this.vista.getTbl_clientes().getSelectedRow() != -1){
@@ -228,7 +229,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
             new ControladorAgregarUsuario(socioEncontrado);
         }else JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+    */
     
     public void buscarSocio(){
         int selector = this.vista.getcBox_filtro().getSelectedIndex();
