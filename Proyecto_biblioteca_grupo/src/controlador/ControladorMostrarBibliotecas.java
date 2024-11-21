@@ -8,10 +8,15 @@ package controlador;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.BaseDatos;
 import modelo.Biblioteca;
 import vista.MostrarBibliotecas;
 
@@ -79,7 +84,8 @@ public class ControladorMostrarBibliotecas implements ActionListener{
             editarSocio();
         }
         if(e.getSource() == this.vista.getBtn_eliminar()){
-            borrarSocio();
+            int id = this.vista.getTbl_biblio().getSelectedRow();
+            eliminarBiblioteca(id);
         }
         if(e.getSource() == this.vista.getBtn_agregar()){
             new ControladorAgregarUsuario();
@@ -165,27 +171,51 @@ public class ControladorMostrarBibliotecas implements ActionListener{
         this.vista.getTbl_biblio().setModel(modeloTabla);
     }
     
-    //Métodos de borrar Socios
-    public void borrarSocio(){
+    //Métodos de borrar Biblioteca
+    public void borrarBiblioteca(){
         int id = -1;
-        if(this.vista.getTbl_clientes().getSelectedRow() != -1){
-            Object idTabla = this.vista.getTbl_clientes().getValueAt(this.vista.getTbl_clientes().getSelectedRow(), 0);
-            Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
-            
+        if(this.vista.getTbl_biblio().getSelectedRow() != -1){
+            Object idTabla = this.vista.getTbl_biblio().getValueAt(this.vista.getTbl_biblio().getSelectedRow(), 0);
+            //Socio socioEncontrado = Socio.obtenerSocioPorId((int)idTabla);
+            Biblioteca biblioEncontrada = Biblioteca.obtenerBibliotecaUnicaID((int)idTabla);
             String mensaje = "¿Desea eliminar este usuario?" +
-                "\nDNI: " + socioEncontrado.getDni() +
-                "\nNombre: " + socioEncontrado.getNombre() + " " + socioEncontrado.getApellidos() +
-                "\nProvincia: " + socioEncontrado.getProvincia() + 
-                "\nTelefono: " + socioEncontrado.getTelefono() +
-                "\nEmail: " + socioEncontrado.getEmail() + "\n";
+                "\nID: " + biblioEncontrada.getIdBiblioteca() +
+                "\nNombre: " + biblioEncontrada.getNombre() +
+                "\nProvincia: " + biblioEncontrada.getProvincia() + 
+                "\nCiudad: " + biblioEncontrada.getCiudad() +
+                "\nCalle: " + biblioEncontrada.getCalle() +
+                "\nTeléfono: " + biblioEncontrada.getTelefono() +
+                "\nEmail: " + biblioEncontrada.getEmail() + "\n";
             int opcion = JOptionPane.showConfirmDialog(this.vista, mensaje, "Eliminar usuario", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if(opcion == JOptionPane.YES_NO_OPTION){
-                Socio.eliminarSocio((int)idTabla);
+                Biblioteca.eliminarBiblioteca((int)idTabla);
             }
         }else
             JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
+    
+    /**
+     * Método para eliminar bibliotecas de la base de datos
+     * @param id 
+     */
+    public static Boolean eliminarBiblioteca(int id){
+        Boolean validacion = false;
+        Connection conexion = null;
+        PreparedStatement prepStat = null;
+        try {
+            conexion = BaseDatos.obtenerConnection();
+            String sql = "DELETE FROM bibliotecas WHERE id_biblio = ?";
+            prepStat = conexion.prepareStatement(sql);
+            prepStat.setInt(1, id);
+            prepStat.executeUpdate();
+            if(Biblioteca.obtenerBibliotecaUnicaID(id) == null){
+                JOptionPane.showMessageDialog(null, "Biblioteca eliminada correctamente" , "Borrado correcto", JOptionPane.INFORMATION_MESSAGE);
+            }else JOptionPane.showMessageDialog(null, "La biblioteca no pudo ser borrada" , "Borrado incorrecto", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return validacion;     
+    }
     
     public void editarSocio(){
         int id = -1;
@@ -211,7 +241,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
             case 1:     // ID
                 if(ControllerUtils.controlarInt(busqueda)){
                     int id = Integer.parseInt(busqueda);
-                    agregarPorParametro(Biblioteca.obtenerBibliotecaPorID(id));
+                    agregarPorParametro(Biblioteca.obtenerBibliotecasPorID(id));
                 }else JOptionPane.showMessageDialog(vista, "Valor no válido", "Error", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 2:     // Nombre

@@ -355,7 +355,7 @@ public class Biblioteca {
      * @param idSocio
      * @return 
      */
-    public static List<Biblioteca> obtenerBibliotecaPorID(int ID) {
+    public static List<Biblioteca> obtenerBibliotecasPorID(int ID) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -393,6 +393,51 @@ public class Biblioteca {
             }
         }  
         return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su id
+     * @param ID
+     * @return 
+     */
+    public static Biblioteca obtenerBibliotecaUnicaID(int ID) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Biblioteca biblio = null;
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE id_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + ID + "%");
+            rs = stmt.executeQuery();
+            if(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                biblio = new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email);
+            }
+            if(biblio == null){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return biblio;
     }
     
     /**
@@ -663,5 +708,35 @@ public class Biblioteca {
             }
         }  
         return resultado;
+    }
+    
+    /**
+     * 
+     * @param id 
+     */
+    public static void eliminarSocio(int id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "DELETE FROM bibliotecas WHERE id_biblio = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Biblioteca " + id + " eliminada correctamente");
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
