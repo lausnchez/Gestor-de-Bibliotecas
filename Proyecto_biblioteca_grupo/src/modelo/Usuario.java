@@ -95,10 +95,10 @@ public class Usuario {
 
         try {
             conn = BaseDatos.obtenerConnection();
-           String sql = "SELECT idUsuarios, nombreUsuario, password " +
+           String sql = "SELECT id_usu, nombre_usu, password_almacen " +
                      "FROM usuarios " +
-                     "JOIN almacen ON usuarios.almacen = almacen.idAlmacen " +
-                     "WHERE nombreUsuario = ? AND almacen.password = ?";
+                     "JOIN almacen ON usuarios.almacen_usu = almacen.id_almacen " +
+                     "WHERE nombre_usu = ? AND almacen.password_almacen = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usuario);
             stmt.setString(2, password);

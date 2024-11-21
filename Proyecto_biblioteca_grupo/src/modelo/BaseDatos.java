@@ -20,7 +20,7 @@ public class BaseDatos {
 	private static final String DB = "Gestor de Bibliotecas";
     private static final String URL = "jdbc:mysql://localhost:3306/bibliotecas";
     private static final String USUARIO = "root"; // Cambiar
-    private static final String CONTRASENA = "root"; // Cambiar
+    private static final String CONTRASENA = "damdaw"; // Cambiar
     
     // Variables para utilizar
     public static Connection conexion;

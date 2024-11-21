@@ -23,7 +23,7 @@ public class ControllerUtils {
     public static int idbiblioteca(String provincia) {
         int idBiblioteca = -1;  // Valor predeterminado para indicar que no se encontró
 
-        String sql = "SELECT idBibliotecas FROM bibliotecas WHERE provincia = ?"; 
+        String sql = "SELECT id_biblio FROM bibliotecas WHERE provincias_biblio = ?"; 
 
         try (Connection conn = BaseDatos.obtenerConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -34,7 +34,7 @@ public class ControllerUtils {
 
             // Si se encuentra la provincia, se obtiene el ID
             if (rs.next()) {
-                idBiblioteca = rs.getInt("idBibliotecas");
+                idBiblioteca = rs.getInt("id_biblio");
             }
         } catch (SQLException e) {
             e.printStackTrace();
