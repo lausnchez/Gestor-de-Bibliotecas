@@ -16,12 +16,12 @@ import vista.librosView;
  * @author Paula
  */
 public class MenuController implements ActionListener{
-        private MenuView menuView;
+    private MenuView menuView;
     private librosView librosView;
     
       public MenuController(MenuView menuView) {
         this.menuView=menuView;
-        this.librosView=librosView;
+        System.out.println("MenuController iniciado"); 
 
         // Registrar botones
         this.menuView.getBtn_socios().addActionListener(this);
@@ -35,17 +35,22 @@ public class MenuController implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuView.getBtn_socios()) {
+    // Verificar si el botón presionado es el de "Libros"
+        if (e.getSource() == menuView.getBtn_libros()) {
+            System.out.println("Botón 'Libros' presionado");
+
+            // Crear instancia del modelo Libro
+            Libro libroModelo = new Libro();
+
+            librosView  librosView= new librosView(); // Crear instancia de la vista libros
+            System.out.println("Abriendo vista de libros..."); 
+            LibrosViewController controller = new LibrosViewController(librosView, libroModelo); // Crear el controlador de la vista de libros
+            librosView.setVisible(true);
+        } 
+        else if (e.getSource() == menuView.getBtn_socios()) {
             System.out.println("Botón Biblioteca presionado");
         } else if (e.getSource() == menuView.getBtn_prestamos()) {
             System.out.println("Botón Préstamos presionado");
-        } else if (e.getSource() == menuView.getBtn_libros()) {
-            System.out.println("Botón libros presionado");
-            //crear instancia del modelo libro
-            Libro libroModelo = new Libro();
-            librosView librosView = new librosView();
-             LibrosViewController controller = new LibrosViewController(librosView, libroModelo); // Pasa la vista y modelo necesarios
-            librosView.setVisible(true);
         } else if (e.getSource() == menuView.getBtn_sanciones()) {
             System.out.println("Botón sanciones presionado");
         }

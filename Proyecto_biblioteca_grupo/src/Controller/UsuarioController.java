@@ -26,7 +26,7 @@ public class UsuarioController implements ActionListener{
 
     public UsuarioController(usuarioLoginView usuarioView) {
         this.usuarioView = usuarioView;
-        // Añadir el actionListener para el botón de acceso
+        // Añadir botones
         this.usuarioView.getBtn_acceder().addActionListener(this);
         this.usuarioView.setVisible(true);
     }
@@ -41,7 +41,7 @@ public class UsuarioController implements ActionListener{
             // Convertir el tipo de usuario a un tipo del modelo (ADMINISTRADOR o BIBLIOTECARIO)
             Usuario.TIPO tipo = tipoUsuario.equals("ADMINISTRADOR/A") ? Usuario.TIPO.ADMINISTRADOR : Usuario.TIPO.TRABAJADOR;
 
-            // Autenticar al usuario
+            // Autenticación
             if (Usuario.autenticarUsuario(nombreUsuario, password)) {
                 JOptionPane.showMessageDialog(usuarioView, "¡Bienvenido, " + nombreUsuario + "!", "Inicio de sesión exitoso", JOptionPane.INFORMATION_MESSAGE);
                 usuarioView.dispose(); // Cerrar la ventana de login
@@ -55,10 +55,10 @@ public class UsuarioController implements ActionListener{
                 // Si es BIBLIOTECARIO/A, mostrar el menú de bibliotecario
                 else if (tipo == Usuario.TIPO.TRABAJADOR) {
                     menuView = new MenuView();
+                    MenuController menuController = new MenuController(menuView);
                     menuView.setVisible(true);
                 }
             } else {
-                // Si la autenticación falla
                 JOptionPane.showMessageDialog(usuarioView, "Usuario o contraseña incorrectos", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
         }
