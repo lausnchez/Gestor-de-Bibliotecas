@@ -9,12 +9,12 @@ package vista;
  *
  * @author Laura Sánchez
  */
-public class AgregarCliente extends javax.swing.JFrame {
+public class agregarCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarClientes
      */
-    public AgregarCliente() {
+    public agregarCliente() {
         initComponents();
     }
 
