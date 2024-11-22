@@ -25,13 +25,13 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
-  `id_usu` int NOT NULL,
+  `id_usu` int NOT NULL AUTO_INCREMENT,
   `nombre_usu` varchar(45) NOT NULL,
   `almacen_usu` int NOT NULL,
   PRIMARY KEY (`id_usu`),
   KEY `almacen_FK_idx` (`almacen_usu`),
   CONSTRAINT `almacen_FK` FOREIGN KEY (`almacen_usu`) REFERENCES `almacen` (`id_almacen`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-21 22:38:32
+-- Dump completed on 2024-11-22 13:27:09
