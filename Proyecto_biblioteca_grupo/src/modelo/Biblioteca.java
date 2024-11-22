@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Biblioteca {
 
-    public enum UbiBiblio {
+    public enum UBICACION {
         MADRID("Madrid"),
         BARCELONA("Barcelona"),
         VALENCIA("Valencia"),
@@ -30,7 +30,7 @@ public class Biblioteca {
 
         private final String nombre;
 
-        UbiBiblio(String nombre) {
+        UBICACION(String nombre) {
             this.nombre = nombre;
         }
 
@@ -40,10 +40,10 @@ public class Biblioteca {
     }
 
     private int idBiblioteca;
-    private UbiBiblio provincia;
+    private UBICACION provincia;
     private String telefono;
 
-    public Biblioteca(int id, UbiBiblio provincia, String telefono) {
+    public Biblioteca(int id, UBICACION provincia, String telefono) {
         this.idBiblioteca = id;
         this.provincia = provincia;
         this.telefono = telefono;
@@ -57,11 +57,11 @@ public class Biblioteca {
         this.idBiblioteca = idBiblioteca;
     }
 
-    public UbiBiblio getProvincia() {
+    public UBICACION getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(UbiBiblio provincia) {
+    public void setProvincia(UBICACION provincia) {
         this.provincia = provincia;
     }
 
@@ -97,7 +97,7 @@ public class Biblioteca {
         try {
             if (rs != null && rs.next()) {
                 String provinciaStr = rs.getString("ubi_biblioteca");
-                UbiBiblio provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
+                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
                 String telefono = rs.getString("tel_biblioteca");
                 return new Biblioteca(id, provincia, telefono);
             }
@@ -120,7 +120,7 @@ public class Biblioteca {
             while (rs != null && rs.next()) {
                 int id = rs.getInt("id_biblioteca");
                 String provinciaStr = rs.getString("ubi_biblioteca");
-                UbiBiblio provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
+                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
                 String telefono = rs.getString("tel_biblioteca");
                 bibliotecas.add(new Biblioteca(id, provincia, telefono));
             }
@@ -148,7 +148,7 @@ public class Biblioteca {
     // Método principal para probar la clase
     public static void main(String[] args) {
         // Crear una biblioteca
-        Biblioteca biblio1 = new Biblioteca(1, UbiBiblio.MADRID, "912345678");
+        Biblioteca biblio1 = new Biblioteca(1, UBICACION.MADRID, "912345678");
 
         // Agregar la biblioteca a la base de datos
         biblio1.agregarBiblioteca();
