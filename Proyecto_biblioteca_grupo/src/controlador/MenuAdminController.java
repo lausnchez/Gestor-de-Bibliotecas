@@ -36,29 +36,37 @@ public class MenuAdminController implements ActionListener{
     
 }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuAdminView.getBtn_biblioteca()) {
-            System.out.println("Botón Biblioteca presionado");
-            new ControladorMostrarBibliotecas();
-        } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
-            System.out.println("Botón Préstamos presionado");
-        }else if (e.getSource() == menuAdminView.getBtn_bibliotecario()) {
-           //crear instancia del modelo libro
-           System.out.println("Botón bibliotecario presionado");
-            Bibliotecario bibliotecarioModelo=new Bibliotecario();
-            bibliotecariosView bibliotecariosView = new bibliotecariosView();
-            BibliotecariosController controller = new BibliotecariosController(bibliotecariosView, bibliotecarioModelo); // Pasa la vista y modelo necesarios
-            librosView.setVisible(true);
-        } else if (e.getSource() == menuAdminView.getBtn_libros()) {
-            System.out.println("Botón libros presionado");
-            //crear instancia del modelo libro
-            Libro libroModelo = new Libro();
-            librosView librosView = new librosView();
-             LibrosViewController controller = new LibrosViewController(librosView, libroModelo); // Pasa la vista y modelo necesarios
-            librosView.setVisible(true);
-        } else if (e.getSource() == menuAdminView.getBtn_sanciones()) {
-            System.out.println("Botón sanciones presionado");
-        }
+   public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == menuAdminView.getBtn_biblioteca()) {
+        System.out.println("Botón Biblioteca presionado");
+        new ControladorMostrarBibliotecas();
+    } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
+        System.out.println("Botón Préstamos presionado");
+    } else if (e.getSource() == menuAdminView.getBtn_bibliotecario()) {
+        // Crear instancia del modelo bibliotecario
+        System.out.println("Botón bibliotecario presionado");
+
+        // Aquí inicializamos la vista y el modelo
+        Bibliotecario bibliotecarioModelo = new Bibliotecario();
+        bibliotecariosView vistaBibliotecarios = new bibliotecariosView();
+
+        // Creamos el controlador y pasamos la vista y el modelo
+        BibliotecariosController controller = new BibliotecariosController(vistaBibliotecarios, bibliotecarioModelo);
+        
+        // Hacer visible la vista de bibliotecarios
+        vistaBibliotecarios.setVisible(true);
+    } else if (e.getSource() == menuAdminView.getBtn_libros()) {
+        System.out.println("Botón libros presionado");
+
+        // Crear instancia del modelo libro
+        Libro libroModelo = new Libro();
+        librosView vistaLibros = new librosView();
+
+        // Crear el controlador de libros y pasarle la vista y el modelo
+        LibrosViewController controller = new LibrosViewController(vistaLibros, libroModelo);
+        vistaLibros.setVisible(true);
+    } else if (e.getSource() == menuAdminView.getBtn_sanciones()) {
+        System.out.println("Botón sanciones presionado");
     }
+}
 }
