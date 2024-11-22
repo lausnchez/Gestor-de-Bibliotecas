@@ -7,8 +7,10 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import modelo.Bibliotecario;
 import modelo.Libro;
 import vista.MenuAdminView;
+import vista.bibliotecariosView;
 import vista.librosView;
 
 /**
@@ -30,6 +32,7 @@ public class MenuAdminController implements ActionListener{
         this.menuAdminView.getBtn_libros().addActionListener(this);
         this.menuAdminView.getBtn_socios().addActionListener(this);
         this.menuAdminView.getBtn_sanciones().addActionListener(this);
+        this.menuAdminView.getBtn_bibliotecario().addActionListener(this);
     
 }
 
@@ -40,6 +43,13 @@ public class MenuAdminController implements ActionListener{
             new ControladorMostrarBibliotecas();
         } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
             System.out.println("Botón Préstamos presionado");
+        }else if (e.getSource() == menuAdminView.getBtn_bibliotecario()) {
+           //crear instancia del modelo libro
+           System.out.println("Botón bibliotecario presionado");
+            Bibliotecario bibliotecarioModelo=new Bibliotecario();
+            bibliotecariosView bibliotecariosView = new bibliotecariosView();
+            BibliotecariosController controller = new BibliotecariosController(bibliotecariosView, bibliotecarioModelo); // Pasa la vista y modelo necesarios
+            librosView.setVisible(true);
         } else if (e.getSource() == menuAdminView.getBtn_libros()) {
             System.out.println("Botón libros presionado");
             //crear instancia del modelo libro

@@ -18,13 +18,10 @@ import java.sql.ResultSet;
 public class BaseDatos {
     // Parámetros de conexión
 	private static final String DB = "Gestor de Bibliotecas";
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     private static final String URL = "jdbc:mysql://localhost:3306/bibliotecas";
     private static final String USUARIO = "root"; // Cambiar
-    private static final String CONTRASENA = "damdaw"; // Cambiar
+    private static final String CONTRASENA = "root"; // Cambiar
     
     public static Connection conexion = null;
     public static Statement miStatement = null;
