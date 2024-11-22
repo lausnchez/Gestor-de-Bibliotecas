@@ -9,10 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-import java.text.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import modelo.Biblioteca.UbiBiblio;
+import java.util.List;
+
+import modelo.Biblioteca.UBICACION;
 /**
  *
  * @author 
@@ -126,10 +129,10 @@ public class InformeMensual {
                 PreparedStatement stmtProvincia = conn.prepareStatement(sqlProvincia);
                 stmtProvincia.setInt(1, idBiblioteca);
                 ResultSet rsProvincia = stmtProvincia.executeQuery();
-                UbiBiblio provincia = null;
+                UBICACION provincia = null;
                 if (rsProvincia.next()) {
                     String provinciaStr = rsProvincia.getString("ubi_biblioteca");
-                    provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
+                    provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
                 }
                 rsProvincia.close();  // Cerrar el ResultSet de la provincia
 

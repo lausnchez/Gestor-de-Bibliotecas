@@ -33,7 +33,7 @@ class Recibo {
         this.pagado = pagado;
     }
 
-    Recibo(Socio socio, Biblioteca.UbiBiblio provincia, int idSocio, Date fecha, boolean pagado) {
+    Recibo(Socio socio, Biblioteca.UBICACION provincia, int idSocio, Date fecha, boolean pagado) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
