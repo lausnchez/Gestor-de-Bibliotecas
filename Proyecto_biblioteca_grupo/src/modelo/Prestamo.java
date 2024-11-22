@@ -5,11 +5,15 @@
  */
 package modelo;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import modelo.Biblioteca.UbiBiblio;
+
+import modelo.Biblioteca.UBICACION;
 
 /**
  *
@@ -18,14 +22,14 @@ import modelo.Biblioteca.UbiBiblio;
 public class Prestamo {
     private int id;
     private Socio socio;
-    private UbiBiblio biblioteca;
+    private UBICACION biblioteca;
     private Date fechaPrestamo;
     private Libro libro;
     private Date fechaDevolucion;
     private boolean devuelto;
     
     // Constructor
-    public Prestamo(int id, Socio socio,UbiBiblio biblioteca, Date fechaPrestamo, Libro libro, Date fechaDevolucion, boolean devuelto) {
+    public Prestamo(int id, Socio socio, UBICACION biblioteca, Date fechaPrestamo, Libro libro, Date fechaDevolucion, boolean devuelto) {
         this.id = id;
         this.socio = socio;
         this.biblioteca = biblioteca;
@@ -55,11 +59,11 @@ public class Prestamo {
         this.socio = socio;
     }
 
-    public UbiBiblio getBiblioteca() {
+    public UBICACION getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UbiBiblio biblioteca) {
+    public void setBiblioteca(UBICACION biblioteca) {
         this.biblioteca = biblioteca;
     }
 
@@ -197,7 +201,7 @@ public class Prestamo {
 
             while (rs.next()) {
                 int idPrestamo = rs.getInt("id");
-                 UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
+                 UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_lib"));
                 Date fechaPrestamo = rs.getDate("fecha_prestamo");
                 int idLibro = rs.getInt("id_libro");
                 Date fechaDevolucion = rs.getDate("fecha_devolucion");

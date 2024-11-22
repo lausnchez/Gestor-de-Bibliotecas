@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +37,7 @@ public class MenuAdminController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuAdminView.getBtn_biblioteca()) {
             System.out.println("Botón Biblioteca presionado");
+            new ControladorMostrarBibliotecas();
         } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
             System.out.println("Botón Préstamos presionado");
         } else if (e.getSource() == menuAdminView.getBtn_libros()) {

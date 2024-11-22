@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controlador;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -102,7 +102,7 @@ public class agregarLibroController implements ActionListener{
         // Aquí podrías poner un valor por defecto o mostrar un mensaje de error
     }
     
-        int bibliotecaId = ControllerUtils.idbiblioteca(this.vista.getcBox_ubicacion().getSelectedItem().toString()); 
+        int bibliotecaId = ControllerUtils.idbibliotecaPaula(this.vista.getcBox_ubicacion().getSelectedItem().toString()); 
 
         Libro nuevoLibro = new Libro(0, isbn, titulo, autor, editorial, precio, bibliotecaId, true);
         
