@@ -20,6 +20,8 @@ public class EditarBibliotecarioView extends javax.swing.JFrame {
      */
     public EditarBibliotecarioView() {
         initComponents();
+          setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setTitle("Editar Bibliotecario");
     }
 
     public JButton getBtn_guardar() {
@@ -114,8 +116,11 @@ public class EditarBibliotecarioView extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
         jLabel6.setText("DATOS BIBLIOTECARIO");
 
+        btn_guardar.setBackground(new java.awt.Color(0, 153, 153));
+        btn_guardar.setForeground(new java.awt.Color(255, 255, 255));
         btn_guardar.setText("Guardar cambios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

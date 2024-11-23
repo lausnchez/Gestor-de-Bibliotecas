@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Bibliotecario;
 import modelo.Libro;
+import vista.AgregarBibliotecarioView;
 import vista.EditarBibliotecarioView;
 import vista.bibliotecariosView;
 
@@ -27,6 +28,7 @@ public class BibliotecariosController implements ActionListener {
     private Bibliotecario modelo;
     private DefaultTableModel modeloTabla;
     private bibliotecariosView bibliotecariosView;
+    private AgregarBibliotecarioView agregarBibliotecariosController;
  
    
     
@@ -52,7 +54,7 @@ public class BibliotecariosController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.vista.getBtn_agregar()) {
-            buscarBibliotecario();
+            agregarBibliotecario();
         }
         else if (e.getSource() == this.vista.getBtn_editar()) {
             editarBibliotecario();
@@ -65,7 +67,11 @@ public class BibliotecariosController implements ActionListener {
         }
     }
 
-   
+   private void agregarBibliotecario() {
+    AgregarBibliotecarioView agregarView = new AgregarBibliotecarioView();
+    new AgregarBibliotecarioController(agregarView);
+    agregarView.setVisible(true);
+}
 
    public void crearTabla() {
     if (this.vista.getTebl_bibliotecarios() != null) {

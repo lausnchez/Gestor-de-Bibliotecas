@@ -20,6 +20,8 @@ public class MenuView extends javax.swing.JFrame {
      */
     public MenuView() {
         initComponents();
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setTitle("Menu Principal");
     }
 
     public JButton getBtn_consultas() {
@@ -73,6 +75,7 @@ public class MenuView extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(153, 0, 153));
         jLabel1.setText("MENU");
 
+        btn_socios.setForeground(new java.awt.Color(153, 0, 204));
         btn_socios.setText("SOCIOS");
         btn_socios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,12 +83,16 @@ public class MenuView extends javax.swing.JFrame {
             }
         });
 
+        btn_libros.setForeground(new java.awt.Color(153, 0, 204));
         btn_libros.setText("LIBROS");
 
+        btn_sanciones.setForeground(new java.awt.Color(153, 0, 204));
         btn_sanciones.setText("SANCIONES");
 
+        btn_prestamos.setForeground(new java.awt.Color(153, 0, 204));
         btn_prestamos.setText("PRÉSTAMOS");
 
+        btn_consultas.setForeground(new java.awt.Color(153, 0, 204));
         btn_consultas.setText("CONSULTAS");
         btn_consultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

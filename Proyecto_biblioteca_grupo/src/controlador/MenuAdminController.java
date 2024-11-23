@@ -43,18 +43,12 @@ public class MenuAdminController implements ActionListener{
     } else if (e.getSource() == menuAdminView.getBtn_prestamos()) {
         System.out.println("Botón Préstamos presionado");
     } else if (e.getSource() == menuAdminView.getBtn_bibliotecario()) {
-        // Crear instancia del modelo bibliotecario
         System.out.println("Botón bibliotecario presionado");
-
-        // Aquí inicializamos la vista y el modelo
         Bibliotecario bibliotecarioModelo = new Bibliotecario();
         bibliotecariosView vistaBibliotecarios = new bibliotecariosView();
-
         // Creamos el controlador y pasamos la vista y el modelo
         BibliotecariosController controller = new BibliotecariosController(vistaBibliotecarios, bibliotecarioModelo);
-        
-        // Hacer visible la vista de bibliotecarios
-        vistaBibliotecarios.setVisible(true);
+        vistaBibliotecarios.setVisible(true);//hacer visible
     } else if (e.getSource() == menuAdminView.getBtn_libros()) {
         System.out.println("Botón libros presionado");
 

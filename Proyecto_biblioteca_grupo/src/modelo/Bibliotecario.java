@@ -238,6 +238,29 @@ public class Bibliotecario {
         return false;
     }
 }
+    /**
+     * función que agrega bibliotecarios
+     */
+    
+    public static boolean agregarBibliotecario(Bibliotecario bibliotecario) {
+        String sql = "INSERT INTO bibliotecarios (nombre_trab, apellidos_trab, dni_trab, telefono_trab, email_trab) VALUES (?, ?,?, ?, ?)";
+        
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, bibliotecario.getNombreTrab());
+            stmt.setString(2, bibliotecario.getApellidosTrab());
+            stmt.setString(3, bibliotecario.getDniTrab());
+            stmt.setString(4, bibliotecario.getTelefonoTrab());
+            stmt.setString(5, bibliotecario.getEmailTrab());
+
+            int filasInsertadas = stmt.executeUpdate();
+            return filasInsertadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
     /**
      * 

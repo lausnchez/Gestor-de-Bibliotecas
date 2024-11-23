@@ -86,7 +86,7 @@ public class bibliotecariosView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 204));
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("BIBLIOTECARIO/AS");
 
         tebl_bibliotecarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,14 +104,22 @@ public class bibliotecariosView extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jScrollPane2);
 
+        btn_agregar.setBackground(new java.awt.Color(0, 153, 153));
+        btn_agregar.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregar.setText("AGREGAR");
 
+        btn_eliminar.setBackground(new java.awt.Color(0, 153, 153));
+        btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         btn_eliminar.setText("ELIMINAR");
 
+        btn_editar.setBackground(new java.awt.Color(0, 153, 153));
+        btn_editar.setForeground(new java.awt.Color(255, 255, 255));
         btn_editar.setText("EDITAR");
 
         cBox_buscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Apellido", " " }));
 
+        btn_buscar.setBackground(new java.awt.Color(0, 153, 153));
+        btn_buscar.setForeground(new java.awt.Color(255, 255, 255));
         btn_buscar.setText("Buscar");
         btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +236,8 @@ public class bibliotecariosView extends javax.swing.JFrame {
 public bibliotecariosView() {
         // Llamada al método initComponents(), que inicializa los componentes de la interfaz
         initComponents();
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setTitle("BIBLIOTECARIOS");
     }
 
 
