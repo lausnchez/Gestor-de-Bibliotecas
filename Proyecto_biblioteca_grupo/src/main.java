@@ -17,11 +17,11 @@ import vista.usuarioLoginView;
  */
 public class main {
     public static void main(String[] args) {  
-        //new ControladorMostrarBibliotecas();
+        new ControladorMostrarBibliotecas();
         // Crear la vista de login
-        usuarioLoginView loginView = new usuarioLoginView();
-        UsuarioController controller = new UsuarioController(loginView);
-        loginView.setVisible(true);  // Asegúrate de que la ventana sea visible
+        //usuarioLoginView loginView = new usuarioLoginView();
+        //UsuarioController controller = new UsuarioController(loginView);
+        //loginView.setVisible(true);  // Asegúrate de que la ventana sea visible
         
       /*
      // Crear la vista de libros

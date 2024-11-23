@@ -167,34 +167,40 @@ public class Biblioteca {
     }
 
     // Método para actualizar los datos de una biblioteca
+    /*
     public void actualizarBiblioteca() {
         String sql = "UPDATE bibliotecas SET ubi_biblioteca = '" + this.provincia +
                      "', tel_biblioteca = '" + this.telefono + "' WHERE id_biblioteca = " + this.idBiblioteca;
         BaseDatos.ejecutarUpdate(sql);
-    }
-
+    }  */
+  
     /**
      * Método que devuelve la biblioteca por su id
      * @param id
      * @return 
      */
-    /*
+    
     public static Biblioteca obtenerBibliotecaPorId(int id) {
         String sql = "SELECT * FROM bibliotecas WHERE id_biblio = " + id;
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             if (rs != null && rs.next()) {
-                String provinciaStr = rs.getString("ubi_biblioteca");
-                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("tel_biblioteca");
-                return new Biblioteca(id, provincia, telefono);
+                int idEncontrado = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String telefono = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+
+                return new Biblioteca(idEncontrado, nombre, provincia, ciudad, calle, telefono, email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null; // Si no se encuentra la biblioteca
     }
-    */
+    
     
     /**
      * Nos pide un nombre de una biblioteca y nos devuelve su ID
@@ -243,10 +249,10 @@ public class Biblioteca {
      * Método que elimina la biblioteca
      * @param id 
      */
-    public static void eliminarBiblioteca(int id) {
+    /*public static void eliminarBiblioteca(int id) {
         String sql = "DELETE FROM bibliotecas WHERE id_biblioteca = " + id;
         BaseDatos.ejecutarUpdate(sql);
-    }
+    }*/
 
     // Método toString para mostrar la información de la biblioteca
     @Override
@@ -714,7 +720,7 @@ public class Biblioteca {
      * 
      * @param id 
      */
-    public static void eliminarSocio(int id){
+    public static void eliminarBiblioteca(int id){
         Connection conn = null;
         PreparedStatement stmt = null;
 
@@ -727,6 +733,42 @@ public class Biblioteca {
             int filasActualizadas = stmt.executeUpdate();
             if (filasActualizadas > 0) {
                 System.out.println("Biblioteca " + id + " eliminada correctamente");
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
+    public static void actualizarBiblioteca(int id, String nombre, String telefono, String email){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "UPDATE bibliotecas "
+                    + "SET telefono_biblio = ?,"
+                    + "email_biblio = ? "
+                    + "WHERE id_biblio = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, telefono);
+            stmt.setString(2, email);
+            stmt.setInt(3, id);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                String mensaje = "Nuevos datos de la biblioteca:" +
+                "\nNombre: " + nombre +
+                "\nEmail: " + email +
+                "\nTeléfono: " + telefono + "\n";
+                JOptionPane.showMessageDialog(null, mensaje, "Biblioteca actualizada", JOptionPane.INFORMATION_MESSAGE);
             }else System.out.println("No se actualizaron datos");
         } catch (SQLException e) {
             e.printStackTrace();
