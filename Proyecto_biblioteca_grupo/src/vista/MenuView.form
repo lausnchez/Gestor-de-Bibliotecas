@@ -92,6 +92,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_socios">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="SOCIOS"/>
       </Properties>
       <Events>
@@ -100,21 +103,33 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_libros">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="LIBROS"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btn_sanciones">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="SANCIONES"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btn_prestamos">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="PR&#xc9;STAMOS"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btn_consultas">
       <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="CONSULTAS"/>
       </Properties>
       <Events>

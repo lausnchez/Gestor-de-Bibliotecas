@@ -18,33 +18,35 @@ USE `bibliotecas`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sanciones`
+-- Table structure for table `antiguosclientes`
 --
 
-DROP TABLE IF EXISTS `sanciones`;
+DROP TABLE IF EXISTS `antiguosclientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sanciones` (
-  `idSanciones` int NOT NULL,
-  `fecha` date NOT NULL,
-  `prestamo` int NOT NULL,
+CREATE TABLE `antiguosclientes` (
+  `idAntiguoCliente` int NOT NULL,
   `bibliotecaAsociada` int NOT NULL,
-  `cliente` int NOT NULL,
-  `libro` int NOT NULL,
-  `tipo` varchar(45) NOT NULL,
-  `precio` decimal(10,0) NOT NULL,
-  `estado` varchar(45) NOT NULL,
-  PRIMARY KEY (`idSanciones`)
+  `dni` varchar(45) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `apellidos` varchar(45) NOT NULL,
+  `telefono` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `provincia` varchar(45) NOT NULL,
+  `ciudad` varchar(45) NOT NULL,
+  `calle` varchar(45) NOT NULL,
+  `cuentaBancaria` varchar(45) NOT NULL,
+  PRIMARY KEY (`idAntiguoCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sanciones`
+-- Dumping data for table `antiguosclientes`
 --
 
-LOCK TABLES `sanciones` WRITE;
-/*!40000 ALTER TABLE `sanciones` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sanciones` ENABLE KEYS */;
+LOCK TABLES `antiguosclientes` WRITE;
+/*!40000 ALTER TABLE `antiguosclientes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `antiguosclientes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

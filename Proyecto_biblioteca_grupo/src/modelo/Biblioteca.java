@@ -16,21 +16,32 @@ import java.util.List;
  */
 public class Biblioteca {
 
-    public enum UbiBiblio {
-        MADRID("Madrid"),
-        BARCELONA("Barcelona"),
-        VALENCIA("Valencia"),
-        SEVILLA("Sevilla"),
-        ZARAGOZA("Zaragoza"),
-        MALAGA("Málaga"),
-        CORDOBA("Alicante"),
-        ALMERIA("Murcia"),
-        TOLEDO("Granada"),
-        BILBAO("Córdoba");
+    public enum UBICACION {
+MADRID("Madrid"),
+    BARCELONA("Barcelona"),
+    VALENCIA("Valencia"),
+    SEVILLA("Sevilla"),
+    ZARAGOZA("Zaragoza"),
+    MÁLAGA("Málaga"),
+    ALICANTE("Alicante"),
+    MURCIA("Murcia"),
+    GRANADA("Granada"),
+    VALLADOLID("Valladolid"),
+    BURGOS("Burgos"),
+    CÓRDOBA("Córdoba"),
+    CÁDIZ("Cádiz"),
+    SALAMANCA("Salamanca"),
+    TOLEDO("Toledo"),
+    CANTABRIA("Cantabria"),
+    LA_RIOJA("La Rioja"),
+    NAVARRA("Navarra"),
+    ARAGÓN("Aragón"),
+    ASTURIAS("Asturias"),
+    BALEARES("Baleares");
 
         private final String nombre;
 
-        UbiBiblio(String nombre) {
+        UBICACION(String nombre) {
             this.nombre = nombre;
         }
 
@@ -40,10 +51,10 @@ public class Biblioteca {
     }
 
     private int idBiblioteca;
-    private UbiBiblio provincia;
+    private UBICACION provincia;
     private String telefono;
 
-    public Biblioteca(int id, UbiBiblio provincia, String telefono) {
+    public Biblioteca(int id, UBICACION provincia, String telefono) {
         this.idBiblioteca = id;
         this.provincia = provincia;
         this.telefono = telefono;
@@ -57,11 +68,11 @@ public class Biblioteca {
         this.idBiblioteca = idBiblioteca;
     }
 
-    public UbiBiblio getProvincia() {
+    public UBICACION getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(UbiBiblio provincia) {
+    public void setProvincia(UBICACION provincia) {
         this.provincia = provincia;
     }
 
@@ -72,6 +83,38 @@ public class Biblioteca {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    
+    public static List<Biblioteca> obtenerTodasLasBibliotecasPaula() {
+    List<Biblioteca> bibliotecas = new ArrayList<>();
+    String sql = "SELECT * FROM bibliotecas";
+    ResultSet rs = BaseDatos.ejecutarSelect(sql);
+    try {
+        while (rs != null && rs.next()) {
+            int id = rs.getInt("id_biblio");
+            String provinciaStr = rs.getString("provincias_biblio");
+            
+            try {
+                // Transformar el valor a un formato uniforme (mayúsculas) y reemplazar espacios por guiones bajos
+                provinciaStr = provinciaStr.toUpperCase().replace(" ", "_");  
+                UBICACION provincia = UBICACION.valueOf(provinciaStr);  // Convertir a valor del enum
+                
+                String telefono = rs.getString("telefono_biblio");
+                bibliotecas.add(new Biblioteca(id, provincia, telefono));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Provincia desconocida: " + provinciaStr);
+                // Si la provincia no es válida, puedes asignar un valor por defecto o simplemente omitir el registro
+                // En este ejemplo, asignamos una provincia por defecto:
+                UBICACION provincia = UBICACION.MADRID; // O alguna provincia que elijas por defecto
+                String telefono = rs.getString("telefono_biblio");
+                bibliotecas.add(new Biblioteca(id, provincia, telefono));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return bibliotecas;
+}
 // Método para agregar una biblioteca a la base de datos
     public void agregarBiblioteca() {
         String sql = "INSERT INTO bibliotecas (id_biblioteca, ubi_biblioteca, tel_biblioteca) " +
@@ -97,7 +140,7 @@ public class Biblioteca {
         try {
             if (rs != null && rs.next()) {
                 String provinciaStr = rs.getString("ubi_biblioteca");
-                UbiBiblio provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
+                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
                 String telefono = rs.getString("tel_biblioteca");
                 return new Biblioteca(id, provincia, telefono);
             }
@@ -112,16 +155,16 @@ public class Biblioteca {
      * Devuelve las bibliotecas
      * @return 
      */
-    public static List<Biblioteca> obtenerTodasLasBibliotecas() {
+    public static List<Biblioteca> obtenerTodasLasBiblioteca() {
         List<Biblioteca> bibliotecas = new ArrayList<>();
         String sql = "SELECT * FROM bibliotecas";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                int id = rs.getInt("id_biblioteca");
-                String provinciaStr = rs.getString("ubi_biblioteca");
-                UbiBiblio provincia = UbiBiblio.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("tel_biblioteca");
+                int id = rs.getInt("id_biblio");
+                String provinciaStr = rs.getString("provincias_biblio");
+                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
+                String telefono = rs.getString("telefono_biblio");
                 bibliotecas.add(new Biblioteca(id, provincia, telefono));
             }
         } catch (SQLException e) {
@@ -148,7 +191,7 @@ public class Biblioteca {
     // Método principal para probar la clase
     public static void main(String[] args) {
         // Crear una biblioteca
-        Biblioteca biblio1 = new Biblioteca(1, UbiBiblio.MADRID, "912345678");
+        Biblioteca biblio1 = new Biblioteca(1, UBICACION.MADRID, "912345678");
 
         // Agregar la biblioteca a la base de datos
         biblio1.agregarBiblioteca();
@@ -177,3 +220,6 @@ public class Biblioteca {
     }
 
 }
+
+
+

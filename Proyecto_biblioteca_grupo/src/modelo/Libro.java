@@ -7,14 +7,11 @@ package modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import modelo.Biblioteca.UbiBiblio;
 
-/**
- *
- * @author 
- */
 public class Libro {
     private int id;
     private String isbn;
@@ -22,21 +19,26 @@ public class Libro {
     private String autor;
     private String editorial;
     private float precio;
-    private UbiBiblio biblioteca;
+    private int biblioteca;  // El ID de la biblioteca ahora es un int
     private boolean disponible;
     
     // Constructor
-    public Libro(int id, String isbn, String titulo, String autor, String editorial,float precio, UbiBiblio biblioteca, boolean disponible) {
+    public Libro(int id, String isbn, String titulo, String autor, String editorial, float precio, int biblioteca, boolean disponible) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.autor = autor;
         this.editorial = editorial;
         this.precio = precio;
-        this.biblioteca = biblioteca;
+        this.biblioteca = biblioteca; // ID de la biblioteca
         this.disponible = disponible;
     }
 
+    public Libro() {
+        // Constructor por defecto
+    }
+
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -69,7 +71,6 @@ public class Libro {
         this.autor = autor;
     }
 
-  
     public String getEditorial() {
         return editorial;
     }
@@ -86,11 +87,11 @@ public class Libro {
         this.precio = precio;
     }
 
-    public UbiBiblio getBiblioteca() {
+    public int getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UbiBiblio biblioteca) {
+    public void setBiblioteca(int biblioteca) {
         this.biblioteca = biblioteca;
     }
 
@@ -101,89 +102,158 @@ public class Libro {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
-   
-
-    // Métodos
+    
     /**
-     * Método para agregar un libro a la base de datos
+     * 
+     * @param
+     * @return un autor
      */
-    public void agregarLibro() {
-        String sql = "INSERT INTO libros (id_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
-                 "VALUES (" + this.id + ", '" + this.isbn + "', '" + this.titulo + "', '" + this.autor + "', '" + this.editorial + "', " + this.precio + ",'" + this.biblioteca.toString() + "' " + (this.disponible ? 1 : 0) + ")";
-        BaseDatos.ejecutarUpdate(sql);
-    }
+    public static int insertarAutor(String nombreAutor) {
+    int idAutor = -1;
+    String sql = "INSERT INTO autores (nombre_aut) VALUES (?)";
 
-    /**
-     * Método para actualizar la disponibilidad de un libro
-     */
-    public void actualizarDisponibilidad() {
-        String sql = "UPDATE libros SET estado_lib = " + (this.disponible ? 1 : 0) + " WHERE id_lib = " + this.id;
-        BaseDatos.ejecutarUpdate(sql);
-    }
-
-    // Método para obtener un libro de la base de datos por su ID
-    public static Libro obtenerLibroPorId(int id) {
-        String sql = "SELECT * FROM libros WHERE idLibros = " + id;
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
         
-        System.out.println("Libro seleccionado con ID: "+id);
-        ResultSet rs = BaseDatos.ejecutarSelect(sql);
-        try {
-            if (rs != null && rs.next()) {   
-                System.out.println("Libro encontrado: " + rs.getString("nombre"));
-                String isbn = rs.getString("isbn");
-                String titulo = rs.getString("nombre");
-                String autor = rs.getString("autor");
-                String editorial=rs.getString("editorial");
-                float precio=rs.getFloat("precio");
-                String dbValue = rs.getString("bibliotecaAsociada");
-                UbiBiblio biblioteca = UbiBiblio.ALMERIA;
-                boolean disponible = rs.getBoolean("estado");
-                System.out.println("ISBN: " + isbn + ", Titulo: " + titulo + ", Autor: " + autor);
-                
-                
-                Libro libro=new Libro(id,isbn, titulo, autor, editorial, precio, biblioteca, disponible);
-                System.out.println("Libro encontrado con ID " + id + ": " + libro); // Verifica si el libro está siendo creado
-                return libro;
-                
+        stmt.setString(1, nombreAutor);
+        int filasAfectadas = stmt.executeUpdate();
+        
+        // Si se insertó correctamente, obtener el idAutor generado
+        if (filasAfectadas > 0) {
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                idAutor = rs.getInt(1); 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return idAutor;  // Devuelve el idAutor insertado
+}
+    
+    public static void registrarLibro(Libro libro) {
+         int idAutor = insertarAutor(libro.getAutor());  
+
+    // Si el autor no se pudo insertar (por algún error), no continuamos con el registro del libro
+        if (idAutor == -1) {
+            System.out.println("Error al registrar el autor.");
+            return;
+        }
+        // Consulta SQL 
+        String sql = "INSERT INTO libros (biblioteca_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
+                     "VALUES (?, ?, ?, ?, ?, ?,?)";
+
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Establecer los valores de los parámetros de la consulta SQL
+            stmt.setInt(1, libro.getBiblioteca());
+            stmt.setString(2, libro.getIsbn());
+            stmt.setString(3, libro.getTitulo());
+            stmt.setInt(4, idAutor);
+            stmt.setString(5, libro.getEditorial());
+            stmt.setFloat(6, libro.getPrecio());
+            stmt.setBoolean(7, libro.isDisponible());
+            System.out.println(libro.precio);
+            // Ejecutar
+            int filasAfectadas = stmt.executeUpdate();
+            System.out.println("Precio ingresado: " + libro.getPrecio());
+            System.out.println("ID Biblioteca: " + libro.getBiblioteca());
+            
+            if (filasAfectadas > 0) {
+                System.out.println("Libro registrado con éxito.");
+            } else {
+                System.out.println("Error al registrar el libro.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+   /**
+    * Método para agregar un libro
+    */
+    public void agregarLibro() {
+       // Validar los campos obligatorios
+    if (this.isbn == null || this.titulo == null || this.autor == null || this.editorial == null) {
+        throw new IllegalArgumentException("Faltan campos obligatorios para agregar el libro.");
+    }
+
+    // Validar ComboBox valor seleccionado
+    if (this.biblioteca == 0) { 
+        throw new IllegalArgumentException("Debe seleccionar una biblioteca válida.");
+    }
+
+    String sql = "INSERT INTO libros (biblioteca_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        // Establecer los valores en la consulta
+        stmt.setInt(1, this.biblioteca);
+        stmt.setString(2, this.isbn);
+        stmt.setString(3, this.titulo);
+        stmt.setString(4, this.autor);
+        stmt.setString(5, this.editorial);
+        stmt.setFloat(6, this.precio);
+        stmt.setInt(7, this.disponible ? 1 : 0);  // Convertir booleano a entero (1 o 0)
+
+        // Ejecutar la consulta
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    }
+    /**
+     * 
+     * @param id
+     * @return   Método para obtener un libro por su ID
+     */
+    public static Libro obtenerLibroPorId(int id) {
+        String sql = "SELECT idL_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib , biblioteca_lib FROM libros WHERE idL_lib = ?";
+        Libro libro = null;
+        try (Connection conn = BaseDatos.obtenerConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String isbn = rs.getString("isbn_lib");
+                String titulo = rs.getString("titulo_lib");
+                String autor = rs.getString("autor_lib");
+                String editorial = rs.getString("editorial_lib");
+                float precio = rs.getFloat("precio_lib");
+                boolean disponible = "Disponible".equalsIgnoreCase(rs.getString("estado_lib"));
+                int bibliotecaId = rs.getInt("biblioteca_lib");
+
+                // Crear el libro con los datos obtenidos
+                libro = new Libro(id, isbn, titulo, autor, editorial, precio, bibliotecaId, disponible);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Si no se encuentra el libro
+        return libro;
     }
-
-    /**
-     * Método para obtener todos los libros de la base de datos
-     * @return 
-     */
+    
+    // Método para obtener todos los libros de la base de datos
     public static List<Libro> obtenerTodosLosLibros() {
         List<Libro> libros = new ArrayList<>();
-        String sql = "SELECT l.idLibros, l.isbn, l.nombre, l.autor, l.editorial, l.precio, l.estado, b.provincia " +
-             "FROM libros l " +
-             "JOIN bibliotecas b ON l.bibliotecaAsociada = b.idBibliotecas";
+        String sql = "SELECT idL_lib, isbn_lib, titulo_lib, autor_lib, editorial_lib, precio_lib, estado_lib , biblioteca_lib FROM libros";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                System.out.println("Procesando libro...");
-                int id = rs.getInt("idLibros");
-                String isbn = rs.getString("isbn");
-                String titulo = rs.getString("nombre");
-                String autor = rs.getString("autor");
-                String editorial = rs.getString("editorial");
-                float precio=rs.getFloat("precio");
-                String estadoStr = rs.getString("estado");
+                int id = rs.getInt("idL_lib");
+                String isbn = rs.getString("isbn_lib");
+                String titulo = rs.getString("titulo_lib");
+                String autor = rs.getString("autor_lib");
+                String editorial = rs.getString("editorial_lib");
+                float precio = rs.getFloat("precio_lib");
+                boolean disponible = "Disponible".equalsIgnoreCase(rs.getString("estado_lib"));
+                int bibliotecaId = rs.getInt("biblioteca_lib");
 
-            // Convertir el estado de String a booleano (Puedes ajustarlo si es necesario)
-            boolean disponible = false;
-            if ("Disponible".equalsIgnoreCase(estadoStr)) {
-                disponible = true;
-            } else if ("Prestado".equalsIgnoreCase(estadoStr)) {
-                disponible = false;
-            }
-                
-                System.out.println("ID: " + id + ", Titulo: " + titulo + ", Autor: " + autor);
-                libros.add(new Libro(id,isbn, titulo, autor, editorial, precio, null, disponible));
+                // Crear el libro y añadirlo a la lista
+                libros.add(new Libro(id, isbn, titulo, autor, editorial, precio, bibliotecaId, disponible));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,120 +261,115 @@ public class Libro {
         return libros;
     }
 
-    /**
-     * Método para buscar un libro por su ISBN
-     * @param isbn
-     * @return 
-     */
-    public static Libro obtenerLibroPorIsbn(String isbn) {
-        String sql = "SELECT * FROM libros WHERE isbn_lib = '" + isbn + "'";
-        ResultSet rs = BaseDatos.ejecutarSelect(sql);
-        try {
-            if (rs != null && rs.next()) {
-                int id = rs.getInt("id_lib");
-                String titulo = rs.getString("titulo_lib");
-                String autor = rs.getString("autor_lib");
-                String editorial = rs.getString("editorial_lib");
-                float precio=rs.getFloat("precio_lib");
-                UbiBiblio biblioteca = UbiBiblio.valueOf(rs.getString("biblio_lib"));
-                boolean disponible = rs.getBoolean("estado_lib");
-                return new Libro(id, isbn, titulo, autor, editorial, precio, biblioteca, disponible);
+    // Método para eliminar un libro de la base de datos
+    public static void eliminarLibro(int id) {
+        String sql = "DELETE FROM libros WHERE idL_lib = ?";
+        try (Connection conn = BaseDatos.obtenerConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("El libro con ID " + id + " ha sido eliminado.");
+            } else {
+                System.out.println("No se encontró un libro con ID " + id + " para eliminar.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Si no se encuentra el libro
     }
-
-    /**
-     * Método para eliminar un libro de la base de datos
-     * @param id 
-     */
-    public static void eliminarLibro(int id) {
-        String sql = "DELETE FROM libros WHERE idLibros = " + id;
-        
-        System.out.println("Ejecutando SQL: " + sql); 
-        BaseDatos.ejecutarUpdate(sql);
-    }
-
     
-    public boolean validarDatos(String id, String isbn, String titulo, String autor, String genero, String editorial, String precio, String ubicacion) {
+    public static boolean esBibliotecaValida(int bibliotecaId) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    try {
+        // Establece la conexión con la base de datos
+        conn = BaseDatos.obtenerConnection();
 
-    StringBuilder mensajeError = new StringBuilder();
-    boolean hayError = false;
+        // Consulta para verificar si el ID de la biblioteca existe
+        String sql = "SELECT COUNT(*) FROM bibliotecas WHERE id_biblio = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, bibliotecaId);  // Establecer el ID de la biblioteca en el query
+        rs = stmt.executeQuery();
 
-    // Validar ID
-    if (id.trim().length() == 0) {
-        mensajeError.append("Falta introducir un ID.\n");
-        hayError = true;
-    }
-
-    // Validar ISBN
-    if (isbn.trim().length() == 0) {
-        mensajeError.append("Falta introducir un ISBN válido.\n");
-        hayError = true;
-    }
-
-    // Validar Título
-    if (titulo.trim().length() == 0) {
-        mensajeError.append("Falta introducir un título válido.\n");
-        hayError = true;
-    }
-
-    // Validar Autor
-    if (autor.trim().length() == 0) {
-        mensajeError.append("Falta introducir un autor válido.\n");
-        hayError = true;
-    }
-
-    // Validar Género
-    if (genero.trim().length() == 0) {
-        mensajeError.append("Falta introducir un género válido.\n");
-        hayError = true;
-    }
-
-    // Validar Editorial (puede ser un ComboBox, asegurémonos de que no sea vacío)
-    if (editorial.trim().length() == 0) {
-        mensajeError.append("Falta seleccionar una editorial válida.\n");
-        hayError = true;
-    }
-
-    // Validar Precio (asegurarnos de que es un número válido)
-    if (precio.trim().length() == 0) {
-        mensajeError.append("Falta introducir un precio válido.\n");
-        hayError = true;
-    } else {
+        if (rs.next() && rs.getInt(1) > 0) {
+            return true;  // La biblioteca existe
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
         try {
-            Float.parseFloat(precio);  // Intentamos convertir el precio a un número
-        } catch (NumberFormatException ex) {
-            mensajeError.append("El precio no es un número válido.\n");
-            hayError = true;
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    // Validar Ubicación (también puede ser un ComboBox, asegurémonos de que no esté vacío)
-    if (ubicacion.trim().length() == 0) {
-        mensajeError.append("Falta seleccionar una ubicación válida.\n");
-        hayError = true;
-    }
-
-    // Si hay errores, mostramos el mensaje en un JOptionPane
-    if (hayError) {
-        System.err.println(mensajeError.toString());
-        JOptionPane.showMessageDialog(null, mensajeError.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-        return false;  // Si hay error, no es válido
-    }
-
-    // Si no hay errores, todo está bien
-    return true;
+    return false;  // Si no existe, retorna false
 }
+
     /**
-     * Método para mostrar la información del libro
+     * Método para actualizar del libro
      * @return 
      */
-   
-    @Override
-    public String toString() {
-        return "Libro{" + "id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", editorial=" + editorial + ", precio=" + precio + ", biblioteca=" + biblioteca + ", disponible=" + disponible + '}';
+ public static boolean actualizarLibro(Libro libro) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+
+    // Verifica si el ID de la biblioteca es válido
+    if (!esBibliotecaValida(libro.getBiblioteca())) {
+        JOptionPane.showMessageDialog(null, "El ID de la biblioteca no es válido.");
+        return false;  // Detenemos la ejecución si no es válido
+    } else {
+    }
+
+    try {
+        conn = BaseDatos.obtenerConnection();
+
+        // Sentencia SQL para actualizar el libro
+        String sql = "UPDATE libros SET isbn_lib = ?, titulo_lib = ?, autor_lib = ?, editorial_lib = ?, precio_lib = ?, biblioteca_lib = ?, estado_lib = ? WHERE idL_lib = ?";
+
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, libro.getIsbn());
+        stmt.setString(2, libro.getTitulo());
+        stmt.setString(3, libro.getAutor());
+        stmt.setString(4, libro.getEditorial());
+        stmt.setFloat(5, libro.getPrecio());
+        stmt.setInt(6, libro.getBiblioteca());  // ID de la biblioteca
+        stmt.setBoolean(7, libro.isDisponible()); 
+        stmt.setInt(8, libro.getId()); 
+
+        int filasAfectadas = stmt.executeUpdate();  
+
+        return filasAfectadas > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();  
+        return false; 
+    } finally {
+        // Cerrar los recursos
+        try {
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
+ 
+ 
+ 
+private void cargarBibliotecasEnComboBox(JComboBox<String> comboBox) {
+    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecasPaula();
+    for (Biblioteca biblioteca : bibliotecas) {
+        // Puedes mostrar el nombre de la provincia en el ComboBox, pero almacenar el ID internamente
+        comboBox.addItem(biblioteca.getProvincia().getNombre());
+    }
+}
+
+}
+  
+
+
+  

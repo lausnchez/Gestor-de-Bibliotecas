@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `bibliotecas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `bibliotecas`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `bibliotecas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bibliotecas` (
-  `id_biblio` int NOT NULL AUTO_INCREMENT,
+  `id_biblio` int NOT NULL,
   `nombre_biblio` varchar(45) NOT NULL,
   `provincias_biblio` varchar(45) NOT NULL,
   `ciudad_biblio` varchar(45) NOT NULL,
   `calle_biblio` varchar(45) NOT NULL,
   `telefono_biblio` int NOT NULL,
-  `email_biblio` varchar(45) NOT NULL,
+  `email_blbio` varchar(45) NOT NULL,
   PRIMARY KEY (`id_biblio`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22 13:27:09
+-- Dump completed on 2024-11-21 17:13:50

@@ -22,6 +22,7 @@ public class usuarioLoginView extends javax.swing.JFrame {
     public usuarioLoginView() {
         initComponents();
         setTitle("Login de Usuario");
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
     }
 
     /**
