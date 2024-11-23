@@ -20,6 +20,7 @@ public class agregarLibro extends javax.swing.JFrame {
       public agregarLibro() {
         initComponents();
         setTitle("Agregar Libro");
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
         
     ButtonGroup grupoEstado = new ButtonGroup();
     grupoEstado.add(rBtn_disponible);
@@ -129,7 +130,8 @@ public class agregarLibro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("AGREGAR LIBRO");
 
         Lbl_isbn.setText("ISBN");
@@ -146,6 +148,8 @@ public class agregarLibro extends javax.swing.JFrame {
 
         rBtn_disponible.setText("DISPONIBLE");
 
+        btn_agregarLibro.setBackground(new java.awt.Color(0, 153, 153));
+        btn_agregarLibro.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregarLibro.setText("AGREGAR LIBRO");
 
         Lbl_editorial.setText("EDITORIAL");

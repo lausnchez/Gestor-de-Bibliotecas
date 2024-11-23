@@ -17,10 +17,11 @@ import java.sql.ResultSet;
  */
 public class BaseDatos {
     // Parámetros de conexión
-    private static final String DB = "Gestor de Bibliotecas";
+	private static final String DB = "Gestor de Bibliotecas";
+
     private static final String URL = "jdbc:mysql://localhost:3306/bibliotecas";
-    private static final String USUARIO = "root"; // Cambiar
-    private static final String CONTRASENA = "damdaw"; // Cambiar
+    private static final String USUARIO = "root";
+    private static final String CONTRASENA = "root"; // Cambiar segun la contra de la bd
     
     public static Connection conexion = null;
     public static Statement miStatement = null;
@@ -136,9 +137,8 @@ public class BaseDatos {
         Statement stmt = null;
 
         try {
-            // Iniciar la transacción
             conn = obtenerConnection();
-            conn.setAutoCommit(false);  // Desactivar autocommit para manejar la transacción manualmente
+            conn.setAutoCommit(false);  // Desactivar autocommit 
             stmt = conn.createStatement();
 
             // Ejecutar las consultas

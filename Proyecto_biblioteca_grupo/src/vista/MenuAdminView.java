@@ -19,6 +19,8 @@ public class MenuAdminView extends javax.swing.JFrame {
      */
     public MenuAdminView() {
         initComponents();
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setTitle("Menu Principal Admin");
     }
 
     public JButton getBtn_biblioteca() {
@@ -74,35 +76,48 @@ public class MenuAdminView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 204, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("MENU");
 
+        btn_biblioteca.setBackground(new java.awt.Color(0, 153, 153));
+        btn_biblioteca.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_biblioteca.setForeground(new java.awt.Color(255, 255, 255));
         btn_biblioteca.setText("GESTIONAR BIBLIOTECA");
 
+        btn_bibliotecario.setBackground(new java.awt.Color(0, 153, 153));
+        btn_bibliotecario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_bibliotecario.setForeground(new java.awt.Color(255, 255, 255));
         btn_bibliotecario.setText("GESTIONAR BIBLIOTECARIO");
 
+        btn_consultas.setBackground(new java.awt.Color(0, 153, 153));
+        btn_consultas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_consultas.setForeground(new java.awt.Color(255, 255, 255));
         btn_consultas.setText("CONSULTAS");
 
+        btn_sanciones.setBackground(new java.awt.Color(0, 153, 153));
+        btn_sanciones.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_sanciones.setForeground(new java.awt.Color(255, 255, 255));
         btn_sanciones.setText("SANCIONES");
 
+        btn_libros.setBackground(new java.awt.Color(0, 153, 153));
+        btn_libros.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_libros.setForeground(new java.awt.Color(255, 255, 255));
         btn_libros.setText("GESTIONAR LIBROS");
 
+        btn_socios.setBackground(new java.awt.Color(0, 153, 153));
+        btn_socios.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_socios.setForeground(new java.awt.Color(255, 255, 255));
         btn_socios.setText("GESTIONAR SOCIOS");
 
+        btn_prestamos.setBackground(new java.awt.Color(0, 153, 153));
+        btn_prestamos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_prestamos.setForeground(new java.awt.Color(255, 255, 255));
         btn_prestamos.setText("PRÉSTAMOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(btn_bibliotecario)
-                .addGap(0, 122, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +126,7 @@ public class MenuAdminView extends javax.swing.JFrame {
                     .addComponent(btn_consultas, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(160, 160, 160))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(124, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -121,6 +136,15 @@ public class MenuAdminView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_biblioteca)
                         .addGap(132, 132, 132))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(btn_bibliotecario)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
