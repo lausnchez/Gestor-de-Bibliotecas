@@ -21,6 +21,7 @@ public class AgregarBibliotecas extends javax.swing.JFrame {
      */
     public AgregarBibliotecas() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -48,7 +49,7 @@ public class AgregarBibliotecas extends javax.swing.JFrame {
         lbl_email = new javax.swing.JLabel();
         btn_agregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbl_titulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbl_titulo.setText("Agregar Biblioteca");

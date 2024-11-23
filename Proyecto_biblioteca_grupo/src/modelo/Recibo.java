@@ -126,6 +126,7 @@ class Recibo {
      * @param idRecibo
      * @return 
      */
+
     public static Recibo obtenerReciboPorId(int idRecibo) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -164,7 +165,7 @@ class Recibo {
 
         return recibo;
     }
-
+    
     /**
      * Método para actualizar el estado de pago de un recibo en la base de datos
      */

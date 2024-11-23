@@ -59,6 +59,18 @@ MADRID("Madrid"),
         this.provincia = provincia;
         this.telefono = telefono;
     }
+    
+    public Biblioteca(String nombre, String provincia, String ciudad, String calle, String telefono, String email) {
+        this.nombre = nombre;
+        this.provincia = provincia;
+        this.ciudad = ciudad;
+        this.calle = calle;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
+    //Getters & Setters
+    //--------------------------------------------------------------------------
 
     public int getIdBiblioteca() {
         return idBiblioteca;
@@ -123,31 +135,56 @@ MADRID("Madrid"),
     }
 
     // Método para actualizar los datos de una biblioteca
+    /*
     public void actualizarBiblioteca() {
         String sql = "UPDATE bibliotecas SET ubi_biblioteca = '" + this.provincia.getNombre() +
                      "', tel_biblioteca = '" + this.telefono + "' WHERE id_biblioteca = " + this.idBiblioteca;
         BaseDatos.ejecutarUpdate(sql);
-    }
-
+    }  */
+  
     /**
      * Método que devuelve la biblioteca por su id
      * @param id
      * @return 
      */
+
     public static Biblioteca obtenerBibliotecaPorId(int id) {
         String sql = "SELECT * FROM bibliotecas WHERE id_biblioteca = " + id;
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             if (rs != null && rs.next()) {
-                String provinciaStr = rs.getString("ubi_biblioteca");
-                UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("tel_biblioteca");
-                return new Biblioteca(id, provincia, telefono);
+                int idEncontrado = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String telefono = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+
+                return new Biblioteca(idEncontrado, nombre, provincia, ciudad, calle, telefono, email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null; // Si no se encuentra la biblioteca
+    }
+
+    /**
+     * Nos pide un nombre de una biblioteca y nos devuelve su ID
+     * @param nombreBiblioteca
+     * @return 
+     */
+    public static int obtenerIDBibliotecaPorNombre(String nombreBiblioteca){
+        int id = -1;
+        String sql = "SELECT id_biblio FROM bibliotecas WHERE nombre_biblio LIKE \"" + nombreBiblioteca + "\"";
+        ResultSet rs = BaseDatos.ejecutarSelect(sql);
+        try {
+            while(rs != null && rs.next()){
+                id = rs.getInt("id_biblio");
+            }
+        } catch (SQLException e) {
+        }
+        return id;
     }
 
     /**
@@ -177,10 +214,10 @@ MADRID("Madrid"),
      * Método que elimina la biblioteca
      * @param id 
      */
-    public static void eliminarBiblioteca(int id) {
+    /*public static void eliminarBiblioteca(int id) {
         String sql = "DELETE FROM bibliotecas WHERE id_biblioteca = " + id;
         BaseDatos.ejecutarUpdate(sql);
-    }
+    }*/
 
     // Método toString para mostrar la información de la biblioteca
     @Override
@@ -205,6 +242,378 @@ MADRID("Madrid"),
             System.out.println("Biblioteca recuperada: " + biblioRecuperada.toString());
         }
 
+        return listado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su id
+     * @param idSocio
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecasPorID(int ID) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE id_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + ID + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su id
+     * @param ID
+     * @return 
+     */
+    public static Biblioteca obtenerBibliotecaUnicaID(int ID) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Biblioteca biblio = null;
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE id_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + ID + "%");
+            rs = stmt.executeQuery();
+            if(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                biblio = new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email);
+            }
+            if(biblio == null){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return biblio;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su nombre
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorNombre(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE nombre_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su provincia
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorProvincia(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE provincias_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su ciudad
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorCiudad(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE ciudad_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su calle
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorCalle(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE calle_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su teléfono
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorTelefono(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE telefono_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * Método para obtener una biblioteca por su email
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorEmail(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE email_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
+    /**
+     * 
+     * @param id 
+     */
+    public static void eliminarBiblioteca(int id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+
         // Actualizar la biblioteca
         biblio1.setTelefono("987654321");
         biblio1.actualizarBiblioteca();
@@ -218,7 +627,76 @@ MADRID("Madrid"),
         // Eliminar la biblioteca
         Biblioteca.eliminarBiblioteca(1);
     }
+   
+    public static void actualizarBiblioteca(int id, String nombre, String telefono, String email){
+        Connection conn = null;
+        PreparedStatement stmt = null;
 
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "UPDATE bibliotecas "
+                    + "SET telefono_biblio = ?,"
+                    + "email_biblio = ? "
+                    + "WHERE id_biblio = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, telefono);
+            stmt.setString(2, email);
+            stmt.setInt(3, id);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                String mensaje = "Nuevos datos de la biblioteca:" +
+                "\nNombre: " + nombre +
+                "\nEmail: " + email +
+                "\nTeléfono: " + telefono + "\n";
+                JOptionPane.showMessageDialog(null, mensaje, "Biblioteca actualizada", JOptionPane.INFORMATION_MESSAGE);
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Método actualizado para registrar una biblioteca.
+     * Incluye el nombre, provincia, ciudad, calle, email y teléfono
+     * @param biblio
+     */
+    public static void registrarBiblioteca(Biblioteca biblio) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "INSERT INTO bibliotecas(nombre_biblio, provincias_biblio, ciudad_biblio, calle_biblio, telefono_biblio, email_biblio) VALUES (?,?,?,?,?,?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, biblio.getNombre());
+            stmt.setString(2, biblio.getProvincia());
+            stmt.setString(3, biblio.getCiudad());
+            stmt.setString(4, biblio.getCalle());
+            stmt.setString(5, biblio.getTelefono());
+            stmt.setString(6, biblio.getEmail());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al insertar biblioteca");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar conexión");
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 

@@ -78,17 +78,17 @@ public class ControladorMostrarBibliotecas implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.vista.getBtn_buscar()){
             if(!this.vista.getTxt_buscador().getText().trim().isEmpty()) 
-                buscarSocio();
+                buscarBiblioteca();
         }
         if(e.getSource() == this.vista.getBtn_editar()){
-            //editarSocio();
+            editarBiblio();
         }
-        if(e.getSource() == this.vista.getBtn_eliminar()){
+        /*if(e.getSource() == this.vista.getBtn_eliminar()){
             int id = this.vista.getTbl_biblio().getSelectedRow();
             eliminarBiblioteca(id);
-        }
+        }*/
         if(e.getSource() == this.vista.getBtn_agregar()){
-            new ControladorAgregarUsuario();
+            new ControladorAgregarBibliotecas();
         }
         if(e.getSource() == this.vista.getBtn_refresh()){
             actualizarTabla();
@@ -102,7 +102,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
         this.vista.getBtn_buscar().addActionListener(this);
         this.vista.getBtn_agregar().addActionListener(this);
         this.vista.getBtn_editar().addActionListener(this);
-        this.vista.getBtn_eliminar().addActionListener(this);
+        //this.vista.getBtn_eliminar().addActionListener(this);
         this.vista.getBtn_refresh().addActionListener(this);   
     }
     
@@ -231,7 +231,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
     }
     */
     
-    public void buscarSocio(){
+    public void buscarBiblioteca(){
         int selector = this.vista.getcBox_filtro().getSelectedIndex();
         String busqueda = this.vista.getTxt_buscador().getText().trim();
         modeloTabla.setRowCount(0);
@@ -264,5 +264,17 @@ public class ControladorMostrarBibliotecas implements ActionListener{
                 agregarPorParametro(Biblioteca.obtenerBibliotecaPorEmail(busqueda));
                 break;
         }
+    }
+    
+    /**
+     * Escoge la fila seleccionada de la tabla
+     */
+    public void editarBiblio(){
+        int id = -1;
+        if(this.vista.getTbl_biblio().getSelectedRow() != -1){  // Comprobamos la fila
+            Object idTabla = this.vista.getTbl_biblio().getValueAt(this.vista.getTbl_biblio().getSelectedRow(), 0); // Cogemos el id de la fila seleccionada
+            Biblioteca biblioEncontrada = Biblioteca.obtenerBibliotecaUnicaID((int)idTabla);  // Creamos una biblioteca con los datos seleccionados
+            new ControladorAgregarBibliotecas(biblioEncontrada);
+        }else JOptionPane.showMessageDialog(this.vista, "Seleccione un usuario para editar", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

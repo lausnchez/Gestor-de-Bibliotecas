@@ -46,7 +46,6 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         cBox_filtro = new javax.swing.JComboBox<>();
         txt_buscador = new javax.swing.JTextField();
-        btn_eliminar = new javax.swing.JButton();
         btn_editar = new javax.swing.JButton();
         btn_agregar = new javax.swing.JButton();
         btn_refresh = new javax.swing.JButton();
@@ -97,10 +96,6 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
 
         cBox_filtro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar todos", "ID", "Nombre", "Provincia", "Ciudad", "Calle", "Teléfono", "Email" }));
 
-        btn_eliminar.setBackground(new java.awt.Color(102, 0, 0));
-        btn_eliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btn_eliminar.setText("Eliminar biblioteca");
-
         btn_editar.setBackground(new java.awt.Color(102, 0, 0));
         btn_editar.setForeground(new java.awt.Color(255, 255, 255));
         btn_editar.setText("Editar biblioteca");
@@ -120,14 +115,7 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbl_bibliotecas, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jSeparator1))
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_bibliotecas, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_buscador)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -139,7 +127,8 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(42, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1495, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -148,27 +137,22 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_bibliotecas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)))
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(lbl_bibliotecas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cBox_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -248,14 +232,6 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
         this.btn_editar = btn_editar;
     }
 
-    public JButton getBtn_eliminar() {
-        return btn_eliminar;
-    }
-
-    public void setBtn_eliminar(JButton btn_eliminar) {
-        this.btn_eliminar = btn_eliminar;
-    }
-
     public JButton getBtn_refresh() {
         return btn_refresh;
     }
@@ -306,7 +282,6 @@ public class MostrarBibliotecas extends javax.swing.JFrame {
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_editar;
-    private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cBox_filtro;
     private javax.swing.JScrollPane jScrollPane1;
