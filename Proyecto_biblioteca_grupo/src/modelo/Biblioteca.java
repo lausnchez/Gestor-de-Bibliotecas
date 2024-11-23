@@ -103,6 +103,17 @@ public class Biblioteca {
         this.email = email;
     }
     
+    public Biblioteca(String nombre, String provincia, String ciudad, String calle, String telefono, String email) {
+        this.nombre = nombre;
+        this.provincia = provincia;
+        this.ciudad = ciudad;
+        this.calle = calle;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
+    //Getters & Setters
+    //--------------------------------------------------------------------------
     public int getIdBiblioteca() {
         return idBiblioteca;
     }
@@ -777,6 +788,41 @@ public class Biblioteca {
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
             } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Método actualizado para registrar una biblioteca.
+     * Incluye el nombre, provincia, ciudad, calle, email y teléfono
+     * @param biblio
+     */
+    public static void registrarBiblioteca(Biblioteca biblio) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "INSERT INTO bibliotecas(nombre_biblio, provincias_biblio, ciudad_biblio, calle_biblio, telefono_biblio, email_biblio) VALUES (?,?,?,?,?,?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, biblio.getNombre());
+            stmt.setString(2, biblio.getProvincia());
+            stmt.setString(3, biblio.getCiudad());
+            stmt.setString(4, biblio.getCalle());
+            stmt.setString(5, biblio.getTelefono());
+            stmt.setString(6, biblio.getEmail());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al insertar biblioteca");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar conexión");
                 e.printStackTrace();
             }
         }

@@ -63,7 +63,7 @@ public class ControladorAgregarBibliotecas implements ActionListener{
             // Agregar
             if(e.getSource() == this.vista.getBtn_agregar()){
                 if(comprobarCampos()){
-                    //agregarCliente();
+                    agregarBiblioteca();
                 }  
                 else JOptionPane.showMessageDialog(this.vista, "Faltan campos por rellenar", "Registro erróneo",JOptionPane.ERROR_MESSAGE);
                 }
@@ -123,6 +123,23 @@ public class ControladorAgregarBibliotecas implements ActionListener{
            this.vista.getLbl_provincia().setForeground(Color.red);
        }
        return valido; 
+    }
+    
+    public void agregarBiblioteca(){
+        String nombre = this.vista.getTxt_nombre().getText();
+        String provincia = this.vista.getcBox_provincias().getSelectedItem().toString();
+        String ciudad = this.vista.getTxt_ciudad().getText();
+        String calle = this.vista.getTxt_calle().getText();
+        String telefono = this.vista.getTxt_telefono().getText();
+        String email = this.vista.getTxt_email().getText();
+                
+        Biblioteca nuevaBiblioteca = new Biblioteca(nombre, provincia, ciudad, calle, telefono, email);
+        Biblioteca.registrarBiblioteca(nuevaBiblioteca);
+        //if(Socio.obtenerSocioPorDNI(nuevoSocio.getDni(), true) != null){
+        if(Biblioteca.obtenerBibliotecaUnicaID(nuevaBiblioteca.getIdBiblioteca()) != null){
+            JOptionPane.showMessageDialog(this.vista, "Biblioteca agregada con éxito", "Agregada correctamente", JOptionPane.INFORMATION_MESSAGE);
+            this.vista.dispose(); 
+        }else JOptionPane.showMessageDialog(this.vista, "No se pudo agregar la biblioteca", "Error al agregar", JOptionPane.ERROR_MESSAGE);
     }
 
 }
