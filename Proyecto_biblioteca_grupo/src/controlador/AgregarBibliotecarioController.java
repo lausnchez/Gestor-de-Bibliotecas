@@ -52,7 +52,7 @@ public class AgregarBibliotecarioController implements ActionListener{
         nuevoBibliotecario.setEmailTrab(email);
         
         
-        nuevoBibliotecario.setBibliotecaTrab(biblioteca); 
+        nuevoBibliotecario.setBibliotecaTrab(0); 
 
         // Intentamos agregar el bibliotecario a la base de datos
         boolean agregado = Bibliotecario.agregarBibliotecario(nuevoBibliotecario);
