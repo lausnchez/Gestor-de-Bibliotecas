@@ -46,7 +46,6 @@ public class BibliotecariosController implements ActionListener {
     this.vista.getcBox_buscar().addActionListener(this);
     this.vista.getTxt_buscar().addActionListener(this);
 
-    // Hacer visible la vista
     this.vista.setVisible(true);
 }
     
@@ -69,7 +68,7 @@ public class BibliotecariosController implements ActionListener {
 
    private void agregarBibliotecario() {
     AgregarBibliotecarioView agregarView = new AgregarBibliotecarioView();
-    new AgregarBibliotecarioController(agregarView);
+    new AgregarBibliotecarioController(agregarView, bibliotecariosView);
     agregarView.setVisible(true);
 }
 
@@ -141,7 +140,6 @@ public class BibliotecariosController implements ActionListener {
         return;
     }
 
-    // Obtener ID y datos del bibliotecario seleccionado
     int id = (int) this.vista.getTebl_bibliotecarios().getValueAt(fila, 0);
     Bibliotecario biblio = Bibliotecario.obtenerBibliotecarioPorId(id);
 
@@ -150,23 +148,18 @@ public class BibliotecariosController implements ActionListener {
         return;
     }
 
-    // Crear la vista de edición
     EditarBibliotecarioView editarView = new EditarBibliotecarioView();
 
-    // Pasa los datos al formulario
+    // Pasar los datos al formulario
     editarView.getTxt_id().setText(String.valueOf(biblio.getIdTrab()));
     editarView.getTxt_nombre().setText(biblio.getNombreTrab());
     editarView.getTxt_dni().setText(biblio.getDniTrab());
     editarView.getTxt_email().setText(biblio.getEmailTrab());
     editarView.getTxt_telefono().setText(biblio.getTelefonoTrab());
 
-    // Asegúrate de que no se pueda editar el campo de ID
     editarView.getTxt_id().setEnabled(false);
-
-    // Agrega acción al botón "Guardar"
     editarView.getBtn_guardar().addActionListener(e -> guardarCambios(editarView, biblio));
 
-    // Mostrar el formulario
     editarView.setVisible(true);
 }
  
@@ -184,7 +177,6 @@ public class BibliotecariosController implements ActionListener {
             return;
         }
 
-        // Actualizar objeto bibliotecario
         biblio.setNombreTrab(nuevoNombre);
         biblio.setDniTrab(nuevoDni);
         biblio.setEmailTrab(nuevoEmail);

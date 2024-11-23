@@ -44,7 +44,7 @@ public class LibrosViewController implements ActionListener {
         this.librosView.getBtn_guardar().addActionListener(this);
 
      cargarCabeceraTabla(); 
-     cargarLibrosEnTabla();  // Cargar los libros al iniciar
+     cargarLibrosEnTabla(); 
      
      // Aquí agregamos la tabla a la vista
         this.librosView.setVisible(true);
@@ -63,9 +63,9 @@ public class LibrosViewController implements ActionListener {
      * Función que carga todos los libros y los muestra en la tabla
      */
     public void cargarLibrosEnTabla() {
-    modeloTabla.setRowCount(0);  // Vaciar la tabla antes de cargar los nuevos datos
+    modeloTabla.setRowCount(0);  // Vaciar la tabla 
     
-    List<Libro> listadoLibros = this.libroModelo.obtenerTodosLosLibros(); // Obtener los libros desde el modelo
+    List<Libro> listadoLibros = this.libroModelo.obtenerTodosLosLibros();
     
     if (listadoLibros.isEmpty()) {
         JOptionPane.showMessageDialog(librosView, "No se han encontrado libros.", 
@@ -164,8 +164,6 @@ public void editarLibro() {
         JOptionPane.showMessageDialog(librosView, "Error al cargar los datos del libro.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-
-    // Crear la vista de edición del libro
     EditarLibroView editarView = new EditarLibroView();  // Vista para editar libro
 
     // Pasa los datos al formulario
@@ -176,20 +174,16 @@ public void editarLibro() {
     editarView.getTxt_editorial().setText(libro.getEditorial());
     editarView.getTxt_precio().setText(String.valueOf(libro.getPrecio()));
 
-    // Establecer la biblioteca seleccionada en el ComboBox
     String nombreBiblioteca = obtenerNombreBibliotecaPorId(libro.getBiblioteca()); // Debes crear este método
     editarView.getcBox_biblioteca().setSelectedItem(nombreBiblioteca);
 
-    // Agregar acción al botón "Guardar"
     editarView.getBtn_guardar().addActionListener(e -> guardarCambios(editarView, libro));
 
-    // Mostrar el formulario de edición
     editarView.setVisible(true);
 }
 
 private String obtenerNombreBibliotecaPorId(int bibliotecaId) {
     // Lógica para obtener el nombre de la biblioteca a partir del ID.
-    // Este es un ejemplo, depende de cómo manejes las bibliotecas
     if (bibliotecaId == 1) {
         return "Madrid";
     } else if (bibliotecaId == 2) {
@@ -209,14 +203,12 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
         String nuevaEditorial = editarView.getTxt_editorial().getText();
         String nuevoPrecioStr = editarView.getTxt_precio().getText();
         
-        // Obtener el índice de la biblioteca seleccionada en el ComboBox
         int indiceBiblioteca = editarView.getcBox_biblioteca().getSelectedIndex();
         
-        // Obtener la lista de bibliotecas y obtener el ID correspondiente
-        List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+        List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecasPaula();
         int idBiblioteca = bibliotecas.get(indiceBiblioteca).getIdBiblioteca();
 
-        // Validaciones simples (puedes ampliarlas)
+        // Validaciones
         if (nuevoIsbn.isEmpty() || nuevoTitulo.isEmpty() || nuevoAutor.isEmpty() || nuevaEditorial.isEmpty() || 
             nuevoPrecioStr.isEmpty() || indiceBiblioteca == -1) {  // -1 indica que no se ha seleccionado ninguna opción
             JOptionPane.showMessageDialog(editarView, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -232,19 +224,18 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
             return;
         }
 
-        // Actualizar objeto libro con los nuevos valores
+        // Actualizar objeto libro 
         libro.setIsbn(nuevoIsbn);
         libro.setTitulo(nuevoTitulo);
         libro.setAutor(nuevoAutor);
         libro.setEditorial(nuevaEditorial);
         libro.setPrecio(nuevoPrecio);
-        libro.setBiblioteca(idBiblioteca);  // Usar el ID de la biblioteca seleccionada
+        libro.setBiblioteca(idBiblioteca); 
 
-        // Guardar cambios en la base de datos
         if (Libro.actualizarLibro(libro)) {
             JOptionPane.showMessageDialog(editarView, "Libro actualizado con éxito.");
-            editarView.dispose();  // Cerrar el formulario
-            cargarLibrosEnTabla();  // Refrescar la tabla en la vista principal
+            editarView.dispose();  
+            cargarLibrosEnTabla(); 
         } else {
             JOptionPane.showMessageDialog(editarView, "Error al actualizar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -256,16 +247,20 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
 
 private int obtenerIdBibliotecaPorIndice(int indice) {
     // Asumiendo que tienes una lista de bibliotecas cargada en la vista o controlador
-    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecasPaula();
 
     if (indice >= 0 && indice < bibliotecas.size()) {
-        return bibliotecas.get(indice).getIdBiblioteca();  // Devuelve el ID de la biblioteca correspondiente
+        return bibliotecas.get(indice).getIdBiblioteca(); 
     }
 
     return -1;  // Si el índice es inválido
 }
 
-// Método para verificar si una cadena es un número válido
+/**
+ * 
+ * @param str
+ * @return Método para verificar si una cadena es un número válido
+ */
 private boolean esNumero(String str) {
     try {
         Integer.parseInt(str);

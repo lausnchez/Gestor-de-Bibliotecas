@@ -85,7 +85,7 @@ MADRID("Madrid"),
     }
     
     
-    public static List<Biblioteca> obtenerTodasLasBibliotecas() {
+    public static List<Biblioteca> obtenerTodasLasBibliotecasPaula() {
     List<Biblioteca> bibliotecas = new ArrayList<>();
     String sql = "SELECT * FROM bibliotecas";
     ResultSet rs = BaseDatos.ejecutarSelect(sql);
@@ -155,7 +155,7 @@ MADRID("Madrid"),
      * Devuelve las bibliotecas
      * @return 
      */
-    public static List<Biblioteca> obtenerTodasLasBibliotecas() {
+    public static List<Biblioteca> obtenerTodasLasBiblioteca() {
         List<Biblioteca> bibliotecas = new ArrayList<>();
         String sql = "SELECT * FROM bibliotecas";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);

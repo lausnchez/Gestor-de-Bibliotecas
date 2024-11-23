@@ -361,7 +361,7 @@ public class Libro {
  
  
 private void cargarBibliotecasEnComboBox(JComboBox<String> comboBox) {
-    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecasPaula();
     for (Biblioteca biblioteca : bibliotecas) {
         // Puedes mostrar el nombre de la provincia en el ComboBox, pero almacenar el ID internamente
         comboBox.addItem(biblioteca.getProvincia().getNombre());

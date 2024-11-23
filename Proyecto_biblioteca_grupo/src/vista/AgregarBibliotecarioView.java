@@ -121,7 +121,7 @@ public class AgregarBibliotecarioView extends javax.swing.JFrame {
         btn_agregar.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregar.setText("Agregar");
 
-        cBox_bibliotecas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " Madrid", "        BARCELONA", "        VALENCIA", "        SEVILLA", "        ZARAGOZA", "        MALAGA", "        Alicante", "        Murcia", "        Granada", "        Córdoba" }));
+        cBox_bibliotecas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " Madrid", "BARCELONA", "VALENCIA", "SEVILLA", "ZARAGOZA", "MALAGA", "Alicante", "Murcia", "Granada", "Córdoba" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
