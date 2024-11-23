@@ -20,7 +20,7 @@ public class EditarBibliotecarioView extends javax.swing.JFrame {
      */
     public EditarBibliotecarioView() {
         initComponents();
-          setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
         setTitle("Editar Bibliotecario");
     }
 

@@ -21,6 +21,8 @@ public class EditarLibroView extends javax.swing.JFrame {
      */
     public EditarLibroView() {
         initComponents();
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        setTitle("Editar Libro");
     }
 
     public JButton getBtn_guardar() {
@@ -135,7 +137,7 @@ public class EditarLibroView extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 153, 153));
         jLabel7.setText("Editar Libro");
 
-        cBox_biblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBox_biblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Alicante", "Murcia", "Granada", "Córdoba" }));
 
         btn_guardar.setBackground(new java.awt.Color(0, 153, 153));
         btn_guardar.setForeground(new java.awt.Color(255, 255, 255));

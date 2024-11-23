@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Libro;
+import vista.EditarLibroView;
 import vista.agregarLibro;
 import vista.librosView;
 
@@ -134,13 +135,99 @@ public class LibrosViewController implements ActionListener {
             agregarLibroController controller = new agregarLibroController(vistaAgregarLibro, modeloLibro);
             vistaAgregarLibro.setVisible(true);
         } else if (e.getSource() == this.librosView.getBtn_editar()) {
-            int filaSeleccionada = tbl_libros.getSelectedRow();
-            if(e.getSource() == this.librosView.getBtn_guardar()){
-                System.out.println("Ha dado a guardar");
-            }
-            
-        }
+            editarLibro();
+         } else {
+             JOptionPane.showMessageDialog(librosView, "Debe seleccionar un libro de la tabla para editarlo.", "Error", JOptionPane.ERROR_MESSAGE);
+         }
+
     }
+        
+
+    
+    public void editarLibro() {
+    int fila = this.librosView.getTbl_libros().getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(librosView, "Seleccione un libro.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Obtener ID y datos del libro seleccionado
+    int id = (int) this.librosView.getTbl_libros().getValueAt(fila, 0);
+    Libro libro = Libro.obtenerLibroPorId(id);  // Método para obtener el libro por ID
+
+    if (libro == null) {
+        JOptionPane.showMessageDialog(librosView, "Error al cargar los datos del libro.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Crear la vista de edición del libro
+    EditarLibroView editarView = new EditarLibroView();  // Vista para editar libro
+
+    // Pasa los datos al formulario
+    editarView.getTxt_id().setText(String.valueOf(libro.getId()));
+    editarView.getTxt_isbn().setText(libro.getIsbn());
+    editarView.getTxt_titulo().setText(libro.getTitulo());
+    editarView.getTxt_autor().setText(libro.getAutor());
+    editarView.getTxt_editorial().setText(libro.getEditorial());
+    editarView.getTxt_precio().setText(String.valueOf(libro.getPrecio()));
+    editarView.getcBox_biblioteca();
+
+    // Agrega acción al botón "Guardar"
+    editarView.getBtn_guardar().addActionListener(e -> guardarCambios(editarView, libro));
+
+    // Mostrar el formulario
+    editarView.setVisible(true);
+}
+
+private void guardarCambios(EditarLibroView editarView, Libro libro) {
+    try {
+        // Obtener nuevos valores de los campos
+        String nuevoIsbn = editarView.getTxt_isbn().getText();
+        String nuevoTitulo = editarView.getTxt_titulo().getText();
+        String nuevoAutor = editarView.getTxt_autor().getText();
+        String nuevaEditorial = editarView.getTxt_editorial().getText();
+        String nuevoPrecioStr = editarView.getTxt_precio().getText();
+        
+        // Obtener el índice de la biblioteca seleccionada en el ComboBox
+        int indiceBiblioteca = editarView.getcBox_biblioteca().getSelectedIndex();
+
+        // Validaciones simples (puedes ampliarlas)
+        if (nuevoIsbn.isEmpty() || nuevoTitulo.isEmpty() || nuevoAutor.isEmpty() || nuevaEditorial.isEmpty() || 
+            nuevoPrecioStr.isEmpty() || indiceBiblioteca == -1) {  // -1 indica que no se ha seleccionado ninguna opción
+            JOptionPane.showMessageDialog(editarView, "Todos los campos son obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validación de precio
+        float nuevoPrecio;
+        try {
+            nuevoPrecio = Float.parseFloat(nuevoPrecioStr);  // Convertir a float
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(editarView, "El precio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Actualizar objeto libro con los nuevos valores
+        libro.setIsbn(nuevoIsbn);
+        libro.setTitulo(nuevoTitulo);
+        libro.setAutor(nuevoAutor);
+        libro.setEditorial(nuevaEditorial);
+        libro.setPrecio(nuevoPrecio);
+        libro.setBiblioteca(indiceBiblioteca);  // Usar el índice para setear la biblioteca
+
+        // Guardar cambios en la base de datos
+        if (Libro.actualizarLibro(libro)) {
+            JOptionPane.showMessageDialog(editarView, "Libro actualizado con éxito.");
+            editarView.dispose();  // Cerrar el formulario
+            cargarLibrosEnTabla();  // Refrescar la tabla en la vista principal
+        } else {
+            JOptionPane.showMessageDialog(editarView, "Error al actualizar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(editarView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
 
 // Método para verificar si una cadena es un número válido
 private boolean esNumero(String str) {
