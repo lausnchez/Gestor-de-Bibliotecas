@@ -320,10 +320,10 @@ public class Libro {
     if (!esBibliotecaValida(libro.getBiblioteca())) {
         JOptionPane.showMessageDialog(null, "El ID de la biblioteca no es válido.");
         return false;  // Detenemos la ejecución si no es válido
+    } else {
     }
 
     try {
-        // Establecer la conexión con la base de datos
         conn = BaseDatos.obtenerConnection();
 
         // Sentencia SQL para actualizar el libro
@@ -336,15 +336,15 @@ public class Libro {
         stmt.setString(4, libro.getEditorial());
         stmt.setFloat(5, libro.getPrecio());
         stmt.setInt(6, libro.getBiblioteca());  // ID de la biblioteca
-        stmt.setBoolean(7, libro.isDisponible());  // Asumiendo que "estado_lib" es otro campo que debes actualizar
-        stmt.setInt(8, libro.getId());  // Suponiendo que tienes un método getId() para el libro
+        stmt.setBoolean(7, libro.isDisponible()); 
+        stmt.setInt(8, libro.getId()); 
 
-        int filasAfectadas = stmt.executeUpdate();  // Ejecutar la actualización
+        int filasAfectadas = stmt.executeUpdate();  
 
-        return filasAfectadas > 0;  // Si se actualizó al menos un registro, retorna true
+        return filasAfectadas > 0;
     } catch (SQLException e) {
-        e.printStackTrace();  // Imprimir el error si ocurre
-        return false;  // Retorna false en caso de error
+        e.printStackTrace();  
+        return false; 
     } finally {
         // Cerrar los recursos
         try {
