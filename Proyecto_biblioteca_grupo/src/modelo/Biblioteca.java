@@ -17,16 +17,27 @@ import java.util.List;
 public class Biblioteca {
 
     public enum UBICACION {
-        MADRID("Madrid"),
-        BARCELONA("Barcelona"),
-        VALENCIA("Valencia"),
-        SEVILLA("Sevilla"),
-        ZARAGOZA("Zaragoza"),
-        MALAGA("Málaga"),
-        CORDOBA("Alicante"),
-        ALMERIA("Murcia"),
-        TOLEDO("Granada"),
-        BILBAO("Córdoba");
+MADRID("Madrid"),
+    BARCELONA("Barcelona"),
+    VALENCIA("Valencia"),
+    SEVILLA("Sevilla"),
+    ZARAGOZA("Zaragoza"),
+    MÁLAGA("Málaga"),
+    ALICANTE("Alicante"),
+    MURCIA("Murcia"),
+    GRANADA("Granada"),
+    VALLADOLID("Valladolid"),
+    BURGOS("Burgos"),
+    CÓRDOBA("Córdoba"),
+    CÁDIZ("Cádiz"),
+    SALAMANCA("Salamanca"),
+    TOLEDO("Toledo"),
+    CANTABRIA("Cantabria"),
+    LA_RIOJA("La Rioja"),
+    NAVARRA("Navarra"),
+    ARAGÓN("Aragón"),
+    ASTURIAS("Asturias"),
+    BALEARES("Baleares");
 
         private final String nombre;
 
@@ -72,6 +83,38 @@ public class Biblioteca {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    
+    public static List<Biblioteca> obtenerTodasLasBibliotecas() {
+    List<Biblioteca> bibliotecas = new ArrayList<>();
+    String sql = "SELECT * FROM bibliotecas";
+    ResultSet rs = BaseDatos.ejecutarSelect(sql);
+    try {
+        while (rs != null && rs.next()) {
+            int id = rs.getInt("id_biblio");
+            String provinciaStr = rs.getString("provincias_biblio");
+            
+            try {
+                // Transformar el valor a un formato uniforme (mayúsculas) y reemplazar espacios por guiones bajos
+                provinciaStr = provinciaStr.toUpperCase().replace(" ", "_");  
+                UBICACION provincia = UBICACION.valueOf(provinciaStr);  // Convertir a valor del enum
+                
+                String telefono = rs.getString("telefono_biblio");
+                bibliotecas.add(new Biblioteca(id, provincia, telefono));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Provincia desconocida: " + provinciaStr);
+                // Si la provincia no es válida, puedes asignar un valor por defecto o simplemente omitir el registro
+                // En este ejemplo, asignamos una provincia por defecto:
+                UBICACION provincia = UBICACION.MADRID; // O alguna provincia que elijas por defecto
+                String telefono = rs.getString("telefono_biblio");
+                bibliotecas.add(new Biblioteca(id, provincia, telefono));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return bibliotecas;
+}
 // Método para agregar una biblioteca a la base de datos
     public void agregarBiblioteca() {
         String sql = "INSERT INTO bibliotecas (id_biblioteca, ubi_biblioteca, tel_biblioteca) " +
@@ -118,10 +161,10 @@ public class Biblioteca {
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                int id = rs.getInt("id_biblioteca");
-                String provinciaStr = rs.getString("ubi_biblioteca");
+                int id = rs.getInt("id_biblio");
+                String provinciaStr = rs.getString("provincias_biblio");
                 UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("tel_biblioteca");
+                String telefono = rs.getString("telefono_biblio");
                 bibliotecas.add(new Biblioteca(id, provincia, telefono));
             }
         } catch (SQLException e) {

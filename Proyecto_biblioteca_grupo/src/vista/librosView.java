@@ -75,7 +75,7 @@ public class librosView extends javax.swing.JFrame {
 
         btn_guardar.setBackground(new java.awt.Color(0, 153, 153));
         btn_guardar.setForeground(new java.awt.Color(255, 255, 255));
-        btn_guardar.setText("GUARDAR");
+        btn_guardar.setText("ACTUALIZAR");
 
         btn_agregar.setBackground(new java.awt.Color(0, 153, 153));
         btn_agregar.setForeground(new java.awt.Color(255, 255, 255));

@@ -7,7 +7,9 @@ package modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class Libro {
@@ -276,7 +278,7 @@ public class Libro {
         }
     }
     
-    public boolean esBibliotecaValida(int bibliotecaId) {
+    public static boolean esBibliotecaValida(int bibliotecaId) {
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -355,7 +357,19 @@ public class Libro {
         }
     }
 }
+ 
+ 
+ 
+private void cargarBibliotecasEnComboBox(JComboBox<String> comboBox) {
+    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+    for (Biblioteca biblioteca : bibliotecas) {
+        // Puedes mostrar el nombre de la provincia en el ComboBox, pero almacenar el ID internamente
+        comboBox.addItem(biblioteca.getProvincia().getNombre());
+    }
+}
+
 }
   
+
 
   

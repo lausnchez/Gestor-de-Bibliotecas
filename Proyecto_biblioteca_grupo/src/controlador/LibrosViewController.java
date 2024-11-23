@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Biblioteca;
 import modelo.Libro;
 import vista.EditarLibroView;
 import vista.agregarLibro;
@@ -117,6 +118,8 @@ public class LibrosViewController implements ActionListener {
                     this.libroModelo.eliminarLibro(id);  
                     JOptionPane.showMessageDialog(librosView, "El libro con ID " + id + " ha sido eliminado con éxito.",
                             "Libro Eliminado", JOptionPane.INFORMATION_MESSAGE);
+                     // Recargar la tabla para reflejar el cambio
+                    cargarLibrosEnTabla();
                 } else {
                     JOptionPane.showMessageDialog(librosView, "No existe un libro con el ID " + id + ". No se pudo eliminar.",
                             "Error en Eliminación", JOptionPane.ERROR_MESSAGE);
@@ -136,7 +139,9 @@ public class LibrosViewController implements ActionListener {
             vistaAgregarLibro.setVisible(true);
         } else if (e.getSource() == this.librosView.getBtn_editar()) {
             editarLibro();
-         } else {
+        } else if (e.getSource() == this.librosView.getBtn_guardar()) {
+            cargarLibrosEnTabla();
+        }else {
              JOptionPane.showMessageDialog(librosView, "Debe seleccionar un libro de la tabla para editarlo.", "Error", JOptionPane.ERROR_MESSAGE);
          }
 
@@ -144,7 +149,7 @@ public class LibrosViewController implements ActionListener {
         
 
     
-    public void editarLibro() {
+public void editarLibro() {
     int fila = this.librosView.getTbl_libros().getSelectedRow();
     if (fila == -1) {
         JOptionPane.showMessageDialog(librosView, "Seleccione un libro.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -170,13 +175,29 @@ public class LibrosViewController implements ActionListener {
     editarView.getTxt_autor().setText(libro.getAutor());
     editarView.getTxt_editorial().setText(libro.getEditorial());
     editarView.getTxt_precio().setText(String.valueOf(libro.getPrecio()));
-    editarView.getcBox_biblioteca();
 
-    // Agrega acción al botón "Guardar"
+    // Establecer la biblioteca seleccionada en el ComboBox
+    String nombreBiblioteca = obtenerNombreBibliotecaPorId(libro.getBiblioteca()); // Debes crear este método
+    editarView.getcBox_biblioteca().setSelectedItem(nombreBiblioteca);
+
+    // Agregar acción al botón "Guardar"
     editarView.getBtn_guardar().addActionListener(e -> guardarCambios(editarView, libro));
 
-    // Mostrar el formulario
+    // Mostrar el formulario de edición
     editarView.setVisible(true);
+}
+
+private String obtenerNombreBibliotecaPorId(int bibliotecaId) {
+    // Lógica para obtener el nombre de la biblioteca a partir del ID.
+    // Este es un ejemplo, depende de cómo manejes las bibliotecas
+    if (bibliotecaId == 1) {
+        return "Madrid";
+    } else if (bibliotecaId == 2) {
+        return "Barcelona";
+    } else if (bibliotecaId == 3) {
+        return "Biblioteca Sur";
+    }
+    return "Desconocida"; // En caso de que no se encuentre
 }
 
 private void guardarCambios(EditarLibroView editarView, Libro libro) {
@@ -190,6 +211,10 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
         
         // Obtener el índice de la biblioteca seleccionada en el ComboBox
         int indiceBiblioteca = editarView.getcBox_biblioteca().getSelectedIndex();
+        
+        // Obtener la lista de bibliotecas y obtener el ID correspondiente
+        List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+        int idBiblioteca = bibliotecas.get(indiceBiblioteca).getIdBiblioteca();
 
         // Validaciones simples (puedes ampliarlas)
         if (nuevoIsbn.isEmpty() || nuevoTitulo.isEmpty() || nuevoAutor.isEmpty() || nuevaEditorial.isEmpty() || 
@@ -213,7 +238,7 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
         libro.setAutor(nuevoAutor);
         libro.setEditorial(nuevaEditorial);
         libro.setPrecio(nuevoPrecio);
-        libro.setBiblioteca(indiceBiblioteca);  // Usar el índice para setear la biblioteca
+        libro.setBiblioteca(idBiblioteca);  // Usar el ID de la biblioteca seleccionada
 
         // Guardar cambios en la base de datos
         if (Libro.actualizarLibro(libro)) {
@@ -227,6 +252,17 @@ private void guardarCambios(EditarLibroView editarView, Libro libro) {
         JOptionPane.showMessageDialog(editarView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
+}
+
+private int obtenerIdBibliotecaPorIndice(int indice) {
+    // Asumiendo que tienes una lista de bibliotecas cargada en la vista o controlador
+    List<Biblioteca> bibliotecas = Biblioteca.obtenerTodasLasBibliotecas();
+
+    if (indice >= 0 && indice < bibliotecas.size()) {
+        return bibliotecas.get(indice).getIdBiblioteca();  // Devuelve el ID de la biblioteca correspondiente
+    }
+
+    return -1;  // Si el índice es inválido
 }
 
 // Método para verificar si una cadena es un número válido
