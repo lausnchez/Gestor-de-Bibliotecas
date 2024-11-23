@@ -267,24 +267,27 @@ public class Bibliotecario {
      */
     
     public static boolean agregarBibliotecario(Bibliotecario bibliotecario) {
-        String sql = "INSERT INTO bibliotecario (nombre_trab, apellidos_trab, dni_trab, telefono_trab, email_trab) VALUES (?, ?,?, ?, ?)";
-        
-        try (Connection conn = BaseDatos.obtenerConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    String sql = "INSERT INTO bibliotecario (biblioteca_trab, dni_trab, nombre_trab, apellidos_trab, usuario_trab, telefono_trab, email_trab) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            stmt.setString(1, bibliotecario.getNombreTrab());
-            stmt.setString(2, bibliotecario.getApellidosTrab());
-            stmt.setString(3, bibliotecario.getDniTrab());
-            stmt.setString(4, bibliotecario.getTelefonoTrab());
-            stmt.setString(5, bibliotecario.getEmailTrab());
+    try (Connection conn = BaseDatos.obtenerConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            int filasInsertadas = stmt.executeUpdate();
-            return filasInsertadas > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        stmt.setInt(1, bibliotecario.getBibliotecaTrab()); // Obligatorio
+        stmt.setString(2, bibliotecario.getDniTrab());
+        stmt.setString(3, bibliotecario.getNombreTrab());
+        stmt.setString(4, bibliotecario.getApellidosTrab());
+        stmt.setString(5, bibliotecario.getUsuarioTrab());
+        stmt.setString(6, bibliotecario.getTelefonoTrab());
+        stmt.setString(7, bibliotecario.getEmailTrab());
+
+        int filasInsertadas = stmt.executeUpdate();
+        return filasInsertadas > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
     
     /**
      * 
