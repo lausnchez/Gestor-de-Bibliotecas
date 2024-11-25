@@ -175,7 +175,7 @@ public class bibliotecariosView extends javax.swing.JFrame {
                     .addComponent(btn_agregar)
                     .addComponent(btn_eliminar)
                     .addComponent(btn_editar))
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();

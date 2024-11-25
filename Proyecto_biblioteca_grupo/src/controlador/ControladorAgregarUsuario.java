@@ -190,7 +190,8 @@ public class ControladorAgregarUsuario implements ActionListener{
         String email = this.vista.getTxt_email().getText();
         String cBancaria = this.vista.getTxt_cuentaBancaria().getText();
         
-        int biblioteca = ControllerUtils.idbibliotecaPaula(this.vista.getcBox_biblioteca().getSelectedItem().toString());
+        //int biblioteca = ControllerUtils.idbibliotecaPaula(this.vista.getcBox_biblioteca().getSelectedItem().toString());
+        int biblioteca = ControllerUtils.idbibliotecaLaura(this.vista.getcBox_biblioteca().getSelectedItem().toString());
         System.out.println(biblioteca);
         Boolean pago = this.vista.getCheck_pago().isSelected();
         String provincia = this.vista.getcBox_provincia().getSelectedItem().toString();

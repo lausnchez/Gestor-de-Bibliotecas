@@ -130,7 +130,7 @@ public class ControladorMostrarBibliotecas implements ActionListener{
 
     public void agregarTodos(){
         modeloTabla.setRowCount(0);  // Vaciar tabla
-        List<Biblioteca> listadoSocios = Biblioteca.obtenerBiblioteca();
+        List<Biblioteca> listadoSocios = Biblioteca.obtenerBibliotecas();
         //Collections.sort(listadoSocios);
         for(int i=0; i<listadoSocios.size(); i++){
             Biblioteca nuevaBiblio = listadoSocios.get(i);

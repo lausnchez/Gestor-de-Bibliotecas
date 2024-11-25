@@ -10,17 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Libro;
-import vista.agregarLibro;
+import vista.AgregarLibroAntigua;
 
 /**
  *
  * @author Paula
  */
 public class agregarLibroController implements ActionListener{
-    private agregarLibro vista;
+    private AgregarLibroAntigua vista;
     private Libro libroModelo;
 
-    public agregarLibroController(agregarLibro vista,Libro libroModelo) {
+    public agregarLibroController(AgregarLibroAntigua vista,Libro libroModelo) {
         this.vista = vista;
         this.libroModelo = libroModelo;
 

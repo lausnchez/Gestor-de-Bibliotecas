@@ -51,7 +51,7 @@ public class MostrarSocio extends javax.swing.JFrame {
         btn_agregarUsuario = new javax.swing.JButton();
         btn_refresh = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbl_clientes.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbl_clientes.setText("Control de usuarios");

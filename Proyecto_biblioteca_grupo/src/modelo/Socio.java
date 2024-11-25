@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.DoubleStream;
 import javax.management.remote.JMXConnectorFactory;
 import javax.swing.JOptionPane;
 /**
@@ -348,6 +349,43 @@ public class Socio implements Comparable<Socio>{
         return socioNuevo;
     }
 
+    /**
+     * Obtiene el nombre y apellidos concatenados a partir de su ID
+     * @param idSocio
+     * @return 
+     */
+    public static String obtenerNombreCompletoPorID(int idSocio) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String nombre = "";
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT concat(nombre_soc, ' ', apellidos_soc) AS \"socios\" FROM socios WHERE id_soc LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idSocio);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                nombre = rs.getString("socios");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return nombre;
+    }
+    
     /**
      * Transforma el resultado del método obtenerSocioPorID en una Lista de Socios
      * @param socio
@@ -741,40 +779,34 @@ public class Socio implements Comparable<Socio>{
         };
         return resultado;
     } 
-        
-    /**
-     * Método para obtener un socio por su número de sanciones
-     * @param buscar
-     * @return 
-     */
-    public static List<Socio> obtenerSocioPorSanciones(int buscar) {
+     
+    public static List<Socio> obtenerSocioPorSanciones(String buscar, Boolean actual) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Socio> resultado = new ArrayList<>();
         try {
             conn = BaseDatos.obtenerConnection();
-           /* String sql = "SELECT * FROM socios, bibliotecas"
-                    + " WHERE bibliotecas.id_biblio = socios.biblioteca_soc"
-                    + " AND provincia_soc = ?";
-            */
-           String sql = "select socios.id_soc,\n" +
-                " bibliotecas.nombre_biblio,\n" +
-                " socios.dni_soc,\n" +
-                " socios.nombre_soc,\n" +
-                " socios.apellidos_soc,\n" +
-                " socios.tlf_soc,\n" +
-                " socios.email_soc,\n" +
-                " socios.provincia_soc,\n" +
-                " socios.numSanciones_soc,\n" +
-                " socios.cuentaBancaria_soc,\n" +
-                " socios.pago_soc\n" +
-                " FROM socios, bibliotecas\n" +
-                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
-                " AND numSanciones_soc LIKE ?" +
-                " ORDER BY id_soc ASC;";
+
+           String sql = "SELECT socios.id_soc,\n" +
+                 " bibliotecas.nombre_biblio,\n" +
+                 " socios.dni_soc,\n" +
+                 " socios.nombre_soc,\n" +
+                 " socios.apellidos_soc,\n" +
+                 " socios.tlf_soc,\n" +
+                 " socios.email_soc,\n" +
+                 " socios.provincia_soc,\n" +
+                 " socios.numSanciones_soc,\n" +
+                 " socios.cuentaBancaria_soc,\n" +
+                 " socios.pago_soc\n" +
+                 " FROM socios\n" +
+                 " WHERE " +        // SEGUIR CON ESTO
+                 " AND actual_soc = ?" +
+                 " ORDER BY id_soc ASC;";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, buscar);
+            stmt.setString(1, "%" + buscar + "%");
+            stmt.setString(2, "%" + buscar + "%");
+            stmt.setBoolean(3, actual);
             rs = stmt.executeQuery();
             int contador = 0;
             while(rs.next()){
@@ -809,6 +841,87 @@ public class Socio implements Comparable<Socio>{
             }
         };
         return resultado;
+    } 
+    
+
+    /**
+     * Método para obtener un listado de socios por biblioteca
+     * @param idBiblio
+     * @return 
+     */
+    public static List<Socio> obtenerSocioPorBibliotecas(int idBiblio) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Socio> resultado = new ArrayList<>();
+        try {
+            conn = BaseDatos.obtenerConnection();
+           String sql = "select socios.id_soc,\n" +
+                " bibliotecas.nombre_biblio,\n" +
+                " socios.dni_soc,\n" +
+                " socios.nombre_soc,\n" +
+                " socios.apellidos_soc,\n" +
+                " socios.tlf_soc,\n" +
+                " socios.email_soc,\n" +
+                " socios.provincia_soc,\n" +
+                " socios.numSanciones_soc,\n" +
+                " socios.cuentaBancaria_soc,\n" +
+                " socios.pago_soc\n" +
+                " FROM socios, bibliotecas\n" +
+                " WHERE socios.biblioteca_soc = bibliotecas.id_biblio" +
+                " AND biblioteca_soc LIKE ?" +
+                " ORDER BY id_soc ASC;";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idBiblio);
+            rs = stmt.executeQuery();
+            int contador = 0;
+            while(rs.next()){
+                int id = rs.getInt("id_soc");
+                String biblioteca = rs.getString("nombre_biblio");
+                String dni = rs.getString("dni_soc");
+                String nombre = rs.getString("nombre_soc");
+                String apellidos = rs.getString("apellidos_soc");
+                String tlf = rs.getString("tlf_soc");
+                String email = rs.getString("email_soc");
+                String provincia = rs.getString("provincia_soc");
+                int numSanciones = rs.getInt("numSanciones_soc");
+                String cuentaBancaria = rs.getString("cuentaBancaria_soc");
+                boolean pago = rs.getBoolean("pago_soc");
+
+                resultado.add(new Socio(id, biblioteca, dni, nombre, apellidos, tlf, email, pago, provincia.toUpperCase(), numSanciones, cuentaBancaria));
+                contador++;
+            }
+            if(contador == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        };
+        return resultado;
+    }
+    
+    /**
+     * Recibe una lista de socios y nos devuelve una lista de strings con el 
+     * nombre, apellidos, y ID concatenados.
+     * @param listado
+     * @return 
+     */
+    public static List<String> obtenerNombresSociosDesdeLista(List<Socio> listado){
+        List<String> nombres = new ArrayList<>();
+        for(Socio valor: listado){
+            String resultado = String.valueOf(valor.getId());
+            resultado = resultado.concat(' ' + valor.getNombre() + ' ' + valor.getApellidos());
+        }
+        return nombres;
     }
     
     /**
