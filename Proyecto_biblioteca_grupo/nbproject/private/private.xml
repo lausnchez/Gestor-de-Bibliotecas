@@ -3,12 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/modelo/Prestamo.java</file>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/controlador/ControladorMostrarBibliotecas.java</file>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/modelo/Biblioteca.java</file>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/vista/MostrarPrestamos.java</file>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/vista/AgregarPrestamo.java</file>
-            <file>file:/C:/Users/Laura%20Sánchez/Desktop/final/Proyecto_biblioteca_grupo/src/controlador/ControladorMostrarPrestamos.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Usuario.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/main.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/ControladorAgregarBibliotecas.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/vista/MenuAdminView.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Biblioteca.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/MenuAdminController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/ControladorAgregarUsuario.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/PruebaConexion.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Libro.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/agregarLibroController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/MenuController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Recibo.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/ControladorMostrarAntiguosSocios.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/UsuarioController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/ControladorMostrarsocio.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/LibrosViewController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/BaseDatos.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/ControladorMostrarBibliotecas.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/vista/MostrarBibliotecas.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/controlador/AgregarBibliotecarioController.java</file>
+            <file>file:/C:/Users/david/OneDrive/Documentos/GitHub/Gestor-de-Bibliotecas/Proyecto_biblioteca_grupo/src/modelo/Bibliotecario.java</file>
         </group>
     </open-files>
 </project-private>
