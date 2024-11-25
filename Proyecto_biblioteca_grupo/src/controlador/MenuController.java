@@ -8,18 +8,18 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import modelo.Libro;
-import vista.MenuView;
-import vista.librosView;
+import vista.MenuViewAntigua;
+import vista.librosViewAntigua;
 
 /**
  *
  * @author Paula
  */
 public class MenuController implements ActionListener{
-    private MenuView menuView;
-    private librosView librosView;
+    private MenuViewAntigua menuView;
+    private librosViewAntigua librosView;
     
-      public MenuController(MenuView menuView) {
+      public MenuController(MenuViewAntigua menuView) {
         this.menuView=menuView;
         System.out.println("MenuController iniciado"); 
 
@@ -42,7 +42,7 @@ public class MenuController implements ActionListener{
             // Crear instancia del modelo Libro
             Libro libroModelo = new Libro();
 
-            librosView  librosView= new librosView(); // Crear instancia de la vista libros
+            librosViewAntigua  librosView= new librosViewAntigua(); // Crear instancia de la vista libros
             System.out.println("Abriendo vista de libros..."); 
             LibrosViewController controller = new LibrosViewController(librosView, libroModelo); // Crear el controlador de la vista de libros
             librosView.setVisible(true);

@@ -6,9 +6,10 @@
 
 
 import controlador.ControladorMostrarBibliotecas;
+import controlador.ControladorMostrarPrestamos;
 import controlador.UsuarioController;
 import modelo.Libro;
-import vista.librosView;
+import vista.librosViewAntigua;
 import vista.usuarioLoginView;
 
 /**

@@ -5,59 +5,102 @@
  */
 package modelo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Paula
  */
-public class Biblioteca {
-
-    public enum UBICACION {
-MADRID("Madrid"),
-    BARCELONA("Barcelona"),
-    VALENCIA("Valencia"),
-    SEVILLA("Sevilla"),
-    ZARAGOZA("Zaragoza"),
-    MÁLAGA("Málaga"),
-    ALICANTE("Alicante"),
-    MURCIA("Murcia"),
-    GRANADA("Granada"),
-    VALLADOLID("Valladolid"),
-    BURGOS("Burgos"),
-    CÓRDOBA("Córdoba"),
-    CÁDIZ("Cádiz"),
-    SALAMANCA("Salamanca"),
-    TOLEDO("Toledo"),
-    CANTABRIA("Cantabria"),
-    LA_RIOJA("La Rioja"),
-    NAVARRA("Navarra"),
-    ARAGÓN("Aragón"),
-    ASTURIAS("Asturias"),
-    BALEARES("Baleares");
-
-        private final String nombre;
-
-        UBICACION(String nombre) {
-            this.nombre = nombre;
-        }
-
-        public String getNombre() {
-            return nombre;
-        }
+public class Biblioteca {    
+    public enum UBICACION{
+        A_CORUÑA,
+        ÁLAVA,
+        ALBACETE,
+        ALICANTE,
+        ALMERÍA,
+        ASTURIAS,
+        ÁVILA,
+        BADAJOZ,
+        BARCELONA,
+        BURGOS,
+        CÁDIZ,
+        CANTABRIA,
+        CASTELLÓN,
+        CEUTA,
+        CÓRDOBA,
+        LA_CORUÑA,
+        CUENCA,
+        GERONA,
+        GRANADA,
+        GUADALAJARA,
+        GIPUZKOA,
+        HUELVA,
+        HUESCA,
+        ISLAS_BALEARES,
+        JAÉN,
+        LA_RIOJA,
+        LAS_PALMAS,
+        LEÓN,
+        LLEIDA,
+        LUGO,
+        MADRID,
+        MÁLAGA,
+        MURCIA,
+        NAVARRA,
+        OURENSE,
+        PALENCIA,
+        PONTEVEDRA,
+        SALAMANCA,
+        SANTA_CRUZ_DE_TENERIFE,
+        SEGOVIA,
+        SEVILLA,
+        SORIA,
+        TARRAGONA,
+        TERUEL,
+        TOLEDO,
+        VALENCIA,
+        VALLADOLID,
+        VIZCAYA,
+        ZAMORA,
+        ZARAGOZA
     }
 
+    // Atributos de la clase Biblioteca
+    //--------------------------------------------------------------------------
     private int idBiblioteca;
-    private UBICACION provincia;
+    private String nombre;
+    private String provincia;
+    private String ciudad;
+    private String calle;
     private String telefono;
+    private String email;
 
-    public Biblioteca(int id, UBICACION provincia, String telefono) {
-        this.idBiblioteca = id;
+    // Contructores
+    //--------------------------------------------------------------------------
+    public Biblioteca(){
+        this.idBiblioteca = -1;
+        this.nombre = "";
+        this.provincia = "";
+        this.ciudad = "";
+        this.calle = "";
+        this.telefono = "";
+        this.email = "";
+    }
+
+    public Biblioteca(int idBiblioteca, String nombre, String provincia, String ciudad, String calle, String telefono, String email) {
+        this.idBiblioteca = idBiblioteca;
+        this.nombre = nombre;
         this.provincia = provincia;
+        this.ciudad = ciudad;
+        this.calle = calle;
         this.telefono = telefono;
+        this.email = email;
     }
     
     public Biblioteca(String nombre, String provincia, String ciudad, String calle, String telefono, String email) {
@@ -69,9 +112,12 @@ MADRID("Madrid"),
         this.email = email;
     }
     
+    public Biblioteca(String nombre, String provincia, String telefono){
+        
+    }
+    
     //Getters & Setters
     //--------------------------------------------------------------------------
-
     public int getIdBiblioteca() {
         return idBiblioteca;
     }
@@ -80,11 +126,11 @@ MADRID("Madrid"),
         this.idBiblioteca = idBiblioteca;
     }
 
-    public UBICACION getProvincia() {
+    public String getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(UBICACION provincia) {
+    public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
@@ -95,49 +141,84 @@ MADRID("Madrid"),
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
-    public static List<Biblioteca> obtenerTodasLasBibliotecasPaula() {
-    List<Biblioteca> bibliotecas = new ArrayList<>();
-    String sql = "SELECT * FROM bibliotecas";
-    ResultSet rs = BaseDatos.ejecutarSelect(sql);
-    try {
-        while (rs != null && rs.next()) {
-            int id = rs.getInt("id_biblio");
-            String provinciaStr = rs.getString("provincias_biblio");
-            
-            try {
-                // Transformar el valor a un formato uniforme (mayúsculas) y reemplazar espacios por guiones bajos
-                provinciaStr = provinciaStr.toUpperCase().replace(" ", "_");  
-                UBICACION provincia = UBICACION.valueOf(provinciaStr);  // Convertir a valor del enum
-                
-                String telefono = rs.getString("telefono_biblio");
-                bibliotecas.add(new Biblioteca(id, provincia, telefono));
-            } catch (IllegalArgumentException e) {
-                System.out.println("Provincia desconocida: " + provinciaStr);
-                // Si la provincia no es válida, puedes asignar un valor por defecto o simplemente omitir el registro
-                // En este ejemplo, asignamos una provincia por defecto:
-                UBICACION provincia = UBICACION.MADRID; // O alguna provincia que elijas por defecto
-                String telefono = rs.getString("telefono_biblio");
-                bibliotecas.add(new Biblioteca(id, provincia, telefono));
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+    public String getNombre() {
+        return nombre;
     }
-    return bibliotecas;
-}
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+   
+    public static List<Biblioteca> obtenerTodasLasBibliotecasPaula() {
+        List<Biblioteca> bibliotecas = new ArrayList<>();
+        String sql = "SELECT * FROM bibliotecas";
+        ResultSet rs = BaseDatos.ejecutarSelect(sql);
+        try {
+            while (rs != null && rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String provinciaStr = rs.getString("provincias_biblio");
+
+                try {
+                    // Transformar el valor a un formato uniforme (mayúsculas) y reemplazar espacios por guiones bajos
+                    provinciaStr = provinciaStr.toUpperCase().replace(" ", "_");  
+                    UBICACION provincia = UBICACION.valueOf(provinciaStr);  // Convertir a valor del enum
+
+                    String telefono = rs.getString("telefono_biblio");
+                    bibliotecas.add(new Biblioteca(id, provincia, telefono));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Provincia desconocida: " + provinciaStr);
+                    // Si la provincia no es válida, puedes asignar un valor por defecto o simplemente omitir el registro
+                    // En este ejemplo, asignamos una provincia por defecto:
+                    UBICACION provincia = UBICACION.MADRID; // O alguna provincia que elijas por defecto
+                    String telefono = rs.getString("telefono_biblio");
+                    bibliotecas.add(new Biblioteca(id, provincia, telefono));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+            return bibliotecas;
+    }
+    
+    
+    
+    
 // Método para agregar una biblioteca a la base de datos
     public void agregarBiblioteca() {
         String sql = "INSERT INTO bibliotecas (id_biblioteca, ubi_biblioteca, tel_biblioteca) " +
-                     "VALUES (" + this.idBiblioteca + ", '" + this.provincia.getNombre() + "', '" + this.telefono + "')";
+                     "VALUES (" + this.idBiblioteca + ", '" + this.provincia+ "', '" + this.telefono + "')";
         BaseDatos.ejecutarUpdate(sql);
     }
 
     // Método para actualizar los datos de una biblioteca
     /*
     public void actualizarBiblioteca() {
-        String sql = "UPDATE bibliotecas SET ubi_biblioteca = '" + this.provincia.getNombre() +
+        String sql = "UPDATE bibliotecas SET ubi_biblioteca = '" + this.provincia +
                      "', tel_biblioteca = '" + this.telefono + "' WHERE id_biblioteca = " + this.idBiblioteca;
         BaseDatos.ejecutarUpdate(sql);
     }  */
@@ -147,9 +228,9 @@ MADRID("Madrid"),
      * @param id
      * @return 
      */
-
+    
     public static Biblioteca obtenerBibliotecaPorId(int id) {
-        String sql = "SELECT * FROM bibliotecas WHERE id_biblioteca = " + id;
+        String sql = "SELECT * FROM bibliotecas WHERE id_biblio = " + id;
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             if (rs != null && rs.next()) {
@@ -168,7 +249,8 @@ MADRID("Madrid"),
         }
         return null; // Si no se encuentra la biblioteca
     }
-
+    
+    
     /**
      * Nos pide un nombre de una biblioteca y nos devuelve su ID
      * @param nombreBiblioteca
@@ -186,22 +268,23 @@ MADRID("Madrid"),
         }
         return id;
     }
-
+    
     /**
      * Método para obtener todas las Bibliotecas
      * Devuelve las bibliotecas
      * @return 
      */
-    public static List<Biblioteca> obtenerTodasLasBiblioteca() {
+    
+    public static List<Biblioteca> obtenerTodasLasBibliotecas() {
         List<Biblioteca> bibliotecas = new ArrayList<>();
         String sql = "SELECT * FROM bibliotecas";
         ResultSet rs = BaseDatos.ejecutarSelect(sql);
         try {
             while (rs != null && rs.next()) {
-                int id = rs.getInt("id_biblio");
-                String provinciaStr = rs.getString("provincias_biblio");
+                int id = rs.getInt("id_biblioteca");
+                String provinciaStr = rs.getString("ubi_biblioteca");
                 UBICACION provincia = UBICACION.valueOf(provinciaStr.toUpperCase()); // Convertir de String a Enum
-                String telefono = rs.getString("telefono_biblio");
+                String telefono = rs.getString("tel_biblioteca");
                 bibliotecas.add(new Biblioteca(id, provincia, telefono));
             }
         } catch (SQLException e) {
@@ -209,7 +292,8 @@ MADRID("Madrid"),
         }
         return bibliotecas;
     }
-
+    
+    
     /**
      * Método que elimina la biblioteca
      * @param id 
@@ -222,26 +306,102 @@ MADRID("Madrid"),
     // Método toString para mostrar la información de la biblioteca
     @Override
     public String toString() {
-        return "Biblioteca{id=" + idBiblioteca + ", provincia='" + provincia.getNombre() + "', telefono='" + telefono + "'}";
+        return "Biblioteca{id=" + idBiblioteca + ", provincia='" + provincia + "', telefono='" + telefono + "'}";
     }
 
-    // Método principal para probar la clase
-    public static void main(String[] args) {
-        // Crear una biblioteca
-        Biblioteca biblio1 = new Biblioteca(1, UBICACION.MADRID, "912345678");
 
-        // Agregar la biblioteca a la base de datos
-        biblio1.agregarBiblioteca();
-
-        // Mostrar la información de la biblioteca
-        System.out.println(biblio1.toString());
-
-        // Obtener la biblioteca desde la base de datos
-        Biblioteca biblioRecuperada = Biblioteca.obtenerBibliotecaPorId(1);
-        if (biblioRecuperada != null) {
-            System.out.println("Biblioteca recuperada: " + biblioRecuperada.toString());
+    /**
+     * Nos devuelve una lista de Strings para implementar a los combobox
+     * @return 
+     */
+    public static List<String> recogerNombreBibliotecas(){
+        List<String> bibliotecas = new ArrayList<>();
+        String sql = "SELECT DISTINCT nombre_biblio FROM bibliotecas.bibliotecas";
+        ResultSet rs = BaseDatos.ejecutarSelect(sql);
+        try {
+            while(rs.next()){
+                bibliotecas.add(rs.getString("nombre_biblio"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return bibliotecas;
+    }
+    
+    /**
+     * Nos devuelve las bibliotecas que hay en una provincia escogida
+     * @return 
+     */
+    public static List<String> recogerBibliotecasPorProvincia(String provincia){
+        List<String> bibliotecas = new ArrayList<>();
+        PreparedStatement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT DISTINCT nombre_biblio FROM bibliotecas.bibliotecas WHERE provincias_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, provincia);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                bibliotecas.add(rs.getString("nombre_biblio"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al recoger bibliotecas");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bibliotecas;
+    }
+    
+    /**
+     * Método que nos devuelve un listado de todas las bibliotecas de la
+     * base de datos
+     * @return
+     */
+    public static List<Biblioteca> obtenerBibliotecas() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Biblioteca biblio = null;
+        List<Biblioteca> listado = new ArrayList<>();
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * from Bibliotecas;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
 
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String telefono = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+
+                biblio = new Biblioteca(id, nombre, provincia, ciudad, calle, telefono, email);
+                listado.add(biblio);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return listado;
     }
     
@@ -379,25 +539,25 @@ MADRID("Madrid"),
         }  
         return resultado;
     }
-    
+        
     /**
-     * Método para obtener una biblioteca por su provincia
+     * Método para obtener el id de una biblioteca por su nombre exacto
      * @param busqueda
      * @return 
      */
-    public static List<Biblioteca> obtenerBibliotecaPorProvincia(String busqueda) {
+    public static Biblioteca obtenerIdBibliotecaPorNombreUnico(String busqueda) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Biblioteca> resultado = new ArrayList<>();
+        Biblioteca resultado = null;
         
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "SELECT * FROM bibliotecas WHERE provincias_biblio LIKE ?";
+            String sql = "SELECT id_biblio FROM bibliotecas WHERE nombre_biblio LIKE ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, "%" + busqueda + "%");
+            stmt.setString(1, busqueda);
             rs = stmt.executeQuery();
-            while(rs.next()) {
+            if(rs.next()) {
                 int id = rs.getInt("id_biblio");
                 String nombre = rs.getString("nombre_biblio");
                 String provincia = rs.getString("provincias_biblio");
@@ -405,9 +565,9 @@ MADRID("Madrid"),
                 String calle = rs.getString("calle_biblio");
                 String tlf = rs.getString("telefono_biblio");
                 String email = rs.getString("email_biblio");
-                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+                resultado = new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email);
             }
-            if(resultado.size() == 0){
+            if(resultado == null){
                 JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
                 return resultado;
             }
@@ -423,6 +583,16 @@ MADRID("Madrid"),
             }
         }  
         return resultado;
+    }
+    
+    /**
+     * Obtiene el nombre de una biblioteca pasándole su ID
+     * @param id
+     * @return 
+     */
+    public static String obtenerNombreBibliotecaPorID(int id){
+        Biblioteca biblio = Biblioteca.obtenerBibliotecaPorId(id);
+        return biblio.getNombre();
     }
     
     /**
@@ -469,6 +639,52 @@ MADRID("Madrid"),
         }  
         return resultado;
     }
+    
+    /**
+     * Método para obtener una biblioteca por su ciudad
+     * @param busqueda
+     * @return 
+     */
+    public static List<Biblioteca> obtenerBibliotecaPorProvincia(String busqueda) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Biblioteca> resultado = new ArrayList<>();
+        
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "SELECT * FROM bibliotecas WHERE provincias_biblio LIKE ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + busqueda + "%");
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                int id = rs.getInt("id_biblio");
+                String nombre = rs.getString("nombre_biblio");
+                String provincia = rs.getString("provincias_biblio");
+                String ciudad = rs.getString("ciudad_biblio");
+                String calle = rs.getString("calle_biblio");
+                String tlf = rs.getString("telefono_biblio");
+                String email = rs.getString("email_biblio");
+                resultado.add(new Biblioteca(id, nombre, provincia, ciudad, calle, tlf, email));
+            }
+            if(resultado.size() == 0){
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return resultado;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }  
+        return resultado;
+    }
+    
     
     /**
      * Método para obtener una biblioteca por su calle
@@ -613,21 +829,29 @@ MADRID("Madrid"),
         Connection conn = null;
         PreparedStatement stmt = null;
 
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "DELETE FROM bibliotecas WHERE id_biblio = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
 
-        // Actualizar la biblioteca
-        biblio1.setTelefono("987654321");
-        biblio1.actualizarBiblioteca();
-
-        // Mostrar la biblioteca actualizada
-        biblioRecuperada = Biblioteca.obtenerBibliotecaPorId(1);
-        if (biblioRecuperada != null) {
-            System.out.println("Biblioteca después de la actualización: " + biblioRecuperada.toString());
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Biblioteca " + id + " eliminada correctamente");
+            }else System.out.println("No se actualizaron datos");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
-        // Eliminar la biblioteca
-        Biblioteca.eliminarBiblioteca(1);
     }
-   
+    
+    
     public static void actualizarBiblioteca(int id, String nombre, String telefono, String email){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -698,6 +922,3 @@ MADRID("Madrid"),
         }
     }
 }
-
-
-

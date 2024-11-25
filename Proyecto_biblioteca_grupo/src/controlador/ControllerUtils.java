@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.BaseDatos;
 
@@ -85,6 +88,32 @@ public class ControllerUtils {
             e.printStackTrace();
         }
         return bibliotecas;
+    }
+    
+    /**
+     * Con un ID de una biblioteca te devuelve un listado de los socios de dicha
+     * biblioteca con los ID concatenados y ordenados alfabéticamente.
+     * @param idBiblioteca
+     * @return 
+     */
+    public static List<String> obtenerSocios(int idBiblioteca){
+        List<String> socios = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement prepStat = null;
+        ResultSet rs = null;
+        try {
+            conexion = BaseDatos.obtenerConnection();
+            String sql = "SELECT concat(id_soc, \" - \", nombre_soc, ' ', apellidos_soc) as \"socios\" FROM socios WHERE biblioteca_soc = ? ORDER BY nombre_soc, apellidos_soc;";
+            prepStat = conexion.prepareStatement(sql);
+            rs = prepStat.executeQuery();
+            while(rs.next()){
+                socios.add(rs.getString("socios"));
+            }
+            BaseDatos.cerrarConnection(conexion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return socios;
     }
     
     /**
@@ -180,6 +209,37 @@ public class ControllerUtils {
             e.printStackTrace();
         } 
         return id;
+    }
+    
+    /**
+     * Le pasamos una String y nos dice si coincide con la fecha actual
+     */
+    public static boolean esFechaActual(String fechaAComparar){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaConvertida = null;
+        try {
+            fechaConvertida = formato.parse(fechaAComparar);
+        } catch (Exception e) {
+            System.err.println("Error al transformar la fecha");
+        } 
+        if(fechaConvertida.equals(LocalDate.now())) return true;
+        else return false;
+    }
+    
+    /**
+     * Convierte una String de formato yyyy-MM-dd en una fecha
+     * @param fechaString
+     * @return 
+     */
+    public static Date pasarAFecha(String fechaString){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaConvertida = null;
+        try {
+            fechaConvertida = formato.parse(fechaString);
+        } catch (Exception e) {
+            System.err.println("Error al transformar la fecha");
+        } 
+        return fechaConvertida;
     }
     
 }
