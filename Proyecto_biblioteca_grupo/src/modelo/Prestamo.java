@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import controlador.ControllerUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,15 +22,16 @@ import modelo.Biblioteca.UBICACION;
  */
 public class Prestamo {
     private int id;
-    private Socio socio;
-    private UBICACION biblioteca;
-    private Date fechaPrestamo;
-    private Libro libro;
-    private Date fechaDevolucion;
+    private int socio;
+    private int biblioteca;
+    private String fechaPrestamo;
+    private int libro;
+    private String fechaDevolucion;
     private boolean devuelto;
     
-    // Constructor
-    public Prestamo(int id, Socio socio, UBICACION biblioteca, Date fechaPrestamo, Libro libro, Date fechaDevolucion, boolean devuelto) {
+    // Constructores
+    //--------------------------------------------------------------------------
+    public Prestamo(int id, int socio, int biblioteca, String fechaPrestamo, int libro, String fechaDevolucion, boolean devuelto) {
         this.id = id;
         this.socio = socio;
         this.biblioteca = biblioteca;
@@ -39,6 +41,33 @@ public class Prestamo {
         this.devuelto = devuelto;
     }
 
+    public Prestamo(int socio, int biblioteca, String fechaPrestamo, int libro, String fechaDevolucion, boolean devuelto) {
+        this.socio = socio;
+        this.biblioteca = biblioteca;
+        this.fechaPrestamo = fechaPrestamo;
+        this.libro = libro;
+        this.fechaDevolucion = fechaDevolucion;
+        this.devuelto = devuelto;
+    }
+    
+    public Prestamo(int socio, int biblioteca, int libro) {
+        this.socio = socio;
+        this.biblioteca = biblioteca;
+        this.libro = libro;
+    }
+    
+    public Prestamo(){
+        this.id = -1;
+        this.socio = -1;
+        this.biblioteca = -1;
+        this.fechaPrestamo = "";
+        this.libro = -1;
+        this.fechaDevolucion = "";
+        this.devuelto = false;
+    }
+    
+    // Getters & Setters
+    //--------------------------------------------------------------------------
     private Prestamo(int idPrestamo, Socio socio, Date fechaPrestamo, Libro libro, Date fechaDevolucion) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -51,43 +80,43 @@ public class Prestamo {
         this.id = id;
     }
 
-    public Socio getSocio() {
+    public int getSocio() {
         return socio;
     }
 
-    public void setSocio(Socio socio) {
+    public void setSocio(int socio) {
         this.socio = socio;
     }
 
-    public UBICACION getBiblioteca() {
+    public int getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(UBICACION biblioteca) {
+    public void setBiblioteca(int biblioteca) {
         this.biblioteca = biblioteca;
     }
 
-    public Date getFechaPrestamo() {
+    public String getFechaPrestamo() {
         return fechaPrestamo;
     }
 
-    public void setFechaPrestamo(Date fechaPrestamo) {
+    public void setFechaPrestamo(String fechaPrestamo) {
         this.fechaPrestamo = fechaPrestamo;
     }
 
-    public Libro getLibro() {
+    public int getLibro() {
         return libro;
     }
 
-    public void setLibro(Libro libro) {
+    public void setLibro(int libro) {
         this.libro = libro;
     }
 
-    public Date getFechaDevolucion() {
+    public String getFechaDevolucion() {
         return fechaDevolucion;
     }
 
-    public void setFechaDevolucion(Date fechaDevolucion) {
+    public void setFechaDevolucion(String fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
 
@@ -112,14 +141,11 @@ public class Prestamo {
 
         try {
             conn = BaseDatos.obtenerConnection();
-            String sql = "INSERT INTO prestamos (id_prest, id_socio_prest, biblioteca_prest fecha_prestamo, id_lib, fecha_dev, devuelto) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO prestamos (id_socio_prest, biblioteca_prest, fecha_prest, libro_prest, devuelto_prest) VALUES (?, ?, CURRENT_DATE, ?, date_add(current_date, interval 15 day))";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, prestamo.getSocio().getId());
-            stmt.setString(2, prestamo.getBiblioteca().toString());
-            stmt.setDate(3, new java.sql.Date(prestamo.getFechaPrestamo().getTime()));
-            stmt.setInt(4, prestamo.getLibro().getId());
-            stmt.setDate(5, new java.sql.Date(prestamo.getFechaDevolucion().getTime()));
-            stmt.setBoolean(6, prestamo.isDevuelto());
+            stmt.setInt(1, prestamo.getSocio());
+            stmt.setInt(2, prestamo.getBiblioteca());
+            stmt.setInt(3, prestamo.getLibro());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -133,7 +159,7 @@ public class Prestamo {
             }
         }
     }
-
+    
     /**
      * Método para obtener un préstamo por su ID
      * @param idPrestamo
@@ -287,5 +313,55 @@ public class Prestamo {
         }
 
         return false;
+    }
+    
+    /**
+     * Obtiene una lista completa de los préstamos
+     * @return listado
+     */
+    public static List<Prestamo> obtenerPrestamos() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Prestamo> listado = new ArrayList<>();
+        try {
+            conn = BaseDatos.obtenerConnection();
+            String sql = "select prestamos.id_prest,\n" +
+                " prestamos.id_socio_prest,\n" +
+                " prestamos.biblioteca_prest,\n" +
+                " prestamos.fecha_prest,\n" +
+                " prestamos.libro_prest, \n " +
+                " prestamos.estado_prest, \n" + 
+                " prestamos.devuelto_prest " + 
+                " FROM prestamos, socios\n" +
+                " WHERE socios.id_soc = prestamos.id_socio_prest" + 
+                " AND actual_soc = 1" +
+                " ORDER BY id_soc ASC;";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("id_prest");
+                int idSocio = rs.getInt("id_socio_prest");
+                int biblio = rs.getInt("biblioteca_prest");
+                String fechaPrest = rs.getString("fecha_prest");
+                int libro = rs.getInt("libro_prest");
+                String fechaDev = rs.getString("devuelto_prest");
+                Boolean estado = rs.getBoolean("estado_prest");
+
+                listado.add(new Prestamo(idSocio, biblio, fechaPrest, libro, fechaDev, true));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return listado;
     }
 }

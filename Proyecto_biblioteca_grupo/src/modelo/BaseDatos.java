@@ -17,11 +17,10 @@ import java.sql.ResultSet;
  */
 public class BaseDatos {
     // Parámetros de conexión
-	private static final String DB = "Gestor de Bibliotecas";
-
+    private static final String DB = "Gestor de Bibliotecas";
     private static final String URL = "jdbc:mysql://localhost:3306/bibliotecas";
-    private static final String USUARIO = "root";
-    private static final String CONTRASENA = "root"; // Cambiar segun la contra de la bd
+    private static final String USUARIO = "root"; // Cambiar
+    private static final String CONTRASENA = "damdaw"; // Cambiar
     
     public static Connection conexion = null;
     public static Statement miStatement = null;
@@ -37,8 +36,8 @@ public class BaseDatos {
     	try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             if(obtenerConnection() != null) {
-                    miStatement = conexion.createStatement();
-                    System.out.println("Conexión a la base de datos correcta");
+                miStatement = conexion.createStatement();
+                System.out.println("Conexión a la base de datos correcta");
             }else System.out.println("Conexión a la base de datos fallida");
         }
     	catch (ClassNotFoundException e) {
@@ -137,8 +136,9 @@ public class BaseDatos {
         Statement stmt = null;
 
         try {
+            // Iniciar la transacción
             conn = obtenerConnection();
-            conn.setAutoCommit(false);  // Desactivar autocommit 
+            conn.setAutoCommit(false);  // Desactivar autocommit para manejar la transacción manualmente
             stmt = conn.createStatement();
 
             // Ejecutar las consultas

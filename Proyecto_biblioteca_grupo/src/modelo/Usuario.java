@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Biblioteca.UBICACION;
 
 /**
  *
@@ -25,10 +26,10 @@ public class Usuario {
     private TIPO tipo;
     private String nombre;
     private String password;
-    private Biblioteca biblioteca;
+    private UBICACION biblioteca;
 
     // Constructor
-    public Usuario(int id, TIPO tipo, String nombre, String password, Biblioteca biblioteca) {
+    public Usuario(int id, TIPO tipo, String nombre, String password, UBICACION biblioteca) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -69,11 +70,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public Biblioteca getBiblioteca() {
+    public UBICACION getBiblioteca() {
         return biblioteca;
     }
 
-    public void setBiblioteca(Biblioteca biblioteca) {
+    public void setBiblioteca(UBICACION biblioteca) {
         this.biblioteca = biblioteca;
     }
     
@@ -94,7 +95,7 @@ public class Usuario {
 
         try {
             conn = BaseDatos.obtenerConnection();
-           String sql = "SELECT id_usu, nombre_usu, password_almacen " +
+            String sql = "SELECT id_usu, nombre_usu, password_almacen " +
                      "FROM usuarios " +
                      "JOIN almacen ON usuarios.almacen_usu = almacen.id_almacen " +
                      "WHERE nombre_usu = ? AND almacen.password_almacen = ?";
@@ -145,7 +146,7 @@ public class Usuario {
                 String nombre = rs.getString("nombre_us");
                 String password = rs.getString("password");
                 TIPO tipo = TIPO.valueOf(rs.getString("tipo_us"));
-                Biblioteca biblioteca = Biblioteca.valueOf(rs.getString("biblio_usu").toUpperCase());
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_usu").toUpperCase());
 
                 usuario = new Usuario(id, tipo, nombre,password,biblioteca);
             }
@@ -250,7 +251,7 @@ public class Usuario {
                 String nombre = rs.getString("nombre_us");
                 String usuario = rs.getString("usuario");
                 String password = rs.getString("password");
-                Biblioteca biblioteca = Biblioteca.valueOf(rs.getString("biblio_usu").toUpperCase());
+                UBICACION biblioteca = UBICACION.valueOf(rs.getString("biblio_usu").toUpperCase());
                 TIPO tipo = TIPO.valueOf(rs.getString("tipo_us"));
 
                 Usuario nuevoUsuario = new Usuario(id, tipo, nombre, password, biblioteca);

@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
-import vista.MenuAdminView;
-import vista.MenuView;
-import vista.librosView;
+import vista.MenuAdminViewAntigua;
+import vista.MenuViewAntigua;
+import vista.librosViewAntigua;
 import vista.usuarioLoginView;
 
 /**
@@ -21,8 +21,8 @@ import vista.usuarioLoginView;
 public class UsuarioController implements ActionListener{
     
     private usuarioLoginView usuarioView;
-    private MenuAdminView vistaMenuAdmin;
-    private MenuView menuView;
+    private MenuAdminViewAntigua vistaMenuAdmin;
+    private MenuViewAntigua menuView;
 
     public UsuarioController(usuarioLoginView usuarioView) {
         this.usuarioView = usuarioView;
@@ -48,13 +48,13 @@ public class UsuarioController implements ActionListener{
 
                 // Si es ADMINISTRADOR/A, mostrar el menú de administrador
                 if (tipo == Usuario.TIPO.ADMINISTRADOR) {
-                    vistaMenuAdmin = new MenuAdminView();
+                    vistaMenuAdmin = new MenuAdminViewAntigua();
                     MenuAdminController controllerAdmin = new MenuAdminController(vistaMenuAdmin);
                     vistaMenuAdmin.setVisible(true);
                 }
                 // Si es BIBLIOTECARIO/A, mostrar el menú de bibliotecario
                 else if (tipo == Usuario.TIPO.TRABAJADOR) {
-                    menuView = new MenuView();
+                    menuView = new MenuViewAntigua();
                     MenuController menuController = new MenuController(menuView);
                     menuView.setVisible(true);
                 }

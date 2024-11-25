@@ -65,7 +65,7 @@ public class AgregarSocio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Registro de Clientes");
+        jLabel1.setText("Registro de Socios");
 
         lbl_nombre.setText("Nombre");
 
